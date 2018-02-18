@@ -285,6 +285,9 @@ options.disableLastCharCheckboxOnPasswordGenerator = function () {
 }
 
 options.initGeneralSettingsLocale = function () {
+
+    if (isSafari) return;
+
     // -- Side menu --
     $("#options-html").text(chrome.i18n.getMessage("Options_General"));
     $("#credential-fields-html").text(chrome.i18n.getMessage("Options_Credential_Fields"));
@@ -312,6 +315,9 @@ options.initGeneralSettingsLocale = function () {
 };
 
 options.initAboutLocale = function () {
+
+    if (isSafari) return;
+
     // -- Side menu --
     $("#options-html").text(chrome.i18n.getMessage("Options_General"));
     $("#credential-fields-html").text(chrome.i18n.getMessage("Options_Credential_Fields"));
@@ -334,6 +340,9 @@ options.initAboutLocale = function () {
 };
 
 options.initCredentialListLocale = function () {
+
+    if (isSafari) return;
+
     // -- Side menu --
     $("#options-html").text(chrome.i18n.getMessage("Options_General"));
     $("#credential-fields-html").text(chrome.i18n.getMessage("Options_Credential_Fields"));
@@ -352,6 +361,9 @@ options.initCredentialListLocale = function () {
 };
 
 options.initBlacklistLocale = function () {
+
+    if (isSafari) return;
+
     // -- Side menu --
     $("#options-html").text(chrome.i18n.getMessage("Options_General"));
     $("#credential-fields-html").text(chrome.i18n.getMessage("Options_Credential_Fields"));
