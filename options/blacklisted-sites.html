@@ -13,26 +13,26 @@
         <h1>Mooltipass</h1>
 
         <ul>
-          <li><a href="options.html">General</a></li>
-          <li><a href="credential-fields.html">Credential Fields</a></li>
-          <li><a href="blacklisted-sites.html" class="active">Blacklisted Sites</a></li>
+          <li><a id="options-html" href="options.html"></a></li>
+          <li><a id="credential-fields-html" href="credential-fields.html"></a></li>
+          <li><a id="blacklisted-sites-html" href="blacklisted-sites.html" class="active"></a></li>
           <li>&nbsp;</li>
-          <li><a href="about.html">About</a></li>
+          <li><a id="about-html" href="about.html"></a></li>
         </ul>
       </div>
       <div class="pure-u-5-6 settings">
-        <h1>Blacklisted Sites</h1>
+        <h1 id="blacklisted-sites-h1"></h1>
         <hr />
-        <p class="description">Sites on this list do not prompt for password updates.</p>
+        <p id="blacklisted-sites-description" class="description"></p>
 
         <table class="pure-table">
           <thead>
               <tr>
-                <th>Page URL</th>
+                <th id="blacklisted-sites-table-title"></th>
               </tr>
           </thead>
           <tr id="no-blacklisted-urls">
-            <td colspan="1">No blacklisted URLs.</td>
+            <td colspan="1"></td>
           </tr>
           <tbody id="blacklisted-urls">
           </tbody>
@@ -42,15 +42,15 @@
           <div>
             <div class="pure-g">
               <div class="pure-u-5-5">
-                <h2>Add blacklisted site</h2>
+                <h2 id="add-blacklisted-site-h2"></h2>
               </div>
             </div>
             <div class="pure-g">
               <div class="pure-u-11-12">
-                <input type="text" style="width: 100%;" placeholder="Domain name (e.g. sub.domain.com)" id="url-blacklist-add" autocomplete="off" />
+                <input type="text" style="width: 100%;" placeholder="" id="url-blacklist-add" autocomplete="off" />
               </div>
               <div class="pure-u-1-12">
-                <button type="submit" class="pure-button pure-button-primary">Add</button>
+                <button id="blackListed_site_submit" type="submit" class="pure-button pure-button-primary"></button>
               </div>
             </div>
           </div>

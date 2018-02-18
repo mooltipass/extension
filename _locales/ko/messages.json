@@ -1,0 +1,38 @@
+{
+  "Manifest_Description": { "message": "Retrieve and store Mooltipass credentials easily from websites" },
+  
+  "Options_General": { "message": "General" },
+  "Options_Credential_Fields": { "message": "Credential Fields" },
+  "Options_Blacklisted_Sites": { "message": "Blacklisted Sites" },
+  "Options_About": { "message": "About" },
+  
+  "OptionsHtml_Password_Generator": { "message": "Password Generator" },
+  "OptionsHtml_Password_Generator_Description": { "message": "An icon will be added to all password fields providing you a random password." },
+  "OptionsHtml_Password_Generator_Checkbox": { "message": "Activate password generator" },
+  "OptionsHtml_Password_Generator_Length": { "message": "Password length" },
+  "OptionsHtml_Password_Generator_Complexity": { "message": "Password complexity" },
+  "OptionsHtml_Password_Generator_Lowercase": { "message": "Lowercase ( a b c ...)" },
+  "OptionsHtml_Password_Generator_Uppercase": { "message": "Uppercase ( A B C ...)" },
+  "OptionsHtml_Password_Generator_Numbers": { "message": "Numbers ( 1 2 3 ...)" },
+  "OptionsHtml_Password_Generator_Specialchars": { "message": "Special characters ( ! $ % ^ * ( ) _ + { } - [ ] : \" | ; ' ? , . / )" },
+  "OptionsHtml_Advanced_Options": { "message": "Advanced Options" },
+  "OptionsHtml_Advanced_Options_Description": { "message": "These options are for advanced users." },
+  "OptionsHtml_Advanced_Options_Checkbox": { "message": "<b>Do not</b> send a submit event after filling the credential fields" },
+  
+  "AboutHtml_About_Description": { "message": "Mooltipass was created with the support of great people. It started as a <a href=\"https://hackaday.io/project/86-mooltipass\" target=\"_blank\">Hackaday.io</a> project, was successfully crowd-funded on <a href=\"https://www.indiegogo.com/projects/mooltipass-open-source-offline-password-keeper#/story\" target=\"_blank\">Indiegogo</a>, and developed to a real product at <a href=\"http://www.themooltipass.com/\" target=\"_blank\">themooltipass.com</a>." },
+  "AboutHtml_Contributors": { "message": "Contributors" },
+  "AboutHtml_Contributors_Description": { "message": "The following people made this project happen:" },
+  "AboutHtml_Opensource": { "message": "Open Source" },
+  "AboutHtml_Opensource_Description": { "message": "This project is open source and can be found at <a href=\"https://github.com/limpkin/mooltipass/\" target=\"_blank\">github.com</a>." },
+  
+  "CredentialFieldsHtml_Description": { "message": "If Mooltipass detects incorrect credential fields, you can specify correct fields by yourself. Just go to the page and click on the Mooltipass icon, select <i>Select custom credential fields for this page</i>." },
+  "CredentialFieldsHtml_Table_Title": { "message": "Page URL" },
+  "CredentialFieldsHtml_Table_No_Credential_Urls": { "message": "No custom credential fields specified." },
+  
+  "BlacklistedSitesHtml_Description": { "message": "Sites on this list do not prompt for password updates." },
+  "BlacklistedSitesHtml_Table_Title": { "message": "Page URL" },
+  "BlacklistedSitesHtml_Table_No_Blacklisted_Urls": { "message": "No blacklisted URLs." },
+  "BlacklistedSitesHtml_BlackListed_Site_Form_Title": { "message": "Add blacklisted site" },
+  "BlacklistedSitesHtml_BlackListed_Site_Form_Placeholder": { "message": "Domain name (e.g. sub.domain.com)" },
+  "BlacklistedSitesHtml_BlackListed_Site_Form_Submit": { "message": "Add" }
+}
