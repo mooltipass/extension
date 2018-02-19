@@ -68,5 +68,26 @@
   "PopupStatusHtml_StatusBar_DeviceLocked": { "message": "Device Locked" },
   "PopupStatusHtml_StatusBar_DeviceDisconnected": { "message": "Device Disconnected" },
   "PopupStatusHtml_StatusBar_AppMissing": { "message": "Mooltipass Application Missing!" },
-  "PopupStatusHtml_StatusBar_Unknown": { "message": "Unknown Status" }
+  "PopupStatusHtml_StatusBar_Unknown": { "message": "Unknown Status" },
+  
+  "EventJs_Notification_AppNotInstalled_Title": { "message": "No Mooltipass App Installed" },
+  "EventJs_Notification_AppNotInstalled_Message": { "message": "Please Install our Application on www.themooltipass.com/setup" },
+  "EventJs_Notification_AppNotConnected_Title": { "message": "Mooltipass Not Connected" },
+  "EventJs_Notification_AppNotConnected_Message": { "message": "Please Connect Your Mooltipass" },
+  "EventJs_Notification_DeviceLocked_Title": { "message": "Mooltipass Locked" },
+  "EventJs_Notification_DeviceLocked_Message": { "message": "Please Unlock Your Mooltipass" },
+  "EventJs_Notification_NoCard_Title": { "message": "No Card in Mooltipass!" },
+  "EventJs_Notification_NoCard_Message": { "message": "Please Insert Your Smartcard and Enter Your PIN" },
+  "EventJs_Notification_ManagementMode_Title": { "message": "Mooltipass in Management Mode!" },
+  "EventJs_Notification_ManagementMode_Message": { "message": "Please leave management mode in the App" },
+  "EventJs_Notification_PassTooLong_Title": { "message": "Password Too Long" },
+  "EventJs_Notification_PassTooLong_Message": { "message": "We are sorry, Mooltipass only supports passwords that are less than 31 characters" },
+  "EventJs_Notification_DetectedCredentials_Title": { "message": "Credentials Detected!" },
+  "EventJs_Notification_DetectedCredentials_Message": { "message": "Please Approve their Storage on the Mooltipass" },
+  "EventJs_Notification_SubDomainDetected_Title": { "message": "Subdomain Detected!" },
+  "EventJs_Notification_SubDomainDetected_Message_1": { "message": "Please approve Domain storage" },
+  "EventJs_Notification_SubDomainDetected_Message_2": { "message": "What domain do you want to store?" },
+  "EventJs_Notification_Button_HideNotifications": { "message": "Don't show these notifications" },
+  "EventJs_Notification_Button_BlackList": { "message": "Black list this website" },
+  "EventJs_Notification_Button_StoreDomain": { "message": "Store " }
 }
