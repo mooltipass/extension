@@ -484,7 +484,8 @@ mooltipassEvent.onUpdateNotify = function(callback, tab, username, password, url
 
 				// Firefox doesn't support buttons on notifications
 				if (!isFirefox && !isSafari) {
-                    notification.buttons = [{ title: chrome.i18n.getMessage("EventJs_Notification_Button_StoreDomain") + domain }, { title: chrome.i18n.getMessage("EventJs_Notification_Button_StoreDomain") + subdomain + '.' + domain}];
+          notification.buttons = [{ title: chrome.i18n.getMessage("EventJs_Notification_Button_StoreDomain") + domain }, { title: chrome.i18n.getMessage("EventJs_Notification_Button_StoreDomain") + subdomain + '.' + domain}];
+					notification.requireInteraction = true;
 				} else {
 					// Firefox: Use domain (we should check against subdomain and later domain if missing tho...)
 					notification.message = chrome.i18n.getMessage("EventJs_Notification_SubDomainDetected_Message_1");
