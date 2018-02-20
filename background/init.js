@@ -172,7 +172,7 @@ startMooltipass = function() {
 		 * Add context menu entry for filling in username + password
 		 */
 		chrome.contextMenus.create({
-			"title": "Fill &User + Pass",
+            "title": chrome.i18n.getMessage("InitJs_ContextMenu_FillUserPass"),
 			"contexts": [ "editable" ],
 			"onclick": function(info, tab) {
 				chrome.tabs.sendMessage(tab.id, {
@@ -185,7 +185,7 @@ startMooltipass = function() {
 		 * Add context menu entry for filling in only password which matches for given username
 		 */
 		chrome.contextMenus.create({
-			"title": "Fill &Pass Only",
+            "title": chrome.i18n.getMessage("InitJs_ContextMenu_FillPass"),
 			"contexts": [ "editable" ],
 			"onclick": function(info, tab) {
 				chrome.tabs.sendMessage(tab.id, {
@@ -198,7 +198,7 @@ startMooltipass = function() {
 		 * Add context menu entry for creating icon for generate-password dialog
 		 */
 		chrome.contextMenus.create({
-			"title": "Show Password &Generator Icons",
+            "title": chrome.i18n.getMessage("InitJs_ContextMenu_ShowPassGenIcons"),
 			"contexts": [ "editable" ],
 			"onclick": function(info, tab) {
 				chrome.tabs.sendMessage(tab.id, {
@@ -211,7 +211,7 @@ startMooltipass = function() {
 		 * Add context menu entry for creating icon for generate-password dialog
 		 */
 		chrome.contextMenus.create({
-			"title": "&Save credentials",
+            "title": chrome.i18n.getMessage("InitJs_ContextMenu_SaveCredentials"),
 			"contexts": [ "editable" ],
 			"onclick": function(info, tab) {
 				chrome.tabs.sendMessage(tab.id, {

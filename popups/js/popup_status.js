@@ -23,6 +23,9 @@ function initSettings() {
         });
     }
 
+    // Display strings in proper locale
+    initLocale();
+
     mpJQ(".pure-menu-list .pure-menu-item").click(function() {
         if (isSafari) {
             safari.self.hide();
@@ -169,6 +172,48 @@ function updateStatusInfo() {
 function _updateStatusInfo() {
     updateStatusInfo();
     setTimeout(_updateStatusInfo, 1000);
+}
+
+function initLocale() {
+    if (isSafari) return;
+
+    // -- Error --
+    $("#error-encountered h3:first").text(chrome.i18n.getMessage("PopupStatusHtml_Error_Header"));
+    $("#error-message").text(chrome.i18n.getMessage("PopupStatusHtml_Error_Message"));
+    $("#error-message-2").text(chrome.i18n.getMessage("PopupStatusHtml_Error_Link"));
+
+    // -- Reconnect --
+    $("#reconnect-button h3:first").text(chrome.i18n.getMessage("PopupStatusHtml_Reconnect_Header"));
+    $("#need-reconnect-message").text(chrome.i18n.getMessage("PopupStatusHtml_Reconnect_Link"));
+
+    // -- Notifications disabled --
+    $("#notifications-disabled h3:first").text(chrome.i18n.getMessage("PopupStatusHtml_Notifications_Header"));
+    $("#notifications-disabled-message").text(chrome.i18n.getMessage("PopupStatusHtml_Notifications_Link"));
+
+    // -- Configure --
+    $("#not-configured h3:first").text(chrome.i18n.getMessage("PopupStatusHtml_Configure_Header"));
+    $("#not-configured-message").text(chrome.i18n.getMessage("PopupStatusHtml_Configure_Link"));
+
+    // -- Update --
+    $("#update-available h3:first").text(chrome.i18n.getMessage("PopupStatusHtml_Update_Header"));
+    $("#update-available-message").text(chrome.i18n.getMessage("PopupStatusHtml_Update_Link"));
+
+    // -- Menu --
+    $("#btn-select-credential-fields").text(chrome.i18n.getMessage("PopupStatusHtml_Menu_SelectCredentials"));
+    $("#btn-add-site-to-blacklist a:first").text(chrome.i18n.getMessage("PopupStatusHtml_Menu_AddToBlacklist"));
+    $("#btn-remove-site-from-blacklist a:first").text(chrome.i18n.getMessage("PopupStatusHtml_Menu_RemoveFromBlacklist"));
+    $("#btn-settings").text(chrome.i18n.getMessage("PopupStatusHtml_Menu_Settings"));
+    $("#btn-link").text(chrome.i18n.getMessage("PopupStatusHtml_Menu_Website"));
+    $("#btn-open-app").text(chrome.i18n.getMessage("PopupStatusHtml_Menu_OpenApp"));
+    $("#btn-report-error").text(chrome.i18n.getMessage("PopupStatusHtml_Menu_ReportIssue"));
+
+    // -- Status bar --
+    $("#initial-state").text(chrome.i18n.getMessage("PopupStatusHtml_StatusBar_CheckStatus"));
+    $("#device-unlocked").text(chrome.i18n.getMessage("PopupStatusHtml_StatusBar_DeviceUnlocked"));
+    $("#device-locked").text(chrome.i18n.getMessage("PopupStatusHtml_StatusBar_DeviceLocked"));
+    $("#device-disconnected").text(chrome.i18n.getMessage("PopupStatusHtml_StatusBar_DeviceDisconnected"));
+    $("#app-missing").text(chrome.i18n.getMessage("PopupStatusHtml_StatusBar_AppMissing"));
+    $("#unknown-error").text(chrome.i18n.getMessage("PopupStatusHtml_StatusBar_Unknown"));
 }
 
 mpJQ(function() {

@@ -34,6 +34,9 @@ if (isFirefox) options.settings.useMoolticute = true;
 options.keyRing = typeof(localStorage.keyRing) == 'undefined' ? {} : JSON.parse(localStorage.keyRing);
 
 options.initGeneralSettings = function () {
+    // Display strings in proper locale
+    options.initGeneralSettingsLocale();
+
     $(".settings input[type=checkbox]").each(function () {
         $(this).attr("checked", options.settings[$(this).attr("name")]);
     });
@@ -64,6 +67,9 @@ options.initGeneralSettings = function () {
 };
 
 options.initAbout = function () {
+    // Display strings in proper locale
+    options.initAboutLocale();
+
     $("#contributor-list").each(function () {
         $.getJSON("https://api.github.com/repos/limpkin/mooltipass/contributors", function (contributors) {
             $("#contributor-list").html("");
@@ -85,6 +91,9 @@ options.isEmpty = function (dict) {
 }
 
 options.initBlacklist = function () {
+    // Display strings in proper locale
+    options.initBlacklistLocale();
+
     $("#form-blacklist-add").submit(function(e) {
         e.preventDefault();
         console.log('submit');
@@ -173,6 +182,9 @@ options.showBlacklistedUrls = function() {
 };
 
 options.initCredentialList = function () {
+    // Display strings in proper locale
+    options.initCredentialListLocale();
+
     $("#credential-urls").each(function () {
 
         // get blacklist from storage, or create an empty one if none exists
@@ -271,3 +283,105 @@ options.disableLastCharCheckboxOnPasswordGenerator = function () {
 
     return checked.length > 0;
 }
+
+options.initGeneralSettingsLocale = function () {
+
+    if (isSafari) return;
+
+    // -- Side menu --
+    $("#options-html").text(chrome.i18n.getMessage("Options_General"));
+    $("#credential-fields-html").text(chrome.i18n.getMessage("Options_Credential_Fields"));
+    $("#blacklisted-sites-html").text(chrome.i18n.getMessage("Options_Blacklisted_Sites"));
+    $("#about-html").text(chrome.i18n.getMessage("Options_About"));
+
+    // -- Page header --
+    $("#general-h1").text(chrome.i18n.getMessage("Options_General"));
+
+    // -- Password generator block --
+    $("#password-generator-h2").text(chrome.i18n.getMessage("OptionsHtml_Password_Generator"));
+    $("#password-generator-description").text(chrome.i18n.getMessage("OptionsHtml_Password_Generator_Description"));
+    $("#password-generator-checkbox").text(chrome.i18n.getMessage("OptionsHtml_Password_Generator_Checkbox"));
+    $("#password-generator-length").text(chrome.i18n.getMessage("OptionsHtml_Password_Generator_Length"));
+    $("#password-generator-complexity").text(chrome.i18n.getMessage("OptionsHtml_Password_Generator_Complexity"));
+    $("#password-generator-lowercase").text(chrome.i18n.getMessage("OptionsHtml_Password_Generator_Lowercase"));
+    $("#password-generator-uppercase").text(chrome.i18n.getMessage("OptionsHtml_Password_Generator_Uppercase"));
+    $("#password-generator-numbers").text(chrome.i18n.getMessage("OptionsHtml_Password_Generator_Numbers"));
+    $("#password-generator-specialchars").text(chrome.i18n.getMessage("OptionsHtml_Password_Generator_Specialchars"));
+
+    // -- Advanced options block --
+    $("#advanced-options").text(chrome.i18n.getMessage("OptionsHtml_Advanced_Options"));
+    $("#advanced-options-description").text(chrome.i18n.getMessage("OptionsHtml_Advanced_Options_Description"));
+    $("#advanced-options-checkbox").html(chrome.i18n.getMessage("OptionsHtml_Advanced_Options_Checkbox"));
+};
+
+options.initAboutLocale = function () {
+
+    if (isSafari) return;
+
+    // -- Side menu --
+    $("#options-html").text(chrome.i18n.getMessage("Options_General"));
+    $("#credential-fields-html").text(chrome.i18n.getMessage("Options_Credential_Fields"));
+    $("#blacklisted-sites-html").text(chrome.i18n.getMessage("Options_Blacklisted_Sites"));
+    $("#about-html").text(chrome.i18n.getMessage("Options_About"));
+
+    // -- Page header --
+    $("#about-h1").text(chrome.i18n.getMessage("Options_About"));
+
+    // -- About block --
+    $("#about-description").html(chrome.i18n.getMessage("AboutHtml_About_Description"));
+
+    // -- Contributors block --
+    $("#contributors-h2").text(chrome.i18n.getMessage("AboutHtml_Contributors"));
+    $("#contributors-description").text(chrome.i18n.getMessage("AboutHtml_Contributors_Description"));
+
+    // Open source block --
+    $("#opensource-h2").text(chrome.i18n.getMessage("AboutHtml_Opensource"));
+    $("#opensource-description").html(chrome.i18n.getMessage("AboutHtml_Opensource_Description"));
+};
+
+options.initCredentialListLocale = function () {
+
+    if (isSafari) return;
+
+    // -- Side menu --
+    $("#options-html").text(chrome.i18n.getMessage("Options_General"));
+    $("#credential-fields-html").text(chrome.i18n.getMessage("Options_Credential_Fields"));
+    $("#blacklisted-sites-html").text(chrome.i18n.getMessage("Options_Blacklisted_Sites"));
+    $("#about-html").text(chrome.i18n.getMessage("Options_About"));
+
+    // -- Page header --
+    $("#credential-fields-h1").text(chrome.i18n.getMessage("Options_Credential_Fields"));
+
+    // -- Description block --
+    $("#credential-fields-description").html(chrome.i18n.getMessage("CredentialFieldsHtml_Description"));
+
+    // -- URL table --
+    $("#credential-fields-table-title").text(chrome.i18n.getMessage("CredentialFieldsHtml_Table_Title"));
+    $("#no-credential-urls td:first").text(chrome.i18n.getMessage("CredentialFieldsHtml_Table_No_Credential_Urls"));
+};
+
+options.initBlacklistLocale = function () {
+
+    if (isSafari) return;
+
+    // -- Side menu --
+    $("#options-html").text(chrome.i18n.getMessage("Options_General"));
+    $("#credential-fields-html").text(chrome.i18n.getMessage("Options_Credential_Fields"));
+    $("#blacklisted-sites-html").text(chrome.i18n.getMessage("Options_Blacklisted_Sites"));
+    $("#about-html").text(chrome.i18n.getMessage("Options_About"));
+
+    // -- Page header --
+    $("#blacklisted-sites-h1").text(chrome.i18n.getMessage("Options_Blacklisted_Sites"));
+
+    // -- Description block --
+    $("#blacklisted-sites-description").text(chrome.i18n.getMessage("BlacklistedSitesHtml_Description"));
+
+    // -- URL table --
+    $("#blacklisted-sites-table-title").text(chrome.i18n.getMessage("BlacklistedSitesHtml_Table_Title"));
+    $("#no-blacklisted-urls td:first").text(chrome.i18n.getMessage("BlacklistedSitesHtml_Table_No_Blacklisted_Urls"));
+
+    // -- Blacklist form --
+    $("#add-blacklisted-site-h2").text(chrome.i18n.getMessage("BlacklistedSitesHtml_BlackListed_Site_Form_Title"));
+    $("#url-blacklist-add").attr("placeholder", chrome.i18n.getMessage("BlacklistedSitesHtml_BlackListed_Site_Form_Placeholder"));
+    $("#blackListed_site_submit").text(chrome.i18n.getMessage("BlacklistedSitesHtml_BlackListed_Site_Form_Submit"));
+};
