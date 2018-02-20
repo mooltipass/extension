@@ -12,7 +12,10 @@
  
 window.data = JSON.parse(decodeURIComponent(window.location.search.slice(1)))
 
-$(function() {
+$(function () {
+    // Display strings in proper locale
+    initLocale()
+
 	startEventHandling()
 	onShow(data)
 	$('#mooltipass-username').val(data.login);
@@ -183,7 +186,22 @@ $(function() {
 			chrome.runtime.onMessage.removeListener( listenerCallback );
 			chrome.runtime.onMessage.addListener( listenerCallback );
 		}
-	}
+    }
+
+    function initLocale() {
+        if (isSafari) return;
+
+        $("#currentLogIn").text(chrome.i18n.getMessage("PasswordDialogHtml_CurrentLogIn"));
+        $("#CurrentLogInText").text(chrome.i18n.getMessage("PasswordDialogHtml_CurrentLogInText"));
+        $("#credentialStorage").text(chrome.i18n.getMessage("PasswordDialogHtml_CredentialStorage"));
+        $("#credentialStorageText").text(chrome.i18n.getMessage("PasswordDialogHtml_CredentialStorageText"));
+        $("#mooltipass-store-credentials").text(chrome.i18n.getMessage("PasswordDialogHtml_Button_StoreCredentials"));
+        $("a.mooltipass-select-custom").text(chrome.i18n.getMessage("PasswordDialogHtml_SelectCustom"));
+        $("#passwordGen").text(chrome.i18n.getMessage("PasswordDialogHtml_PasswordGen"));
+        $("a.mooltipass-new-password").text(chrome.i18n.getMessage("PasswordDialogHtml_Regenerate"));
+        $("#copy-to-fields").text(chrome.i18n.getMessage("PasswordDialogHtml_Button_CopyToFields"));
+        $("#copy-to-clipboard").text(chrome.i18n.getMessage("PasswordDialogHtml_Button_CopyToClip"));
+    };
 });
 
 

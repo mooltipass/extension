@@ -89,5 +89,16 @@
   "EventJs_Notification_SubDomainDetected_Message_2": { "message": "What domain do you want to store?" },
   "EventJs_Notification_Button_HideNotifications": { "message": "Don't show these notifications" },
   "EventJs_Notification_Button_BlackList": { "message": "Black list this website" },
-  "EventJs_Notification_Button_StoreDomain": { "message": "Store " }
+  "EventJs_Notification_Button_StoreDomain": { "message": "Store " },
+  
+  "PasswordDialogHtml_CurrentLogIn": { "message": "Current Login" },
+  "PasswordDialogHtml_CurrentLogInText": { "message": "If not correct, modify it below" },
+  "PasswordDialogHtml_CredentialStorage": { "message": "Credential Storage" },
+  "PasswordDialogHtml_CredentialStorageText": { "message": "You can store your entered credentials in the Mooltipass device to securely store and easily access them." },
+  "PasswordDialogHtml_Button_StoreCredentials": { "message": "Store or update current credentials" },
+  "PasswordDialogHtml_SelectCustom": { "message": "Select custom credential fields" },
+  "PasswordDialogHtml_PasswordGen": { "message": "Password Generator" },
+  "PasswordDialogHtml_Regenerate": { "message": "Re-generate" },
+  "PasswordDialogHtml_Button_CopyToFields": { "message": "Copy to all password fields" },
+  "PasswordDialogHtml_Button_CopyToClip": { "message": "Copy to clipboard" }
 }
