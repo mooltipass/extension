@@ -485,6 +485,7 @@ mooltipassEvent.onUpdateNotify = function(callback, tab, username, password, url
 				// Firefox doesn't support buttons on notifications
 				if (!isFirefox && !isSafari) {
 					notification.buttons = [{title: 'Store ' + domain}, {title: 'Store ' + subdomain + '.' + domain}];
+					notification.requireInteraction = true;
 				} else {
 					// Firefox: Use domain (we should check against subdomain and later domain if missing tho...)
 					notification.message = 'Please approve Domain storage';
