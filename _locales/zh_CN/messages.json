@@ -100,5 +100,12 @@
   "PasswordDialogHtml_PasswordGen": { "message": "Password Generator" },
   "PasswordDialogHtml_Regenerate": { "message": "Re-generate" },
   "PasswordDialogHtml_Button_CopyToFields": { "message": "Copy to all password fields" },
-  "PasswordDialogHtml_Button_CopyToClip": { "message": "Copy to clipboard" }
+  "PasswordDialogHtml_Button_CopyToClip": { "message": "Copy to clipboard" },
+  
+  "HttpAuthHtml_Authorizing": { "message": "Authorizing at " },
+  "HttpAuthHtml_Input_Login": { "message": "Login" },
+  "HttpAuthHtml_Input_Password": { "message": "Password" },
+  "HttpAuthHtml_Button_Submit": { "message": "Login" },
+  "HttpAuthHtml_CautionTitle": { "message": "Why am I seeing this?" },
+  "HttpAuthHtml_CautionText": { "message": "The website <span></span> requires authentication. The Mooltipass ecosystem successfully detected that authentication request and is providing you with this custom layout." }
 }
