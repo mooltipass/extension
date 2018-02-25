@@ -280,12 +280,12 @@ mooltipassEvent.isMooltipassUnlocked = function()
 		noteId = "mpNotUnlockedStaticMooltipassAppNotReady." + mooltipassEvent.notificationCount.toString();
 
 		// Create notification to inform user
-		cross_notification(noteId,
-			{   type: 'basic',
-               title: chrome.i18n.getMessage("EventJs_Notification_AppNotInstalled_Title"),
-               message: chrome.i18n.getMessage("EventJs_Notification_AppNotInstalled_Message"),
-				iconUrl: '/icons/warning_icon.png',
-               buttons: [{ title: chrome.i18n.getMessage("EventJs_Notification_Button_HideNotifications"), iconUrl: '/icons/forbidden-icon.png'}]});
+        cross_notification(noteId,
+            {   type: 'basic',
+                title: chrome.i18n.getMessage("EventJs_Notification_AppNotInstalled_Title"),
+                message: chrome.i18n.getMessage("EventJs_Notification_AppNotInstalled_Message"),
+                iconUrl: '/icons/warning_icon.png',
+                buttons: [{ title: chrome.i18n.getMessage("EventJs_Notification_Button_HideNotifications"), iconUrl: '/icons/forbidden-icon.png'}]});
 
 		return false;
 	}
@@ -298,11 +298,11 @@ mooltipassEvent.isMooltipassUnlocked = function()
 
 		// Create notification to inform user
 		cross_notification(noteId,
-			{   type: 'basic',
-               title: chrome.i18n.getMessage("EventJs_Notification_AppNotConnected_Title"),
-               message: chrome.i18n.getMessage("EventJs_Notification_AppNotConnected_Message"),
-				iconUrl: '/icons/warning_icon.png',
-               buttons: [{ title: chrome.i18n.getMessage("EventJs_Notification_Button_HideNotifications"), iconUrl: '/icons/forbidden-icon.png'}]});
+            {   type: 'basic',
+                title: chrome.i18n.getMessage("EventJs_Notification_AppNotConnected_Title"),
+                message: chrome.i18n.getMessage("EventJs_Notification_AppNotConnected_Message"),
+                iconUrl: '/icons/warning_icon.png',
+                buttons: [{ title: chrome.i18n.getMessage("EventJs_Notification_Button_HideNotifications"), iconUrl: '/icons/forbidden-icon.png'}]});
 
 		return false;
 	}
@@ -311,13 +311,12 @@ mooltipassEvent.isMooltipassUnlocked = function()
 		//console.log('notify: device locked');
 		noteId = "mpNotUnlockedStaticMooltipassDeviceLocked." + mooltipassEvent.notificationCount.toString();
 
-		cross_notification( noteId, {
-			type: 'basic',
-           title: chrome.i18n.getMessage("EventJs_Notification_DeviceLocked_Title"),
-           message: chrome.i18n.getMessage("EventJs_Notification_DeviceLocked_Message"),
-			iconUrl: '/icons/warning_icon.png',
-           buttons: [{ title: chrome.i18n.getMessage("EventJs_Notification_Button_HideNotifications"), iconUrl: '/icons/forbidden-icon.png'}]
-		});
+        cross_notification(noteId,
+            {   type: 'basic',
+                title: chrome.i18n.getMessage("EventJs_Notification_DeviceLocked_Title"),
+                message: chrome.i18n.getMessage("EventJs_Notification_DeviceLocked_Message"),
+                iconUrl: '/icons/warning_icon.png',
+                buttons: [{ title: chrome.i18n.getMessage("EventJs_Notification_Button_HideNotifications"), iconUrl: '/icons/forbidden-icon.png'}]});
 
 		return false;
 	}
@@ -329,11 +328,11 @@ mooltipassEvent.isMooltipassUnlocked = function()
 
 		// Create notification to inform user
 		cross_notification(noteId,
-				{   type: 'basic',
-                   title: chrome.i18n.getMessage("EventJs_Notification_NoCard_Title"),
-                   message: chrome.i18n.getMessage("EventJs_Notification_NoCard_Message"),
-					iconUrl: '/icons/warning_icon.png',
-                   buttons: [{ title: chrome.i18n.getMessage("EventJs_Notification_Button_HideNotifications"), iconUrl: '/icons/forbidden-icon.png'}]});
+            {   type: 'basic',
+                title: chrome.i18n.getMessage("EventJs_Notification_NoCard_Title"),
+                message: chrome.i18n.getMessage("EventJs_Notification_NoCard_Message"),
+                iconUrl: '/icons/warning_icon.png',
+                buttons: [{ title: chrome.i18n.getMessage("EventJs_Notification_Button_HideNotifications"), iconUrl: '/icons/forbidden-icon.png'}]});
 					
 		return false;
 	}
@@ -344,14 +343,14 @@ mooltipassEvent.isMooltipassUnlocked = function()
 		noteId = "mpNotUnlockedStaticMooltipassDeviceInManagementMode." + mooltipassEvent.notificationCount.toString();
 
 		var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-		var notification = {   
-			type: 'basic',
-           title: chrome.i18n.getMessage("EventJs_Notification_ManagementMode_Title"),
-           message: chrome.i18n.getMessage("EventJs_Notification_ManagementMode_Message"),
-			iconUrl: '/icons/warning_icon.png'
-		};
+        var notification = {
+            type: 'basic',
+            title: chrome.i18n.getMessage("EventJs_Notification_ManagementMode_Title"),
+            message: chrome.i18n.getMessage("EventJs_Notification_ManagementMode_Message"),
+            iconUrl: '/icons/warning_icon.png'
+        };
 
-       if (!isFirefox) notification.buttons = [{ title: chrome.i18n.getMessage("EventJs_Notification_Button_HideNotifications"), iconUrl: '/icons/forbidden-icon.png'}];
+        if (!isFirefox) notification.buttons = [{ title: chrome.i18n.getMessage("EventJs_Notification_Button_HideNotifications"), iconUrl: '/icons/forbidden-icon.png' }];
 
 		// Create notification to inform user
 		cross_notification(noteId,notification);
@@ -405,10 +404,10 @@ mooltipassEvent.onUpdateNotify = function(callback, tab, username, password, url
 			var noteId = 'mpPasswordTooLong.'+ mooltipassEvent.notificationCount.toString();
 			
 			cross_notification(noteId,
-				{   type: 'basic',
-                   title: chrome.i18n.getMessage("EventJs_Notification_PassTooLong_Title"),
-                   message: chrome.i18n.getMessage("EventJs_Notification_PassTooLong_Message"),
-					iconUrl: '/icons/warning_icon.png'});
+                {   type: 'basic',
+                    title: chrome.i18n.getMessage("EventJs_Notification_PassTooLong_Title"),
+                    message: chrome.i18n.getMessage("EventJs_Notification_PassTooLong_Message"),
+                    iconUrl: '/icons/warning_icon.png'});
 			return;
 		}
 
@@ -430,15 +429,15 @@ mooltipassEvent.onUpdateNotify = function(callback, tab, username, password, url
 				// Create notification to blacklist
 				if (mooltipass.device._status.unlocked) {
 					cross_notification(noteId,
-						{   type: 'basic',
-                           title: chrome.i18n.getMessage("EventJs_Notification_DetectedCredentials_Title"),
-                           message: chrome.i18n.getMessage("EventJs_Notification_DetectedCredentials_Message"),
-							iconUrl: '/icons/mooltipass-128.png',
-                           buttons: [{ title: chrome.i18n.getMessage("EventJs_Notification_Button_BlackList"), iconUrl: '/icons/forbidden-icon.png'}] },
-							function(id) 
-							{
-								//console.log('notification created for',id);
-							});
+                        {   type: 'basic',
+                            title: chrome.i18n.getMessage("EventJs_Notification_DetectedCredentials_Title"),
+                            message: chrome.i18n.getMessage("EventJs_Notification_DetectedCredentials_Message"),
+                            iconUrl: '/icons/mooltipass-128.png',
+                            buttons: [{ title: chrome.i18n.getMessage("EventJs_Notification_Button_BlackList"), iconUrl: '/icons/forbidden-icon.png'}] },
+                            function(id) 
+                            {
+                                //console.log('notification created for',id);
+                            });
 				}
 			}
 			else
@@ -456,11 +455,11 @@ mooltipassEvent.onUpdateNotify = function(callback, tab, username, password, url
 			}
 			else if(mooltipass.device.emulation_mode)
 			{
-				var notification = {   
-					type: 'basic',
-                   title: chrome.i18n.getMessage("EventJs_Notification_SubDomainDetected_Title"),
-                   message: chrome.i18n.getMessage("EventJs_Notification_SubDomainDetected_Message_1"),
-					iconUrl: '/icons/question.png',
+				var notification = {
+                    type: 'basic',
+                    title: chrome.i18n.getMessage("EventJs_Notification_SubDomainDetected_Title"),
+                    message: chrome.i18n.getMessage("EventJs_Notification_SubDomainDetected_Message_1"),
+                    iconUrl: '/icons/question.png',
 				};
 
 				mooltipass.device.updateCredentials(null, tab, 0, username, password, domain);
@@ -475,17 +474,17 @@ mooltipassEvent.onUpdateNotify = function(callback, tab, username, password, url
 				mooltipassEvent.mpUpdate[noteId] = { tab: tab, username: username, password: password, url: domain, url2: subdomain + "." + domain, type: "subdomainadd"};
 
 				var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-				var notification = {   
-					type: 'basic',
-                   title: chrome.i18n.getMessage("EventJs_Notification_SubDomainDetected_Title"),
-                   message: chrome.i18n.getMessage("EventJs_Notification_SubDomainDetected_Message_2"),
-					iconUrl: '/icons/question.png',
+				var notification = {
+                    type: 'basic',
+                    title: chrome.i18n.getMessage("EventJs_Notification_SubDomainDetected_Title"),
+                    message: chrome.i18n.getMessage("EventJs_Notification_SubDomainDetected_Message_2"),
+                    iconUrl: '/icons/question.png',
 				};
 
 				// Firefox doesn't support buttons on notifications
-				if (!isFirefox && !isSafari) {
-          notification.buttons = [{ title: chrome.i18n.getMessage("EventJs_Notification_Button_StoreDomain") + domain }, { title: chrome.i18n.getMessage("EventJs_Notification_Button_StoreDomain") + subdomain + '.' + domain}];
-					notification.requireInteraction = true;
+                if (!isFirefox && !isSafari) {
+                    notification.buttons = [{ title: chrome.i18n.getMessage("EventJs_Notification_Button_StoreDomain") + domain }, { title: chrome.i18n.getMessage("EventJs_Notification_Button_StoreDomain") + subdomain + '.' + domain }];
+                    notification.requireInteraction = true;
 				} else {
 					// Firefox: Use domain (we should check against subdomain and later domain if missing tho...)
 					notification.message = chrome.i18n.getMessage("EventJs_Notification_SubDomainDetected_Message_1");
