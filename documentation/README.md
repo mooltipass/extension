@@ -60,8 +60,34 @@ Their are many different scenarios the extension covers. The following chart exp
   <img src="Assets\Content_Script.png" alt="ContentScript In Action"/>
 </p>
 
+# Localization
+
+The extension is currently localized in 13 languages. These languages include:
+- English
+- German
+- Spanish
+- French
+- Italian
+- Japanese
+- Korean
+- Dutch
+- Portogese
+- Russian
+- Turkish
+- Chinese (Simplified & Extended)
+
+The localization resource files are all located within the ***_locales*** directory. The resource files are JSON formated files. The strings are all stored within a JSON structure composed of the following:
+
+    "STRING_RESOURCE_NAME": { "message": "STRING_TEXT" }
+
+- *STRING_RESOURCE_NAME*: The name you'll be refering to within the code to retrieve the localized string
+- *message*: The attribute used to save the localized string
+- *STRING_TEXT*: This is where you input your localized string.
+
+The *STRING_RESOURCE_NAME* should be common across all locale resource files per string. To retrieve the localized string within our code, you'll need to call the *[Chrome.i18n.getMessage(STRING_RESOURCE_NAME)](https://developer.chrome.com/apps/i18n) native api*. This native api is available for calling from within any JS/HTML/CSS file within your extension regardless of its type or action.
+
 # Possible Improvements
 
-- Replace hard-coded strings within the extension with **LOCALE** resources.
+- ~~Replace hard-coded strings within the extension with **LOCALE** resources.~~
 - Refactor the *mooltipass-content.js* into smaller, readable, debugable scripts as is the case with all *background-scripts*.
 - **Chrome.webRequest.onBeforeRequest** is used heavily within the extension. This is very resource intensive and can add major noticable delay to the user experience in cases where the extension is used along side another network trafficing or security extension. Discuss the possibility of limiting it to capturing *HTTP POST* requests being made from within the *main_frame* instead of *all_frames*.
