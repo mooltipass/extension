@@ -64,12 +64,6 @@
 				<string>vendor/mooltipass/mcCombinations.js</string>
 				<string>vendor/sendkeys.js</string>
 				<string>vendor/mooltipass/website.js</string>
-                <string>content_scripts/cip.js</string>
-                <string>content_scripts/cipDefine.js</string>
-                <string>content_scripts/cipEvents.js</string>
-                <string>content_scripts/cipFields.js</string>
-                <string>content_scripts/cipPassword.js</string>
-                <string>content_scripts/mpDialog.js</string>
 				<string>mooltipass-content.js</string>
 			</array>
 		</dict>
