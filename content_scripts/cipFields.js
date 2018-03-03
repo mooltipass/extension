@@ -1,7 +1,10 @@
 /*******************************************************************************************
-  Module:		cipFields
-  Copyright:	(c) 2018
-  Created:		02/25/2018 (mm/dd/yyyy)
+  Module:       cipFields
+  Description:  Handles dealing with Input fields on a page.
+                Searches, extracts and assigns unique id's to every input field.
+/*******************************************************************************************
+  Copyright:    (c) 2018
+  Created:      02/25/2018 (mm/dd/yyyy)
 ********************************************************************************************/
 var cipFields = {
 

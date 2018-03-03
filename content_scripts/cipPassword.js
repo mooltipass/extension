@@ -1,7 +1,11 @@
 /*******************************************************************************************
-  Module:		cipPassword
-  Copyright:	(c) 2018
-  Created:		02/25/2018 (mm/dd/yyyy)
+  Module:       cipPassword
+  Description:  Handles input fields of type [PASSWORD].
+                Adds both; login & password icons to input fields when detected.
+                Listens to created icon's onClick event.
+/*******************************************************************************************
+  Copyright:    (c) 2018
+  Created:      02/25/2018 (mm/dd/yyyy)
 ********************************************************************************************/
 var cipPassword = {
 

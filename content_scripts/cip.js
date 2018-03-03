@@ -1,7 +1,12 @@
 /*******************************************************************************************
-  Module:		cip
-  Copyright:	(c) 2018
-  Created:		02/25/2018 (mm/dd/yyyy)
+  Module:       cip
+  Description:  Acts as the main script within the content-scripts.
+                With every new navigation checks for input fields.
+                Tries to retrieve any stored credentials for the current URL if input fields found.
+                Handles ContextMenu actions.
+/*******************************************************************************************
+  Copyright:    (c) 2018
+  Created:      02/25/2018 (mm/dd/yyyy)
 ********************************************************************************************/
 var cip = {
     
