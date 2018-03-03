@@ -45,14 +45,6 @@ var cipDefine = {
         })
     },
 
-    isFieldSelected: function ($cipId) {
-        return (
-            $cipId == cipDefine.selection.username ||
-            $cipId == cipDefine.selection.password ||
-            $cipId in cipDefine.selection.fields
-        );
-    },
-
     retrieveMarkFields: function (pattern) {
         var fields = []
 

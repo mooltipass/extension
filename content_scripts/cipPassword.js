@@ -289,43 +289,6 @@ var cipPassword = {
             .css("left", $field.position().left + parseInt($field.css('margin-left')) + $field.outerWidth() - $icon.data("size") - $icon.data("offset"))
     },
 
-    callbackPasswordCopied: function (bool)
-    {
-        if (bool) {
-            mpJQ("#mp-genpw-btn-clipboard").addClass("mp-bt-btn-success");
-        }
-    },
-
-    callbackGeneratedPassword: function (entries)
-    {
-        if (entries && entries.length >= 1) {
-            mpJQ("#mp-genpw-btn-clipboard:first").removeClass("mp-bt-btn-success");
-            mpJQ("input#mp-genpw-textfield-password:first").val(entries[0].Password);
-            if (isNaN(entries[0].Login)) {
-                mpJQ("#mp-genpw-quality:first").text("??? Bits");
-            }
-            else {
-                mpJQ("#mp-genpw-quality:first").text(entries[0].Login + " Bits");
-            }
-        }
-        else {
-            if (mpJQ("div#mp-genpw-error:first").length == 0) {
-                mpJQ("button#mp-genpw-btn-generate:first").after("<div style='block' id='mp-genpw-error'>Cannot receive generated password.<br />Is your version of KeePassHttp up-to-date?<br /><br /><a href='https://github.com/pfn/keepasshttp/'>Please visit the KeePassHttp homepage</a></div>");
-                mpJQ("input#mp-genpw-textfield-password:first").parent().hide();
-                mpJQ("button#mp-genpw-btn-generate").hide();
-                mpJQ("button#mp-genpw-btn-clipboard").hide();
-                mpJQ("button#mp-genpw-btn-fillin").hide();
-            }
-        }
-    },
-
-    onRequestPassword: function ()
-    {
-        chrome.runtime.sendMessage({
-            'action': 'generate_password'
-        }, cipPassword.callbackGeneratedPassword);
-    },
-
     checkObservedElements: function ()
     {
         if (typeof (mpJQ) === 'undefined') return;

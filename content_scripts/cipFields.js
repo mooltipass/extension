@@ -38,26 +38,6 @@ var cipFields = {
         }
     },
 
-    setFormUniqueId: function (field)
-    {
-        if (field && !field.attr("data-mp-id")) {
-            // use ID of field if it is unique
-            // yes, it should be, but there are many bad developers outside...
-            var fieldId = field.attr("id");
-            if (fieldId) {
-                var foundIds = mpJQ("form#" + cipFields.prepareId(fieldId));
-                if (foundIds.length == 1) {
-                    field.attr("data-mp-id", fieldId);
-                    return;
-                }
-            }
-
-            // create own ID if no ID is set for this field
-            cipFields.uniqueNumber += 1;
-            field.attr("data-mp-id", "mpJQ" + String(cipFields.uniqueNumber));
-        }
-    },
-
     prepareId: function (id)
     {
         return id.replace(/[:#.,\[\]\(\)' "]/g, '');

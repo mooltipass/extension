@@ -147,9 +147,4 @@ var mpDialog = {
             mcCombs.triggerChangeEvent(field, password)
         })
     },
-
-    onHideDialog: function ()
-    {
-        mpDialog.hide();
-    }
 };
