@@ -1,7 +1,10 @@
 /*******************************************************************************************
-  Module:		cipEvents
-  Copyright:	(c) 2018
-  Created:		02/25/2018 (mm/dd/yyyy)
+  Module:       cipEvents
+  Description:  Listens to incoming Background script messages.
+                Listens to extension defined hotkey presses.
+/*******************************************************************************************
+  Copyright:    (c) 2018
+  Created:      02/25/2018 (mm/dd/yyyy)
 ********************************************************************************************/
 var cipEvents = {
 

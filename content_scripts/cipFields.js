@@ -1,7 +1,10 @@
 /*******************************************************************************************
-  Module:		cipFields
-  Copyright:	(c) 2018
-  Created:		02/25/2018 (mm/dd/yyyy)
+  Module:       cipFields
+  Description:  Handles dealing with Input fields on a page.
+                Searches, extracts and assigns unique id's to every input field.
+/*******************************************************************************************
+  Copyright:    (c) 2018
+  Created:      02/25/2018 (mm/dd/yyyy)
 ********************************************************************************************/
 var cipFields = {
 
@@ -32,26 +35,6 @@ var cipFields = {
             if (containerForm.length && !containerForm.data('mp-id')) {
                 cipFields.setUniqueId(containerForm);
             }
-        }
-    },
-
-    setFormUniqueId: function (field)
-    {
-        if (field && !field.attr("data-mp-id")) {
-            // use ID of field if it is unique
-            // yes, it should be, but there are many bad developers outside...
-            var fieldId = field.attr("id");
-            if (fieldId) {
-                var foundIds = mpJQ("form#" + cipFields.prepareId(fieldId));
-                if (foundIds.length == 1) {
-                    field.attr("data-mp-id", fieldId);
-                    return;
-                }
-            }
-
-            // create own ID if no ID is set for this field
-            cipFields.uniqueNumber += 1;
-            field.attr("data-mp-id", "mpJQ" + String(cipFields.uniqueNumber));
         }
     },
 

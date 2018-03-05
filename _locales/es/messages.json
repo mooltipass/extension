@@ -107,5 +107,14 @@
   "HttpAuthHtml_Input_Password": { "message": "Password" },
   "HttpAuthHtml_Button_Submit": { "message": "Login" },
   "HttpAuthHtml_CautionTitle": { "message": "Why am I seeing this?" },
-  "HttpAuthHtml_CautionText": { "message": "The website <span></span> requires authentication. The Mooltipass ecosystem successfully detected that authentication request and is providing you with this custom layout." }
+  "HttpAuthHtml_CautionText": { "message": "The website <span></span> requires authentication. The Mooltipass ecosystem successfully detected that authentication request and is providing you with this custom layout." },
+  
+  "CustomCredentialsSelectionHtml_Button_Skip": { "message": "Skip" },
+  "CustomCredentialsSelectionHtml_Button_Cancel": { "message": "Cancel" },
+  "CustomCredentialsSelectionHtml_Button_Confirm": { "message": "Confirm" },
+  "CustomCredentialsSelectionHtml_Label_Username": { "message": "Username" },
+  "CustomCredentialsSelectionHtml_Label_Password": { "message": "Password" },
+  "CustomCredentialsSelectionHtml_Step_1": { "message": "1. Choose a username field" },
+  "CustomCredentialsSelectionHtml_Step_2": { "message": "2. Now choose a password field" },
+  "CustomCredentialsSelectionHtml_Step_3": { "message": "3. Confirm selection" }
 }

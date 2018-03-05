@@ -1,7 +1,11 @@
 /*******************************************************************************************
-  Module:		cipDefine
-  Copyright:	(c) 2018
-  Created:		02/25/2018 (mm/dd/yyyy)
+  Module:       cipDefine
+  Description:  Handles allowing the user to select custom credential fields.
+                Displays the dialog allowing the user to select custom fields.
+                Sends the selected credential fields back to the background script.
+/*******************************************************************************************
+  Copyright:    (c) 2018
+  Created:      02/25/2018 (mm/dd/yyyy)
 ********************************************************************************************/
 var cipDefine = {
 
@@ -39,14 +43,6 @@ var cipDefine = {
                 $('body').removeClass('mp-overlay-opened')
             }
         })
-    },
-
-    isFieldSelected: function ($cipId) {
-        return (
-            $cipId == cipDefine.selection.username ||
-            $cipId == cipDefine.selection.password ||
-            $cipId in cipDefine.selection.fields
-        );
     },
 
     retrieveMarkFields: function (pattern) {

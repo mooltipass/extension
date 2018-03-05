@@ -1,7 +1,12 @@
 /*******************************************************************************************
-  Module:		cip
-  Copyright:	(c) 2018
-  Created:		02/25/2018 (mm/dd/yyyy)
+  Module:       cip
+  Description:  Acts as the main script within the content-scripts.
+                With every new navigation checks for input fields.
+                Tries to retrieve any stored credentials for the current URL if input fields found.
+                Handles ContextMenu actions.
+/*******************************************************************************************
+  Copyright:    (c) 2018
+  Created:      02/25/2018 (mm/dd/yyyy)
 ********************************************************************************************/
 var cip = {
     
@@ -119,47 +124,6 @@ var cip = {
                 // even when inputs hash is changed.
                 setTimeout(function () { mcCombs.detectCombination() }, 500);
             }
-        }
-    },
-
-    doSubmit: function (pass)
-    {
-        cip.trapSubmit = false; // don't trap this submit, let it through
-
-        cipDebug.log('doSubmit: pass field');
-
-        // locate best submit option
-        var forms = mpJQ(pass).closest('form');
-        cipDebug.log("forms length: " + forms.length);
-        if (forms.length > 0) {
-            cipDebug.log(mpJQ(forms[0]));
-            var submits = forms.find(':submit');
-            cipDebug.log("submits length: " + submits.length);
-            if (submits.length > 0) {
-                cipDebug.log('submitting form ' + forms[0].id + ' via ', submits[0]);
-                cipDebug.log(mpJQ(submits[0]));
-                mpJQ(submits[0]).click();
-            } else {
-                if (!mpJQ(forms[0]).action) {
-                    // This is wrong, if there's no action, submits to the same page. it is known... 
-                    cipDebug.log("Submitting an empty action form");
-                    mpJQ(forms[0]).submit();
-                }
-                else {
-                    cipDebug.log('submitting form ' + forms[0].id);
-                    mpJQ(forms[0]).submit();
-                }
-            }
-        } else {
-            // uh? No forms... what are we trying to submit?
-            cipDebug.log('submitting default form ' + mpJQ('form').id);
-            cipDebug.log(mpJQ('form'));
-            mpJQ('form').submit();
-
-            setTimeout(function () {
-                // Last resource: try common btn ID and classes
-                mpJQ('#sign-in, .btn-submit').click();
-            }, 1500);
         }
     },
 

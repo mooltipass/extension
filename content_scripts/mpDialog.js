@@ -1,7 +1,12 @@
 /*******************************************************************************************
-  Module:		mpDialog
-  Copyright:	(c) 2018
-  Created:		02/25/2018 (mm/dd/yyyy)
+  Module:       mpDialog
+  Description:  Handles creating, displaying and hiding the UI/dialogs.
+                Listens to GeneratePassword & CopyPasswordToFields.
+                Listens to StoreCredentials & sends them back to background script.
+                Listens to CustomCredentialsSelection and instanciates dialog for that [cipDefine.show()].
+/*******************************************************************************************                
+  Copyright:    (c) 2018
+  Created:      02/25/2018 (mm/dd/yyyy)
 ********************************************************************************************/
 var mpDialog = {
 
@@ -142,9 +147,4 @@ var mpDialog = {
             mcCombs.triggerChangeEvent(field, password)
         })
     },
-
-    onHideDialog: function ()
-    {
-        mpDialog.hide();
-    }
 };

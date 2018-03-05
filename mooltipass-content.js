@@ -1,3 +1,11 @@
+/*******************************************************************************************
+  Module:       mooltipass-content
+  Description:  Defines an entry point into the extension's content-scripts
+/*******************************************************************************************
+  Copyright:    (c) 2018
+  Created:      02/25/2018 (mm/dd/yyyy)
+********************************************************************************************/
+
 // Adding this here just in case.
 window.mpJQ = $;
 
