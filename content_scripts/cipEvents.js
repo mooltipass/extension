@@ -10,6 +10,11 @@ var cipEvents = {
 
     temporaryActions: {},
 
+    /**
+    * Creates an event handler for all incoming messages from the background-script [listenerCallback()].
+    * Creates an event handler for key presses to detect HOTKEYS defined within the extension.
+    * Creates an event handler that's triggered on switching between tabs to detect the current active in-focus tab.
+    */
     startEventHandling: function ()
     {
         /*
@@ -206,11 +211,20 @@ var cipEvents = {
         });
     },
 
+    /**
+    * Triggers when the content-script recieves a "clear_credentials" message from the background-script.
+    * Clears the credentials for the current website from the local cache.
+    */
     clearCredentials: function ()
     {
         cip.credentials = [];
     },
 
+    /**
+    * Triggers when the content-script recieves a "activated_tab" message from the background-script.
+    * The background-script detects when the currentTab (in-focus) is switched.
+    * It then sends a message to the content-script of the new in-focus currentTab ["activated_tab" message].
+    */
     triggerActivatedTab: function ()
     {
         mcCombs.init();

@@ -12,6 +12,14 @@ var cipFields = {
     uniqueNumber: 342845638,    // unique number as new IDs for input fields
     combinations: [],           // objects with combination of username + password fields
 
+    /**
+    * Assigns a unique id to the "data-mp-id" attribute of the <INPUT>/<FORM> element given.
+    * Checks if the current <INPUT> element has an id and use it.
+    * Otherwise generate a new unique id for this <INPUT> element.
+    *
+    * @param {HTMLElement} field
+    *   <INPUT> or <FORM> element found on the page.
+    */
     setUniqueId: function (field)
     {
         if (field && !field.attr("data-mp-id")) {
@@ -38,11 +46,28 @@ var cipFields = {
         }
     },
 
+    /**
+    * Removes any special/unallowed/escape characters from the ID before
+    * assigning it to the "data-mp-id" attribute of an HTMLELEMENT.
+    *
+    * @param {String} id
+    *   String resembling id of an HTMLELEMENT.
+    * @returns {String} id
+    *   String resembling id of an HTMLELEMENT.
+    */
     prepareId: function (id)
     {
         return id.replace(/[:#.,\[\]\(\)' "]/g, '');
     },
 
+    /**
+    * Extracts all <INPUT> elements found on the current page.
+    * Uses the cipFields.inputQueryPattern string to determine the type of elements to extract.
+    * Returns "undefined" if "mooltipass-hash-ignore" class is assigned to current page.
+    *
+    * @returns {Array} fields
+    *   Array containing all <INPUT> elements found.
+    */
     getAllFields: function ()
     {
         //cipDebug.log('field call!');
@@ -61,12 +86,28 @@ var cipFields = {
 
         return fields;
     },
-    
+
+    /**
+    * Checks if a specified HTMLElement with the given ID is found on the page or not.
+    *
+    * @param {String} fieldId
+    *   String ID of HTMLElement to be found.
+    * @returns {boolean}
+    *   [TRUE] HTMLElement is found, [False] HTMLElement not found.
+    */
     isSpecifiedFieldAvailable: function (fieldId)
     {
         return Boolean(_f(fieldId));
     },
 
+    /**
+    * Generates a hash for the current found <INPUT> fields on the page.
+    *
+    * @param {Array} fields
+    *   Array of <INPUT> elements found on page.
+    * @returns {String} hash
+    *   String Hash of all found fields on current page.
+    */
     getHashForVisibleFields: function (fields)
     {
         var hash = '';
@@ -89,6 +130,14 @@ var cipFields = {
         });
     },
 
+    /**
+    * Checks if a given <INPUT> element is visible and active on a page.
+    *
+    * @param {HTMLElement} $field
+    *   <INPUT> element to check for.
+    * @returns {boolean}
+    *   [TRUE] If field is visible and active, [FAlSE] If field is hidden or disabled.
+    */
     isAvailableField: function ($field)
     {
         return (
@@ -100,6 +149,17 @@ var cipFields = {
         );
     },
 
+    /**
+    * Extracts the combination pair of a Login + Password field found on a page.
+    * Returns an array of objects.
+    * Each object contains a pair of LogIn & password field's "data-mp-id" attribute.
+    *
+    * @param {Array} inputs
+    *   Array of <INPUT> elements found on page.
+    * @returns {Array} fields
+    *   Array of objects encompassing a pair of LogIn & password fields that belong together.
+    *   {username: "mpJQ342845639", password: "mpJQ342845641"}
+    */
     getAllCombinations: function (inputs)
     {
         cipDebug.log('cipFields.getAllCombinations');
@@ -136,6 +196,19 @@ var cipFields = {
         return fields;
     },
 
+    /**
+    * Extracts the given combination pair of a Login + Password field found on a page.
+    * Searches within the cipFields.combinations for the given combination if found.
+    * If not found, creates a new combination object and appends it to the cipFields.combinations.
+    *
+    * @param {String} givenType
+    *   The type of the field, could be "password" or "username".
+    * @param {String} fieldId
+    *   String ID assigned to the fields's "data-mp-id" attribute.
+    * @returns {object} combination
+    *   object encompassing a pair of LogIn & password fields that belong together.
+    *   {username: "mpJQ342845639", password: "mpJQ342845641"}
+    */
     getCombination: function (givenType, fieldId)
     {
         cipDebug.log("cipFields.getCombination");
@@ -320,6 +393,14 @@ var cipFields = {
         return passwordField;
     },
 
+    /**
+    * Prepares the fields found within the cipFields.combinations.
+    * Disables the autocomplete feature from the input fields.
+    *
+    * @param {Array} combinations
+    *   Array of objects encompassing a pair of LogIn & password fields that belong together.
+    *   {username: "mpJQ342845639", password: "mpJQ342845641"}    
+    */
     prepareCombinations: function (combinations)
     {
         cipDebug.log("prepareCombinations, length: " + combinations.length);
@@ -344,6 +425,13 @@ var cipFields = {
         }
     },
 
+    /**
+    * Checks for previously detected and stored combinations for the current open page.
+    * If found, retrieves them and checks if the detected fields exist on the page or not.
+    *
+    * @returns {boolean}
+    * [TRUE] If previously detected <INPUT> fields found on page, [FALSE] Otherwise.
+    */
     useDefinedCredentialFields: function ()
     {
         if (cip.settings["defined-credential-fields"] && cip.settings["defined-credential-fields"][document.location.origin]) {
