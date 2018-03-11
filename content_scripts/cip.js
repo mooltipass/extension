@@ -94,6 +94,13 @@ var cip = {
         }, cip.retrieveCredentialsCallback);
     },
 
+    /**
+    * Initializes the password generator [cipPassword].
+    * Goes through all the <INPUT> fields of type "password" & initializes them.
+    *
+    * @param {Array} inputs
+    *   Array of all <INPUT> fields found on the page.
+    */
     initPasswordGenerator: function (inputs)
     {
         if (content_debug_msg > 4) cipDebug.log('%c cip: %c initPasswordGenerator', 'background-color: #b78e1b', 'color: #333333');
@@ -110,6 +117,12 @@ var cip = {
         }
     },
 
+    /**
+    * Checks if their are any new <INPUT> fields available on the page.
+    * Calculates a hash of all visible <INPUT> fields on the page & compares it with the previusly calculted hash.
+    * If both hash values are the same, then no new fields found.
+    * Otherwise, updates the new hash value.
+    */
     checkForNewInputs: function ()
     {
         var fields = cipFields.getAllFields();
@@ -127,6 +140,14 @@ var cip = {
         }
     },
 
+    /**
+    * Triggers when the background-script responds to the "retrieve_credentials" message.
+    *
+    * @param {Object} credentials
+    *   Object carrying the Username and password info required for logging in.
+    * @param {Number} dontAutoFillIn
+    *   Resembling a boolean value. [TRUE] for auto-fill-in, [FALSE] otherwise.
+    */
     retrieveCredentialsCallback: function (credentials, dontAutoFillIn)
     {
         cipDebug.trace('cip.retrieveCredentialsCallback()', credentials);
@@ -194,6 +215,14 @@ var cip = {
         cip.fillPasswordOnly = false;
     },
 
+    /**
+    * Extracts the action URL from the current form.
+    *
+    * @param {Object} combination
+    *   The combination object associated to the current form.
+    * @returns {String} action
+    *   String resembling the action URL of the form.
+    */
     getFormActionUrl: function (combination)
     {
         var field = _f(combination.password) || _f(combination.username);
@@ -255,11 +284,17 @@ var cip = {
         }
     },
 
+    /**
+    * Triggers when the user selects the "Fill user+pass" context-menu.
+    */
     retrieveAndFillUserAndPassword: function ()
     {
         cip.initCredentialFields(true);
     },
 
+    /**
+    * Triggers when the user selects the "Fill pass only" context-menu.
+    */
     retrieveAndFillPassword: function ()
     {
         cip.fillPasswordOnly = true;
@@ -508,6 +543,11 @@ var cip = {
         }
     },
 
+    /**
+    * Triggers when the user selects the "Save credentials" context-menu.
+    * Checks if user entered credentials into the credentials fields.
+    * Intializes their storage by calling cip.rememberCredentials().
+    */
     contextMenuRememberCredentials: function ()
     {
         var el = document.activeElement;
@@ -543,6 +583,22 @@ var cip = {
         }
     },
 
+    /**
+    * Stores the newly input credentials by the user.
+    * Updates the cip.credentials list with the new credentials.
+    * Sends a "update_notify" message to the background script.
+    *
+    * @param {object} event
+    *   Object resembling the event that triggered.
+    * @param {HTMLElement} usernameField
+    *   <INPUT> username field.
+    * @param {String} usernameValue
+    *   String username.
+    * @param {HTMLElement} passwordField
+    *   <INPUT> password field.
+    * @param {String} passwordValue
+    *   String password.
+    */
     rememberCredentials: function (event, usernameField, usernameValue, passwordField, passwordValue)
     {
         cipDebug.log('rememberCredentials()', arguments);
