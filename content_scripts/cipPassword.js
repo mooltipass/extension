@@ -12,6 +12,11 @@ var cipPassword = {
     observedIcons: [],
     observingLock: false,
 
+    /**
+    * Initializes the cipPassword. Checks if its been intialized before or not, and proceeds on with the initialization.
+    * Sets an ongoing action every 400Ms which calls checkObservedElements().
+    * Sets an event handler which triggers on resizing the browser/tab and calls checkObservedElements().
+    */
     init: function ()
     {
         if (content_debug_msg > 4) cipDebug.log('%c cipPassword: %c init', 'background-color: #ff8e1b', 'color: #333333');
@@ -28,6 +33,18 @@ var cipPassword = {
         })
     },
 
+    /**
+    * Marks the field as being initialized so as not to initialize it twice using the "mp-password-generator" attribute.
+    * Creates an icon and appends it to the <INPUT> element.
+    * Updates the attributes of the mpDialog.
+    *
+    * @param {HTMLElement} field
+    *   <INPUT> element. Could be of type "username" or "password".
+    * @param {Array} inputs
+    *   Array containing all <INPUT> elements found on the page.
+    * @param {number} pos
+    *   The index of the [field] within the [inputs] arrays.
+    */
     initField: function (field, inputs, pos)
     {
         if (content_debug_msg > 4) cipDebug.log('%c cipPassword: %c initField', 'background-color: #ff8e1b', 'color: #333333', field);
@@ -55,11 +72,26 @@ var cipPassword = {
         field.data("mp-genpw-next-field-exists", $found);
     },
 
+    /**
+    * Sends a "generate_password" message to the background script.
+    * Triggers as a result of the user clicking on the "Re-generate" password button within the UI/password-dialog.html
+    * Passes the "usePasswordGeneratorLength" stored within the cip.settings to the background script.
+    */
     generatePassword: function ()
     {
         messaging({ action: 'generate_password', args: [cip.settings['usePasswordGeneratorLength']] });
     },
 
+    /**
+    * Generates a new password hash from the password settings stored within the extension.
+    *
+    * @param {object} passwordSettings
+    *   Object containing an array of seeds and a structure containing the extension settings.
+    *   {seeds: [], settings: {}}
+    *   Provided via the background script.
+    * @returns {String} hash
+    *   String hash resembling the new generated password.
+    */
     generatePasswordFromSettings: function (passwordSettings)
     {
         var charactersLowercase = 'abcdefghijklmnopqrstuvwxyz';
@@ -81,6 +113,9 @@ var cipPassword = {
         return hash;
     },
 
+    /**
+    * Removes the icons appended to the UserName and password <INPUT> fields.
+    */
     removeLoginIcons: function ()
     {
         var PREFIX = 'mp-ui-login-icon',
@@ -89,6 +124,13 @@ var cipPassword = {
         mpJQ(SELECTOR).remove()
     },
 
+    /**
+    * Creates a logIn icon and appends it to the "username" <INPUT> field.
+    * Checks if the username <INPUT> field contains an icon, if not, creates a new one.
+    *
+    * @param {HTMLElement} field
+    *   The username <INPUT> field.
+    */
     createLoginIcon: function (field)
     {
         var PREFIX = 'mp-ui-login-icon',
@@ -171,6 +213,13 @@ var cipPassword = {
         $icon.insertAfter(field);
     },
 
+    /**
+    * Creates a password icon and appends it to the "password" <INPUT> field.
+    * Checks if the password <INPUT> field contains an icon, if not, creates a new one.
+    *
+    * @param {HTMLElement} field
+    *   The password <INPUT> field.
+    */
     createIcon: function (field)
     {
         var PREFIX = 'mp-ui-password-dialog-toggle',
@@ -253,6 +302,13 @@ var cipPassword = {
         $icon.insertAfter(field);
     },
 
+    /**
+    * Triggers when the user clicks on icons appended to the "password" field.
+    * Toggels the displays the UI/password-dialog.html <IFRAME>.
+    *
+    * @param {String} iconId
+    *   String resembling the ID of the clicked icon.
+    */
     onIconClick: function (iconId)
     {
         target = $('#' + iconId)
@@ -282,6 +338,14 @@ var cipPassword = {
         mpDialog.toggle(target, comb && comb.isPasswordOnly);
     },
 
+    /**
+    * Updates the styling of the icon to ensure its properly placed within the input field.
+    *
+    * @param {HTMLElement} $icon
+    *   <IFRAME> element with src set to UI/password-dialog-toggle.html carring the icon.
+    * @param {HTMLElement} $field
+    *   The <INPUT> element resembling the password input field
+    */
     setIconPosition: function ($icon, $field)
     {
         $icon
@@ -289,6 +353,11 @@ var cipPassword = {
             .css("left", $field.position().left + parseInt($field.css('margin-left')) + $field.outerWidth() - $icon.data("size") - $icon.data("offset"))
     },
 
+    /**
+    * Goes through the list of detect password <INPUT> fields within the page.
+    * Ensures that the password icon is appended to the field only if the field is visible to the user.
+    * Otherwise, removes the icon from the <INPUT> field.
+    */
     checkObservedElements: function ()
     {
         if (typeof (mpJQ) === 'undefined') return;

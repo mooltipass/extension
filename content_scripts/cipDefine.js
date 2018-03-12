@@ -15,6 +15,11 @@ var cipDefine = {
         fields: {}
     },
 
+    /**
+    * Displays the select custom credentials dialog.
+    * Constructs an <IFRAME> element and loads the dialog within it.
+    * Sets the src of the <IFRAME> to UI/custom-credentials-selection.html.
+    */
     show: function () {
         $('body').addClass('mp-overlay-opened')
         $('.mp-ui-password-dialog').hide()
@@ -33,6 +38,12 @@ var cipDefine = {
         mpJQ("body").append(iframe)
     },
 
+    /**
+    * Removes the custom credentials dialog.
+    * Hides the constructed <IFRAME> element containing the dialog.
+    * Removes the CSS styling from the <BODY> element.
+    * Displays the previously visible UI/password-dialog.html.
+    */
     hide: function () {
         $('.mp-ui-custom-credentials-selection').fadeOut(100, function () {
             $(this).remove()
@@ -45,6 +56,15 @@ var cipDefine = {
         })
     },
 
+    /**
+    * Extracts all labeled login fields within current opened page.
+    * Looks for the elements & their types based on the input pattern.
+    * Extracts the fields only if visible to the user, otherwise ignores them.
+    * Sends the fields to the UI/custom-credentials-selection.html <IFRAME> for initialization.
+    *
+    * @param {string} pattern
+    *   String pattern containing the elements & their types to be extracted from a page.
+    */
     retrieveMarkFields: function (pattern) {
         var fields = []
 
