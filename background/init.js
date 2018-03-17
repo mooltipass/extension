@@ -139,6 +139,14 @@ startMooltipass = function () {
         else var webRequestOptions = ['blocking', 'requestBody'];
 
         chrome.webRequest.onBeforeRequest.addListener(function (details) {
+            // Ignore requests if not originating from current active tab
+            if (details.tabId != page.currentTabId) return;
+
+            // Uncomment to improve performance (Intercepts less requests)
+            // Ignore requests originating from internal browser pages (debugger, settings page, new-tab page, etc...)
+            //Chrome 63+ --> //if (details.initiator && !page.isValidProtocol(details.initiator)) return;
+            //Firefox 48+--> //if (details.originUrl && !page.isValidProtocol(details.originUrl)) return;
+
             if (details.method == 'POST' && background_debug_msg > 4) mpDebug.log('%c init: onBeforeRequest - Post Interception', 'background-color: #4CAF50; color: #FFF', details);
 
             // Intercept posts
