@@ -59,6 +59,18 @@ startMooltipass = function () {
             }
             mooltipass.device.onTabClosed(tabId);
         }, true);
+
+        // Triggers when navigating away from current page within tab
+        safari.application.addEventListener("beforeNavigate", function (evt) {
+            if (evt.target instanceof SafariBrowserTab)
+            {
+                // Get tabId of tab that triggered event
+                var tabId = getSafariTabId(evt.target);
+
+                // Send a cancelling request if it is the tab from which we're waiting an answer
+                mooltipass.device.onTabUpdated(tabId, { status: "loading", url: evt.target.url});
+            }
+        }, true);
     } else {
         chrome.runtime.onMessage.addListener(mooltipassEvent.onMessage);
 
