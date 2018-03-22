@@ -159,11 +159,11 @@ mooltipassEvent.onGetStatus = function (callback, tab) {
         status: mooltipass.device.getStatus(),
         error: undefined,
         blacklisted: false,
-        hideCustomCredentials: twoPageAuthServices.some(function (domain) { return (new URL(tab.url).hostname).match(domain) })
-
+        hideCustomCredentials: false
     };
 
     if (tab && tab.url) {
+        toReturn.hideCustomCredentials = twoPageAuthServices.some(function (domain) { return (new URL(tab.url).hostname).match(domain) });
         var tabStatus = mooltipass.backend.extractDomainAndSubdomain(tab.url);
         toReturn.blacklisted = tabStatus.blacklisted;
     }
