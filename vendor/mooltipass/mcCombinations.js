@@ -1356,44 +1356,44 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
         /weiter/i,
     ],
 
-        IGNORE_PATTERNS = [
-            /forgot/i,
-            /lost/i,
-            /lostlogin/i,
-            /closeModal/i,
-            /vergessen/i,
-            /troubleloggingin/i,
-            /showpassword/i,
-            /showhidepasswd/i,
-            /passwordreset/i,
-            /resetform/i,
-            /remember_login/i,
-            /sign up/i,
-            /facebook/i,
-            /google/i,
-            /id=".*?search.*?"/i,
-            /id="btnLoadMoreProducts"/i,
-            /class=".*?search.*?"/i,
-            /class="login_row"/i,
-            /href=".*?loginpage.*?"/i,
-            /href="http.*?"/i,
-            /\(Logged out\) Header/i,
-        ],
+    IGNORE_PATTERNS = [
+        /forgot/i,
+        /lost/i,
+        /lostlogin/i,
+        /closeModal/i,
+        /vergessen/i,
+        /troubleloggingin/i,
+        /showpassword/i,
+        /showhidepasswd/i,
+        /passwordreset/i,
+        /resetform/i,
+        /remember_login/i,
+        /sign up/i,
+        /facebook/i,
+        /google/i,
+        /id=".*?search.*?"/i,
+        /id="btnLoadMoreProducts"/i,
+        /class=".*?search.*?"/i,
+        /class="login_row"/i,
+        /href=".*?loginpage.*?"/i,
+        /href="http.*?"/i,
+        /\(Logged out\) Header/i,
+    ],
 
-        // Selectors are ordered by priority, first ones are more important.
-        BUTTON_SELECTORS = [
-            'td.custom-button-center:visible',
-            '[type="button"]:visible, [type="submit"]:visible, a[href^="javascript:"]:visible',
-            'button:visible',
-            'button:visible span',
-            '[role="button"]:visible',
-            '[role="button"]:visible span',
-            'input.button:visible',
-            'a:visible',
-            'input[onclick]:visible',
-            'div[onclick]:visible',
-            'div.button:visible'
-        ]
+    // Selectors are ordered by priority, first ones are more important.
+    BUTTON_SELECTORS = [
+        'td.custom-button-center:visible',
+        '[type="button"]:visible, [type="submit"]:visible, a[href^="javascript:"]:visible',
+        'button:visible',
+        'button:visible span',
+        '[role="button"]:visible',
+        '[role="button"]:visible span',
+        'input.button:visible',
+        'a:visible',
+        'input[onclick]:visible',
+        'div[onclick]:visible',
+        'div.button:visible'
+    ];
 
     var submitButton
 
@@ -1422,7 +1422,11 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
         })
 
         // Button shouldn't be far more than 150px from input.
-        if (buttons.length > 0 && buttons[0].distance < 150) return buttons[0]
+        if (buttons.length > 0)
+        {
+            if (buttons[0].distance < 150) return buttons[0];
+            if (buttons[0].distance < 190 && window.location.hostname.match(/accounts.google.com/)) return buttons[0];
+        }
     }
 
     // If we haven't detected submit button yet, try to find it in parent container.
