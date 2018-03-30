@@ -3,10 +3,12 @@ readonly CWD="$(cd "$(dirname "$0")" && pwd)"
 readonly OUTPUT_DIR="${CWD}/CleanVersion"
 readonly FIREFOX_TARGET='firefox'
 readonly CHROMIUM_TARGET='chromium'
+readonly OPERA_TARGET='opera'
 
 EXTENSION_NAME='mooltipass-extension'
 
 BUILD_FIREFOX=0
+BUILD_OPERA=0
 BUILD_CHROMIUM=0
 
 ENABLE_EMULTATION_MODE=0
@@ -50,6 +52,11 @@ function main()
                          :
                          BUILD_FIREFOX=1
                          cur_target="$FIREFOX_TARGET"
+                         ;;
+                     "$OPERA_TARGET")
+                         :
+                         BUILD_OPERA=1
+                         cur_target="$OPERA_TARGET"
                          ;;
                      'chrome'|"$CHROMIUM_TARGET")
                          BUILD_CHROMIUM=1
@@ -111,7 +118,52 @@ function _build()
     )
 
     [ "$BUILD_FIREFOX" == 1 ] &&_build_firefox_xpi "${zip_file}" "${BUILD_METADATA[${FIREFOX_TARGET}]}"
+    [ "$BUILD_OPERA" == 1 ] &&_build_opera_nex "${zip_file}" "${BUILD_METADATA[${OPERA_TARGET}]}"|| true
     [ "$BUILD_CHROMIUM" == 1 ] &&_build_chromium_crx "${zip_file}" "${BUILD_METADATA[${CHROMIUM_TARGET}]}"|| true
+}
+
+# build the Opera NEX file from the generated ZIP file.
+#
+# $1: base ZIP file
+# $2: path to private key for signin Opera extensions
+function _build_opera_nex()
+{
+    local base_zip
+    local zip_file
+    local opera_sign_key
+    local nex_file
+    # temporary generated file
+    local sig
+    local pub
+    local pub_len_hex
+    local sig_len_hex
+
+    readonly CRMAGIC_HEX="4372 3234" # Cr24
+    readonly VERSION_HEX="0200 0000" # 2
+
+    zip_file="$1"
+    opera_sign_key="$2"
+    base_zip="$(basename "${zip_file}")"
+    nex_file="${base_zip//.zip/.nex}"
+    sig="${base_zip//.zip/.sig}"
+    pub="${base_zip//.zip/.pub}"
+
+    _file_present "${zip_file}"
+    _file_present "${opera_sign_key}"
+
+    # signature
+    openssl sha1 -sha1 -binary -sign "${opera_sign_key}" < "${zip_file}" > "${sig}"
+
+    # public key
+    openssl rsa -pubout -outform DER < "${opera_sign_key}" > "${pub}" 2>/dev/null
+
+    pub_len_hex=$(_byte_swap "$(printf '%08x\n' "$(find . -type f -name "${pub}" -printf '%s\n')")")
+    sig_len_hex=$(_byte_swap "$(printf '%08x\n' "$(find . -type f -name "${sig}" -printf '%s\n')")")
+
+    (
+        echo "${CRMAGIC_HEX} ${VERSION_HEX} ${pub_len_hex} ${sig_len_hex}" | xxd -r -p
+        cat "${pub}" "${sig}" "${zip_file}"
+    ) > "${nex_file}"
 }
 
 # build the Chromium CRX file from the generated ZIP file.
@@ -244,7 +296,7 @@ function _inject_scripts()
     cp "${CWD}/mooltipass-content.css" "${OUTPUT_DIR}/mooltipass-content.css"
     cp "${CWD}/manifest.json" "${OUTPUT_DIR}/"
 
-    for ext_dir in vendor popups css options background images icons ui content_scripts; do
+    for ext_dir in vendor popups css options background images icons ui content_scripts _locales; do
         cp -Rf "${CWD}/${ext_dir}" "${OUTPUT_DIR}/"
     done
 
