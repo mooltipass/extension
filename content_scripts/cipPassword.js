@@ -348,9 +348,18 @@ var cipPassword = {
     */
     setIconPosition: function ($icon, $field)
     {
-        $icon
-            .css("top", $field.position().top + parseInt($field.css('margin-top')) + $icon.data("offset"))
-            .css("left", $field.position().left + parseInt($field.css('margin-left')) + $field.outerWidth() - $icon.data("size") - $icon.data("offset"))
+        if (window.location.hostname.match(/indiehackers.com/)) {
+            $icon
+                .offset({
+                    top: $field.offset().top + parseInt($field.css('margin-top')),
+                    left: $field.offset().left + parseInt($field.width()) - 10
+                })
+        }
+        else {
+            $icon
+                .css("top", $field.position().top + parseInt($field.css('margin-top')) + $icon.data("offset"))
+                .css("left", $field.position().left + parseInt($field.css('margin-left')) + $field.outerWidth() - $icon.data("size") - $icon.data("offset"))
+        }
     },
 
     /**
