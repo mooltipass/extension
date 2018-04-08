@@ -351,6 +351,21 @@ var cipPassword = {
         $icon
             .css("top", $field.position().top + parseInt($field.css('margin-top')) + $icon.data("offset"))
             .css("left", $field.position().left + parseInt($field.css('margin-left')) + $field.outerWidth() - $icon.data("size") - $icon.data("offset"))
+
+        // Get bounding rectangles
+        var iconBoundingRect = $icon[0].getBoundingClientRect();
+        var fieldBoundingRect = $field[0].getBoundingClientRect();
+
+        // Ensure $icon is placed within $field
+        if ((iconBoundingRect.bottom <= fieldBoundingRect.bottom) &&
+            (iconBoundingRect.right <= fieldBoundingRect.right)) return;
+
+        // Otherwise, apply generic styling rule
+        $icon
+            .offset({
+                top: $field.offset().top + parseInt($field.css('margin-top')),
+                left: $field.offset().left + parseInt($field.width()) - parseInt($field.css('padding-right'))
+            })
     },
 
     /**
