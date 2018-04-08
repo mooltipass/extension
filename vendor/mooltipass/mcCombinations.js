@@ -1020,6 +1020,7 @@ mcCombinations.prototype.getAllForms = function () {
 
         // Ignore our fields and search fields.
         if (field.attr('id') == 'mooltipass-password-generator' ||
+            field.attr('id') == 'inputWRSL301_rechercheTexte' ||
             field.clone().children().remove().end()[0].outerHTML.match(/search/i)) {
             return;
         }
