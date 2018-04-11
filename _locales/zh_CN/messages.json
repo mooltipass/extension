@@ -102,7 +102,7 @@
   "PasswordDialogHtml_Button_CopyToFields": { "message": "Copy to all password fields" },
   "PasswordDialogHtml_Button_CopyToClip": { "message": "Copy to clipboard" },
   
-  "HttpAuthHtml_Authorizing": { "message": "Authorizing at " },
+  "HttpAuthHtml_Authorizing": { "message": "Authorizing at <span></span>" },
   "HttpAuthHtml_Input_Login": { "message": "Login" },
   "HttpAuthHtml_Input_Password": { "message": "Password" },
   "HttpAuthHtml_Button_Submit": { "message": "Login" },

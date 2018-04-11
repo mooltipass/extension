@@ -8,7 +8,10 @@
 
 window.data = JSON.parse(decodeURIComponent(window.location.search.slice(1)))
 
-$(function() {
+$(function () {
+    // Display strings in proper locale
+    initLocale();
+
 	// Set url as action attribute of the form, so mcCombs will
 	// save credentials for the right url.
 	$('.form').attr('action', 
@@ -35,9 +38,6 @@ $(function() {
 		
 		window.location.href = data.url
    })
-
-    // Display strings in proper locale
-    initLocale();
 });
 
 
@@ -51,7 +51,7 @@ function messaging( message ) {
 function initLocale() {
     if (isSafari) return;
 
-    $("div.notice").text(chrome.i18n.getMessage("HttpAuthHtml_Authorizing"));
+    $("div.notice").html(chrome.i18n.getMessage("HttpAuthHtml_Authorizing"));
     $("#login").text(chrome.i18n.getMessage("HttpAuthHtml_Input_Login"));
     $("#password").text(chrome.i18n.getMessage("HttpAuthHtml_Input_Password"));
     $("button").text(chrome.i18n.getMessage("HttpAuthHtml_Button_Submit"));
