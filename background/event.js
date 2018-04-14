@@ -201,6 +201,14 @@ mooltipassEvent.onNotifyButtonClick = function (id, buttonIndex) {
     if (id.indexOf('mpNotConnected') == 0 || id.indexOf('mpNotUnlocked') == 0) {
         mooltipass.backend.disableNonUnlockedNotifications = true;
     }
+    else if (id.indexOf('mpPasswordManager') == 0)
+    {
+        // Disable default chrome password manager
+        if (buttonIndex == 0) {
+            if (isFirefox) { browser.privacy.services.passwordSavingEnabled.set({ value: false }, function () { }); }
+            else { chrome.privacy.services.autofillEnabled.set({ value: false }, function () { }); }
+        }
+    }
     else {
         // Check notification type
         if (mooltipassEvent.mpUpdate[id].type == "singledomainadd") {
@@ -515,6 +523,30 @@ mooltipassEvent.onMultipleFieldsPopup = function (callback, tab) {
     browserAction.stackUnshift(stackData, tab.id);
 
     browserAction.show(null, tab);
+}
+
+mooltipassEvent.onGetPasswordManagerSettings = function (details)
+{
+    if (details.levelOfControl === 'controllable_by_this_extension' ||
+        details.levelOfControl === 'controllable_by_this_extension')
+    {
+        // Check password manager value
+        if (!details.value) return;
+
+        // Increment notification count
+        mooltipassEvent.notificationCount++;
+
+        // Create notification to inform user
+        var noteId = 'mpPasswordManager.' + mooltipassEvent.notificationCount.toString();
+        cross_notification(noteId,
+            {
+                type: 'basic',
+                title: chrome.i18n.getMessage("EventJs_Notification_PasswordManager_Title"),
+                message: chrome.i18n.getMessage("EventJs_Notification_PasswordManager_Message"),
+                iconUrl: '/icons/warning_icon.png',
+                buttons: [{ title: chrome.i18n.getMessage("EventJs_Notification_Button_DisablePasswordManager"), iconUrl: '/icons/forbidden-icon.png' }]
+            });
+    }
 }
 
 /*

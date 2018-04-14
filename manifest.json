@@ -74,6 +74,7 @@
     "http://*/*",
     "https://raw.github.com/",
     "management",
-    "notifications"
+    "notifications",
+    "privacy"
   ]
 }

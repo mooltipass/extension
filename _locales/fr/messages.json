@@ -90,6 +90,9 @@
   "EventJs_Notification_Button_HideNotifications": { "message": "Don't show these notifications" },
   "EventJs_Notification_Button_BlackList": { "message": "Black list this website" },
   "EventJs_Notification_Button_StoreDomain": { "message": "Store " },
+  "EventJs_Notification_Button_DisablePasswordManager": { "message": "Would you like to disable it?" },
+  "EventJs_Notification_PasswordManager_Title": { "message": "Browser Password Manager" },
+  "EventJs_Notification_PasswordManager_Message": { "message": "Your Browser's Default Password Manager is Enabled. Please disable it for a better Mooltipass experience!" },
   
   "PasswordDialogHtml_CurrentLogIn": { "message": "Current Login" },
   "PasswordDialogHtml_CurrentLogInText": { "message": "If not correct, modify it below" },

@@ -292,6 +292,22 @@ startMooltipass = function () {
             }
         }
     };
+
+    // Check default password manager settings
+    checkChromePasswordManager();
+};
+
+/**
+* Trigger a check to the browser clarifying whether the extension is entitled to change the privacy settings or not
+* Response is handled in ==> mooltipassEvent.onGetPasswordManagerSettings
+*/
+checkChromePasswordManager = function ()
+{
+    if (isSafari) return;
+
+    // Check if extension is allowed to change privacy settings
+    if (isFirefox) { browser.privacy.services.passwordSavingEnabled.get({}, mooltipassEvent.onGetPasswordManagerSettings); }
+    else { chrome.privacy.services.autofillEnabled.get({}, mooltipassEvent.onGetPasswordManagerSettings); }
 };
 
 startMooltipass();
