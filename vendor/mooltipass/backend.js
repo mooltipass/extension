@@ -133,10 +133,7 @@ mooltipass.backend.blacklistUrl = function(url) {
         domain = parsed_url.domain;
         subdomain = parsed_url.subdomain;
 
-        url = domain;
-        if(subdomain != null) {
-            url = subdomain + '.' + domain;
-        }
+        url = subdomain ? subdomain + '.' + domain : domain;
     }
 
     //console.log( mooltipass.backend._blacklist );
@@ -238,7 +235,8 @@ mooltipass.backend.extractDomainAndSubdomain = function ( url ) {
         toReturn.subdomain = null;
     }
 
-    if ( mooltipass.backend.isBlacklisted( toReturn.domain ) || mooltipass.backend.isBlacklisted( toReturn.subdomain ) ) {
+    var toBeProcessedUrl = toReturn.subdomain ? toReturn.subdomain + '.' + toReturn.domain : toReturn.domain;
+    if (mooltipass.backend.isBlacklisted(toReturn.domain) || mooltipass.backend.isBlacklisted(toBeProcessedUrl ) ) {
         toReturn.blacklisted = true;
     }
 
