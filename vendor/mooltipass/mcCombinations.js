@@ -1497,6 +1497,9 @@ mcCombinations.prototype.doSubmit = function doSubmit(currentForm) {
         // If we haven't found submit button, let's trigger submit event on the form.
         mpJQ(currentForm.element).trigger('submit')
     }
+
+    // Clear the credential Cache after submitting
+    messaging({ 'action': 'remove_credentials_from_tab_information'});
 }
 
 
