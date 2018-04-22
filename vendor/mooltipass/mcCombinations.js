@@ -1317,7 +1317,9 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
                 !this.settings.doNotSubmitAfterFill &&
                 (!currentForm.combination.fields.username || mpJQ.contains(document, currentForm.combination.fields.username[0])) &&
                 (!currentForm.combination.fields.password || mpJQ.contains(document, currentForm.combination.fields.password[0]))) {
-                this.doSubmit(currentForm);
+                // Submit and empty local credential cache if password field is visible on Form, otherwise keep the cache
+                if (currentForm.combination.fields.password && currentForm.combination.fields.password[0].tabIndex != -1) this.doSubmit(currentForm, true);
+                else this.doSubmit(currentForm, false);
 
                 // Stop processing forms if we're going to submit
                 // TODO: Weight the importance of each form and submit the most important, not the first!
@@ -1460,9 +1462,16 @@ mcCombinations.prototype.formHasCaptcha = function (form) {
 }
 
 /*
-* Submits the form!
+* Triggers a submit event on the form.
+* Checks if the password field is being submitted.
+* If password is being submitted, then empty credential cache, otherwise hold on to it.
+*
+* @param {jQuery object} currentForm
+*    <FORM> element to be submitted.
+* @param {bool} submitPassword
+*    [TRUE] Password field is being submitted, [FALSE] otherwise
 */
-mcCombinations.prototype.doSubmit = function doSubmit(currentForm) {
+mcCombinations.prototype.doSubmit = function doSubmit(currentForm, submitPassword) {
     var DISABLE_AUTOSUBMIT_DOMAINS = ['gls-online-filiale.de']
 
     if (this.formHasCaptcha()) {
@@ -1498,8 +1507,8 @@ mcCombinations.prototype.doSubmit = function doSubmit(currentForm) {
         mpJQ(currentForm.element).trigger('submit')
     }
 
-    // Clear the credential Cache after submitting
-    messaging({ 'action': 'remove_credentials_from_tab_information'});
+    // Clear the credential Cache after submitting if password field is included
+    if (submitPassword) messaging({ 'action': 'remove_credentials_from_tab_information'});
 }
 
 
