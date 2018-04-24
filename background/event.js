@@ -371,8 +371,11 @@ mooltipassEvent.onUpdateNotify = function (callback, tab, username, password, ur
 
     // Check if URL is valid
     if (valid_url == true) {
+        // Get URI
+        var toBeProcessedUrl = subdomain ? subdomain + '.' + domain : domain;
+
         // Check if blacklisted
-        if (mooltipass.backend.isBlacklisted(domain)) {
+        if (mooltipass.backend.isBlacklisted(domain) || mooltipass.backend.isBlacklisted(toBeProcessedUrl)) {
             //console.log('notify: ignoring blacklisted url',url);
             return;
         }
