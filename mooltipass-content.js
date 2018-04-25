@@ -56,6 +56,7 @@ function init() {
     cipEvents.startEventHandling();
     mcCombs = new mcCombinations();
     mcCombs.settings.debugLevel = content_debug_msg;
+    messaging({ 'action': 'remove_credentials_from_tab_information' });
     messaging({ 'action': 'content_script_loaded' });
 };
 
