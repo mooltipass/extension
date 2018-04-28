@@ -83,6 +83,10 @@ mooltipassEvent.onMessage = function (request, sender, callback) {
         }
         mooltipassEvent.invoke(mooltipassEvent.messageHandlers[request.action], callback, tab, request.args);
     }
+    else if (tab && request.action === 'check_if_blacklisted') {
+        var isBlackListed = mooltipassEvent.isBlacklisted(request.url);
+        callback({ isBlacklisted: isBlackListed }); 
+    }
 
     return true;
 }
@@ -549,6 +553,36 @@ mooltipassEvent.createAction = function (callback, tab, data) {
         action: data.action,
         args: data.args
     }, tab)
+}
+
+/*
+ * Check if a given URL is BlackListed
+ */
+mooltipassEvent.isBlacklisted = function (url) {
+    // Parse URL
+    var parsed_url = mooltipass.backend.extractDomainAndSubdomain(url);
+    var valid_url = false;
+    var isBlackListed = false;
+    var subdomain;
+    var domain;
+
+    // See if our script detected a valid domain & subdomain
+    if (parsed_url.valid == true) {
+        valid_url = true;
+        domain = parsed_url.domain;
+        subdomain = parsed_url.subdomain;
+    }
+
+    // Check if URL is valid
+    if (valid_url == true) {
+        // Get URI
+        var toBeProcessedUrl = subdomain ? subdomain + '.' + domain : domain;
+
+        // Check if blacklisted
+        if (mooltipass.backend.isBlacklisted(domain) || mooltipass.backend.isBlacklisted(toBeProcessedUrl)) isBlackListed = true;
+    }
+
+    return isBlackListed;
 }
 
 // all methods named in this object have to be declared BEFORE this!
