@@ -172,10 +172,7 @@ mooltipass.backend.unblacklistUrl = function(url) {
         domain = parsed_url.domain;
         subdomain = parsed_url.subdomain;
 
-        url = domain;
-        if(subdomain != null) {
-            url = subdomain;
-        }
+        url = subdomain ? subdomain + '.' + domain : domain;
     }
 
     delete mooltipass.backend._blacklist[url];
