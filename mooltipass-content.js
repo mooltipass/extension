@@ -39,25 +39,31 @@ function init() {
         cipDebug.error = function () { }
     }
 
-    // Don't initialize in user targeting iframes, captchas, etc.
-    var stopInitialization =
-        window.self != window.top &&
-        !window.location.hostname.match('chase.com') &&
-        !window.location.hostname.match('apple.com') && (
-            mpJQ('body').text().trim() == '' ||
-            window.innerWidth <= 1 ||
-            window.innerHeight <= 1 ||
-            window.location.href.match('recaptcha') ||
-            window.location.href.match('youtube') ||
-            window.location.href.match('pixel')
-        );
-    if (stopInitialization) return;
+    // Check if URL is BlackListed
+    chrome.runtime.sendMessage({ "action": "check_if_blacklisted", "url": window.location.href }, function (response) {
+        // If URL is BlackListed, don't initialize content scripts
+        if (response.isBlacklisted) return;
 
-    cipEvents.startEventHandling();
-    mcCombs = new mcCombinations();
-    mcCombs.settings.debugLevel = content_debug_msg;
-    messaging({ 'action': 'remove_credentials_from_tab_information' });
-    messaging({ 'action': 'content_script_loaded' });
+        // Don't initialize in user targeting iframes, captchas, etc.
+        var stopInitialization =
+            window.self != window.top &&
+            !window.location.hostname.match('chase.com') &&
+            !window.location.hostname.match('apple.com') && (
+                mpJQ('body').text().trim() == '' ||
+                window.innerWidth <= 1 ||
+                window.innerHeight <= 1 ||
+                window.location.href.match('recaptcha') ||
+                window.location.href.match('youtube') ||
+                window.location.href.match('pixel')
+            );
+        if (stopInitialization) return;
+
+        cipEvents.startEventHandling();
+        mcCombs = new mcCombinations();
+        mcCombs.settings.debugLevel = content_debug_msg;
+        messaging({ 'action': 'remove_credentials_from_tab_information' });
+        messaging({ 'action': 'content_script_loaded' });
+    });
 };
 
 // Unify messaging method - And eliminate callbacks (a message is replied with another message instead)
