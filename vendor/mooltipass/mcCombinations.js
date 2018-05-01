@@ -739,6 +739,25 @@ mcCombinations.prototype.possibleCombinations = [
         maxfields: 1,
         score: 0,
         autoSubmit: false
+    },
+    {
+        combinationId: 'loginform006',
+        combinationName: 'Simple Login Form with Username only',
+        requiredFields: [
+            {
+                selector: 'input[type=email]',
+                submitPropertyName: 'name',
+                mapsTo: 'username'
+            }
+        ],
+        scorePerMatch: 100,
+        score: 0,
+        autoSubmit: true,
+        maxfields: 1,
+        extraFunction: function (fields) {
+            /* This function will be called if the combination is found, in this case: enable any disabled field in the form */
+            if (fields[0] && fields[0].closest) fields[0].closest('form').find('input:disabled').prop('disabled', false);
+        }
     }
 ];
 
