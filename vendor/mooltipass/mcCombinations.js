@@ -300,7 +300,36 @@ var extendedCombinations = {
                 }
             }
         }
-    }
+    },
+    amazon: function (forms) {
+        if (mcCombs.getAllForms() == 0) return;
+        for (form in forms) {
+            var currentForm = forms[form];
+            if (currentForm.element) { // Skip noform form
+                currentForm.combination = {
+                    special: true,
+                    fields: {
+                        username: '',
+                        password: ''
+                    },
+                    savedFields: {
+                        username: '',
+                        password: ''
+                    },
+                    autoSubmit: false
+                }
+
+                if (mpJQ('input[type=email]:visible').length > 0) { // Step 1: Email
+                    currentForm.combination.fields.username = mpJQ('input[type=email]');
+                    currentForm.combination.autoSubmit = true;
+                }
+                if (mpJQ('input[type=password]:visible').length > 0) { // Step 2: Pass
+                    currentForm.combination.fields.password = mpJQ('input[type=password]');
+                    currentForm.combination.autoSubmit = true;
+                }
+            }
+        }
+    },
 };
 
 var extendedPost = {
@@ -447,6 +476,12 @@ mcCombinations.prototype.possibleCombinations = [
         combinationName: 'Google Two Page Login Procedure',
         requiredUrl: 'login.yahoo.com',
         callback: extendedCombinations.yahoo
+    },
+    {
+        combinationId: 'amazonTwoPageAuth',
+        combinationName: 'Amazon Two Page Login Procedure',
+        requiredUrl: 'amazon',
+        callback: extendedCombinations.amazon
     },
     {
         // Seen at icloud.com, seems to comform to an Apple's proprietary identity management system (IDMS)
@@ -760,7 +795,11 @@ mcCombinations.prototype.detectCombination = function () {
     if (numberOfFields > 0) {
         // Check for special cases first 
         for (var I = 0; I < this.possibleCombinations.length; I++) {
-            if (this.possibleCombinations[I].requiredUrl && window.location.hostname.match(this.possibleCombinations[I].requiredUrl)) { // Found a special case
+            var parsedUrl = psl.parse(window.location.hostname);
+            if (this.possibleCombinations[I].requiredUrl &&
+                ( window.location.hostname.match(this.possibleCombinations[I].requiredUrl) ||
+                ( parsedUrl.sld && parsedUrl.sld.match(this.possibleCombinations[I].requiredUrl) )
+            )) { // Found a special case
                 if (this.settings.debugLevel > 1) cipDebug.log('Dealing with special case for ' + window.location.hostname);
 
                 if (this.possibleCombinations[I].callback(this.forms) == 'skip') break
