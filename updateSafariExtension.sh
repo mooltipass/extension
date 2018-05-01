@@ -13,6 +13,7 @@ cp -Rf popups Mooltipass.safariextension/
 cp -Rf fonts Mooltipass.safariextension/
 cp -Rf ui Mooltipass.safariextension/
 cp -Rf content_scripts Mooltipass.safariextension/
+cp -Rf shared_scripts Mooltipass.safariextension/
 
 # Fixes image paths for content styles
 find ./Mooltipass.safariextension -name "*.css" -type f -print0 | xargs -0 sed -i '' 's/chrome-extension:\/\/__MSG_@@extension_id__\/images/\/images/g'

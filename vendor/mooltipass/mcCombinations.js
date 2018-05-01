@@ -480,7 +480,7 @@ mcCombinations.prototype.possibleCombinations = [
     {
         combinationId: 'amazonTwoPageAuth',
         combinationName: 'Amazon Two Page Login Procedure',
-        requiredUrl: 'https?\:\/\/(www\.)?amazon\..*\/ap\/signin.*',
+        requiredUrl: 'amazon',
         callback: extendedCombinations.amazon
     },
     {
@@ -795,7 +795,11 @@ mcCombinations.prototype.detectCombination = function () {
     if (numberOfFields > 0) {
         // Check for special cases first 
         for (var I = 0; I < this.possibleCombinations.length; I++) {
-            if (this.possibleCombinations[I].requiredUrl && (window.location.hostname.match(this.possibleCombinations[I].requiredUrl) || window.location.href.match(this.possibleCombinations[I].requiredUrl, "i"))) { // Found a special case
+            var parsedUrl = psl.parse(window.location.hostname);
+            if (this.possibleCombinations[I].requiredUrl &&
+                ( window.location.hostname.match(this.possibleCombinations[I].requiredUrl) ||
+                ( parsedUrl.sld && parsedUrl.sld.match(this.possibleCombinations[I].requiredUrl) )
+            )) { // Found a special case
                 if (this.settings.debugLevel > 1) cipDebug.log('Dealing with special case for ' + window.location.hostname);
 
                 if (this.possibleCombinations[I].callback(this.forms) == 'skip') break

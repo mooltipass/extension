@@ -23,7 +23,7 @@
   "options_page": "options/options.html",
   "background": {
     "scripts": [
-      "background/psl.min.js",
+      "shared_scripts/psl.min.js",
       "vendor/seedrandom.js",
       "background/httpauth.js",
       "background/browserAction.js",
@@ -40,6 +40,7 @@
       "matches": ["http://*/*", "https://*/*"],
       "js": [
         "vendor/jquery-3.2.1.js",
+        "shared_scripts/psl.min.js",
         "vendor/mooltipass/website.js",
         "vendor/jquery-ui-1.11.4.custom/jquery-ui.js",
         "vendor/sendkeys.js",

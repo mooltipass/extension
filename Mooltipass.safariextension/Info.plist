@@ -60,6 +60,7 @@
             <key>End</key>
             <array>
                 <string>vendor/jquery-3.2.1.js</string>
+                <string>shared_scripts/psl.min.js</string>
                 <string>vendor/jquery-ui-1.11.4.custom/jquery-ui.js</string>
                 <string>vendor/mooltipass/mcCombinations.js</string>
                 <string>vendor/sendkeys.js</string>
