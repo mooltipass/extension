@@ -68,9 +68,9 @@ The ***BlackList*** is stored locally within the extension's cache. Whenever a u
 
 # Credential caching
 
-Not all websites implement simple login dialogs where both; the username and password fields appear side by side on the same page. Some websites resort to implementing a 2-page authentication prompt. On such pages, the user enters first his username. This username us then validated by the website, and only if it appears to exist, a new prompt appears for the user including the password field. The user can then finalize the login procedure by inputting his password and proceeding on with the authentication.
+Not all websites implement simple login dialogs where both; the username and password fields appear side by side on the same page. Some websites resort to implementing a 2-page authentication prompt. On such pages, the user enters first his username. This username is then validated by the website, and only if it appears to exist, a new prompt appears for the user including the password field. The user can then finalize the login procedure by inputting his password and proceeding on with the authentication.
 
-For such websites, the user would be prompted twice on the mooltipass device to enter his credentials. Once for the page containing the username field, and twice for the page containing the password field. This would also result in sending a number if redundant messages from the extension to the device to retrieve the same credentials twice for the same page.
+For such websites, the user would be prompted twice on the mooltipass device to enter his credentials. Once for the page containing the username field, and twice for the page containing the password field. This would also result in sending a number of redundant messages from the extension to the device to retrieve the same credentials twice for the same page.
 
 To solve this issue, we implemented a ***Credential Cache*** within the extension. This means, for such websites, the extension requests the user credentials once from the device, and holds on to them by storing them in the local extension cache. As soon as the login operation is complete and the authentication prompt is removed, the extension empties its local ***Credential Cache*** thus, avoiding storage of unused credentials for longer than required.
 
