@@ -66,15 +66,36 @@ The ***BlackList*** is a list of user defined URL's where the extension is forbi
 
 The ***BlackList*** is stored locally within the extension's cache. Whenever a user navigates to a new website, the extension checks first if the current URL exists within the ***BlackList*** or not. If it exists, the extension halts with script initialization and holds any form of further processing.
 
-# Credential caching
+The above mentioned behavior can be observed in the main content script ***mooltipass-content.js***:
+
+    // Check if URL is BlackListed
+    chrome.runtime.sendMessage({ "action": "check_if_blacklisted", "url": window.location.href }, function (response) {
+        // If URL is BlackListed, don't initialize content scripts
+        if (response.isBlacklisted) return;
+    }
+ 
+Here, the main content script sends a message to the background script which holds a copy of the local blacklist. The message contains the ***window.location.href*** which is the currently surfed URL. It then awaits the response from the background script. If the response is true (***response.isBlacklisted***), the content script returns and stops all further processing/initialization.
+
+# Credential Caching
 
 Not all websites implement simple login dialogs where both; the username and password fields appear side by side on the same page. Some websites resort to implementing a 2-page authentication prompt. On such pages, the user enters first his username. This username is then validated by the website, and only if it appears to exist, a new prompt appears for the user including the password field. The user can then finalize the login procedure by inputting his password and proceeding on with the authentication.
 
 For such websites, the user would be prompted twice on the mooltipass device to enter his credentials. Once for the page containing the username field, and twice for the page containing the password field. This would also result in sending a number of redundant messages from the extension to the device to retrieve the same credentials twice for the same page.
 
-To solve this issue, we implemented a ***Credential Cache*** within the extension. This means, for such websites, the extension requests the user credentials once from the device, and holds on to them by storing them in the local extension cache. As soon as the login operation is complete and the authentication prompt is removed, the extension empties its local ***Credential Cache*** thus, avoiding storage of unused credentials for longer than required.
+To solve this issue, we implemented a ***Credential Cache*** within the extension. This means, for such websites, the extension requests the user credentials once from the device, and holds on to them by storing them in the local extension cache. As soon as the login operation is complete and the authentication prompt is removed, the extension empties its local ***Credential Cache*** thus, avoiding storage of unused credentials for longer than required. The local ***Credential Cache*** is stored within the ***page.js*** background script and could be seen here:
 
-To further ensure not holding on to the credentials for longer than required, on every new navigation, the extension checks whether there are any credentials stored within the local cache & empties any if found.
+    // Store previously used logins
+    page.cacheLogin = function( callback, tab, arguments ) {
+      if (background_debug_msg > 4) mpDebug.log('%c page: %c cacheLogin ','background-color: #ffeef9','color: #246', arguments);
+      page.tabs[ tab.id ].loginList = {'Login': arguments };
+    }
+
+To further ensure not holding on to the credentials for longer than required, on every new navigation, the extension checks whether there are any credentials stored within the local cache & empties any if found. This can be observed in the main content script ***mooltipass-content.js***:
+
+    // Signal background script to empty local cache
+    messaging({ 'action': 'remove_credentials_from_tab_information' });
+
+Here, the content script is sending a message to the background script asking it to delete the local cache for the current active tab. This message is sent once, on every new navigation.
 
 # Localization
 
