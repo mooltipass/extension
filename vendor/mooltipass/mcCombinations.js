@@ -330,6 +330,35 @@ var extendedCombinations = {
             }
         }
     },
+    mooltipassTest: function (forms) {
+        if (mcCombs.getAllForms() == 0) return;
+        for (form in forms) {
+            var currentForm = forms[form];
+            if (currentForm.element) { // Skip noform form
+                currentForm.combination = {
+                    special: true,
+                    fields: {
+                        username: '',
+                        password: ''
+                    },
+                    savedFields: {
+                        username: '',
+                        password: ''
+                    },
+                    autoSubmit: false
+                }
+
+                if (mpJQ('input#username:visible').length > 0) { // Step 1: Email
+                    currentForm.combination.fields.username = mpJQ('input#username');
+                    currentForm.combination.autoSubmit = true;
+                }
+                if (mpJQ('input[type=password]:visible').length > 0) { // Step 2: Pass
+                    currentForm.combination.fields.password = mpJQ('input[type=password]');
+                    currentForm.combination.autoSubmit = true;
+                }
+            }
+        }
+    },
 };
 
 var extendedPost = {
@@ -482,6 +511,12 @@ mcCombinations.prototype.possibleCombinations = [
         combinationName: 'Amazon Two Page Login Procedure',
         requiredUrl: 'amazon',
         callback: extendedCombinations.amazon
+    },
+    {
+        combinationId: 'mooltipassTestTwoPageAuth',
+        combinationName: 'Mooltipass Test Two Page Login Procedure',
+        requiredUrl: '2-step-login.mooltipass-tests.com',
+        callback: extendedCombinations.mooltipassTest
     },
     {
         // Seen at icloud.com, seems to comform to an Apple's proprietary identity management system (IDMS)
