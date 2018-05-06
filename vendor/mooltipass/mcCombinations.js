@@ -1444,6 +1444,8 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
         /passwordreset/i,
         /resetform/i,
         /remember_login/i,
+        /obtenir/i,
+        /info/i,
         /sign up/i,
         /facebook/i,
         /google/i,
@@ -1470,8 +1472,6 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
         'div[onclick]:visible',
         'div.button:visible'
     ];
-
-    var submitButton
 
     for (var selectorIndex = 0; selectorIndex < BUTTON_SELECTORS.length; selectorIndex++) {
         var selector = BUTTON_SELECTORS[selectorIndex]
@@ -1569,8 +1569,8 @@ mcCombinations.prototype.doSubmit = function doSubmit(currentForm) {
             submitButton.click()
         }.bind(this), 100)
     } else {
-        // If we haven't found submit button, let's trigger submit event on the form.
-        mpJQ(currentForm.element).trigger('submit')
+        // If we haven't found submit button, check if <FORM> has a submit event handler defined & trigger it.
+        if (!mpJQ(currentForm.element)[0].outerHTML.match(/ng-submit/i)) mpJQ(currentForm.element).trigger('submit');
     }
 }
 

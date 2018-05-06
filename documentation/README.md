@@ -97,6 +97,32 @@ To further ensure not holding on to the credentials for longer than required, on
 
 Here, the content script is sending a message to the background script asking it to delete the local cache for the current active tab. This message is sent once, on every new navigation.
 
+# Submitting Credentials
+
+When the extension successfuly retrieves the stored credentials from the Mooltipass device and inputs them into the detected input fields, the only thing which remains then is submitting the credentials to the website to enable the user to authenticate.
+
+In order for the extension to submit the credentials, it needs to first locate the *SUBMIT* button on the page and trigger it. The extraction and allocation of the *SUBMIT* button on the page is performed within the ***mcCombinations.js*** script as shown below:
+
+    /*
+	* Detect submit button for the given field and container.
+	*
+	* @param field {jQuery object}
+	* @param container {jQuery object}
+	* @return submitButton {DOM node} or undefined
+	*/
+	mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field, container){}
+
+This function searches the page for a ***SUBMIT*** button. The extraction of the button follows a number of regulations. To describe the regulations, we need to first explain 3 main lists stored within the above mentioned function.
+- ACCEPT_PATTERNS: List of regex's containing the text strings that are allowed to exist within the ***SUBMIT*** button.
+- IGNORE_PATTERNS: List of regex's containing the text strings that are **not** allowed to exist within the ***SUBMIT*** button.
+- BUTTON_SELECTORS: List of regex's describing the HTML elements a ***SUBMIT*** button can be composed of.
+
+The extraction procedure starts off by applying the 3 above mentioned lists on all HTML elements found on the page and filtering out all the elements that don't comply to these regex's. The elements compling to these lists need to match non of the regex's within the *IGNORE_PATTERNS* list and at least 1 regex within each of the *ACCEPT_PATTERNS* & *BUTTON_SELECTORS* list.
+
+After applying these lists and extracting a list of elements on the page, the elements are sorted based on their distance from the FORM element. The closer the button is, the higher its chance of being the selected one is. After the sort operation is complete, the nearest button to the FORM element is chosen to be the ***SUBMIT*** button.
+
+In case where no button matching the criteria described above was found, the extension triggers a *SUBMIT* event on the FORM element itself as a fallback mechanism.
+
 # Localization
 
 The extension is currently localized in 13 languages. These languages include:
