@@ -407,6 +407,7 @@ mcCombinations.prototype = (function () {
         },
         usernameFieldId: null,
         passwordFieldId: null,
+        passwordFieldValue: '',
         settings: {
             debugLevel: 0,
             postDetectionFeature: true
@@ -1058,6 +1059,10 @@ mcCombinations.prototype.detectForms = function () {
                 currentForm.combination.fields.password &&
                 currentForm.combination.fields.password.data('mp-id')
 
+            // Add onChange eventListener for password field
+            // Handle HTML5 <Form> validation functions which blank the password field on Submitting
+            if (this.passwordFieldId) mpJQ(currentForm.combination.fields.password).on('change', mcCombs.onPasswordFieldValueChange);
+
             mpJQ(submitButton)
                 .unbind('click.mooltipass')
                 .on('click.mooltipass', this.onSubmit.bind(this, { target: currentForm.element && currentForm.element[0] }))
@@ -1172,6 +1177,9 @@ mcCombinations.prototype.onSubmit = function (event) {
 
     var submittedUsernameValue = this.parseElement(currentForm.combination.fields.username, 'value');
     var submittedPasswordValue = this.parseElement(currentForm.combination.fields.password, 'value');
+
+    // If password field value is blanked, get latest value from the onPasswordFieldValueChange event
+    if (submittedPasswordValue == "") submittedPasswordValue = mcCombs.passwordFieldValue;
 
     if (mpJQ('#mooltipass-username').val() && mpJQ('#mooltipass-username').val() !== submittedUsernameValue) {
         submittedUsernameValue = mpJQ('#mooltipass-username').val();
@@ -1691,4 +1699,14 @@ mcCombinations.prototype.postDetected = function (details) {
         }
         return;
     }
+}
+
+/*
+* Triggers everytime the password field value changes.
+* Used to handle cases were the <FORM> validation function blanks the password value before submitting.
+* Only stores the new value if not empty otherwise, keeps the old stored value intact.
+*/
+mcCombinations.prototype.onPasswordFieldValueChange = function (event) {
+    if (!event.target.value || event.target.value == "") return;
+    mcCombs.passwordFieldValue = event.target.value;
 }
