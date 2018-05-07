@@ -909,7 +909,7 @@ mcCombinations.prototype.getFormActionUrl = function (formElement) {
     if (this.settings.debugLevel > 4) cipDebug.log('%c mcCombinations: %c getFormActionUrl', 'background-color: #c3c6b4', 'color: #333333');
     var action = formElement[0].action;
 
-    if (typeof (action) != "string" || action == "" || action.indexOf('{') > -1 || action == 'javascript:void(0)') {
+    if (typeof (action) != "string" || action == "" || action.indexOf('{') > -1 || action == 'javascript:void(0)' || action.indexOf('javascript') == 0) {
         action = document.location.origin + document.location.pathname;
     }
 
