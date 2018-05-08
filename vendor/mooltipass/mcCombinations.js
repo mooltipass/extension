@@ -1546,7 +1546,7 @@ mcCombinations.prototype.formHasCaptcha = function (form) {
 * Submits the form!
 */
 mcCombinations.prototype.doSubmit = function doSubmit(currentForm) {
-    var DISABLE_AUTOSUBMIT_DOMAINS = ['gls-online-filiale.de']
+    var DISABLE_AUTOSUBMIT_DOMAINS = ['gls-online-filiale.de', 'mohela.com']
 
     if (this.formHasCaptcha()) {
         if (this.settings.debugLevel > 4) cipDebug.log('%c mcCombinations: %c Captcha detected', 'background-color: #c3c6b4', 'color: #800000')
