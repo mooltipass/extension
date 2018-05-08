@@ -123,6 +123,21 @@ After applying these lists and extracting a list of elements on the page, the el
 
 In case where no button matching the criteria described above was found, the extension triggers a *SUBMIT* event on the FORM element itself as a fallback mechanism.
 
+**The submission of credentials on Forms has an exception mentioned below:**
+
+Not all websites follow the standard authentication procedure. Hence, for some websites, the auto submission is switched off so as not to damage the data flow of those websites. On those websites, the extension retrieves the user credentials from the device & inputs them into the fields on the screen. However, the extension doesn't proceed on by submitting the form. It simply halts any further processing and allows the user to manually submit the form by clicking on the log in button. 
+
+For those domains, a special exception list is created within the ***mcCombinations.js*** content script as displayed below:
+	
+	/*
+	* Submits the form!
+	*/
+	mcCombinations.prototype.doSubmit = function doSubmit(currentForm) {
+    		var DISABLE_AUTOSUBMIT_DOMAINS = ['gls-online-filiale.de', 'mohela.com']
+	}
+
+Before the extension triggers the **Submit** event on the form, it checks if the current website lies within this list of domains or not and acts accordingly.
+
 # Localization
 
 The extension is currently localized in 13 languages. These languages include:
