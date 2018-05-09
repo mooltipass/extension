@@ -846,8 +846,7 @@ mcCombinations.prototype.detectCombination = function () {
                     if (currentForm.element) {
                         cipPassword.createLoginIcon(currentForm.combination.fields.username);
 
-                        var field = currentForm.combination.fields.password || currentForm.combination.fields.username,
-                            submitButton = this.detectSubmitButton(field, field.parent())
+                        var field = currentForm.combination.fields.password || currentForm.combination.fields.username;
 
                         this.usernameFieldId =
                             currentForm.combination.fields.username &&
@@ -856,15 +855,19 @@ mcCombinations.prototype.detectCombination = function () {
                             currentForm.combination.fields.password &&
                             currentForm.combination.fields.password.data('mp-id')
 
-                        mpJQ(submitButton)
-                            .unbind('click.mooltipass')
-                            .on('click.mooltipass', this.onSubmit.bind(this, { target: currentForm.element[0] }))
+                        var submitButton = this.detectSubmitButton(field, field.parent());
+                        if (submitButton)
+                        {
+                            mpJQ(submitButton)
+                                .unbind('click.mooltipass')
+                                .on('click.mooltipass', this.onSubmit.bind(this, { target: currentForm.element[0] }))
 
-                        mpJQ(mpJQ.map(currentForm.fields, function (field) { return field.get() }))
-                            .unbind('keydown.mooltipass')
-                            .on('keydown.mooltipass', function (currentForm, event) {
-                                if (event.which == 13) { this.onSubmit.call(this, { target: currentForm.element[0] }) }
-                            }.bind(this, currentForm))
+                            mpJQ(mpJQ.map(currentForm.fields, function (field) { return field.get() }))
+                                .unbind('keydown.mooltipass')
+                                .on('keydown.mooltipass', function (currentForm, event) {
+                                    if (event.which == 13) { this.onSubmit.call(this, { target: currentForm.element[0] }) }
+                                }.bind(this, currentForm))
+                        }
                     }
                 }
 
@@ -1049,8 +1052,7 @@ mcCombinations.prototype.detectForms = function () {
             }
 
             // Handle sumbit event on submit button click or return keydown.
-            var field = currentForm.combination.fields.password || currentForm.combination.fields.username,
-                submitButton = this.detectSubmitButton(field, field.parent())
+            var field = currentForm.combination.fields.password || currentForm.combination.fields.username;
 
             this.usernameFieldId =
                 currentForm.combination.fields.username &&
@@ -1063,15 +1065,19 @@ mcCombinations.prototype.detectForms = function () {
             // Handle HTML5 <Form> validation functions which blank the password field on Submitting
             if (this.passwordFieldId) mpJQ(currentForm.combination.fields.password).on('change', mcCombs.onPasswordFieldValueChange);
 
-            mpJQ(submitButton)
-                .unbind('click.mooltipass')
-                .on('click.mooltipass', this.onSubmit.bind(this, { target: currentForm.element && currentForm.element[0] }))
+            var submitButton = this.detectSubmitButton(field, field.parent());
+            if (submitButton)
+            {
+                mpJQ(submitButton)
+                    .unbind('click.mooltipass')
+                    .on('click.mooltipass', this.onSubmit.bind(this, { target: currentForm.element && currentForm.element[0] }))
 
-            mpJQ(mpJQ.map(currentForm.fields, function (field) { return field.get() }))
-                .unbind('keydown.mooltipass')
-                .on('keydown.mooltipass', function (currentForm, event) {
-                    if (event.which == 13) { this.onSubmit.call(this, { target: currentForm.element && currentForm.element[0] }) }
-                }.bind(this, currentForm))
+                mpJQ(mpJQ.map(currentForm.fields, function (field) { return field.get() }))
+                    .unbind('keydown.mooltipass')
+                    .on('keydown.mooltipass', function (currentForm, event) {
+                        if (event.which == 13) { this.onSubmit.call(this, { target: currentForm.element && currentForm.element[0] }) }
+                    }.bind(this, currentForm))
+            }
         }
     }
 
@@ -1508,8 +1514,12 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
         // Button shouldn't be far more than 150px from input.
         if (buttons.length > 0)
         {
-            if (buttons[0].distance < 150) return buttons[0];
-            if (buttons[0].distance < 190 && window.location.hostname.match(/accounts.google.com/)) return buttons[0];
+            // Ensure button was not previously selected
+            if (!buttons[0].getAttribute("data-mp-id"))
+            {
+                if (buttons[0].distance < 150) { this.setUniqueId(buttons); return buttons[0]; }
+                if (buttons[0].distance < 190 && window.location.hostname.match(/accounts.google.com/)) { this.setUniqueId(buttons); return buttons[0]; }
+            }
         }
     }
 
