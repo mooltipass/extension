@@ -855,7 +855,7 @@ mcCombinations.prototype.detectCombination = function () {
                             currentForm.combination.fields.password &&
                             currentForm.combination.fields.password.data('mp-id')
 
-                        var submitButton = this.detectSubmitButton(field, field.parent());
+                        var submitButton = this.detectSubmitButton(field, field.parent(), false);
                         if (submitButton)
                         {
                             mpJQ(submitButton)
@@ -1065,7 +1065,7 @@ mcCombinations.prototype.detectForms = function () {
             // Handle HTML5 <Form> validation functions which blank the password field on Submitting
             if (this.passwordFieldId) mpJQ(currentForm.combination.fields.password).on('change', mcCombs.onPasswordFieldValueChange);
 
-            var submitButton = this.detectSubmitButton(field, field.parent());
+            var submitButton = this.detectSubmitButton(field, field.parent(), false);
             if (submitButton)
             {
                 mpJQ(submitButton)
@@ -1427,7 +1427,7 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
  * @param container {jQuery object}
  * @return submitButton {DOM node} or undefined
  */
-mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field, container) {
+mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field, container, isSubmitButtonPreviouslyDetected) {
     var ACCEPT_PATTERNS = [
         /submit/i,
         /login/i,
@@ -1514,18 +1514,29 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
         // Button shouldn't be far more than 150px from input.
         if (buttons.length > 0)
         {
-            // Ensure button was not previously selected
-            if (!buttons[0].getAttribute("data-mp-id"))
+            // Check if button was previously selected
+            if (isSubmitButtonPreviouslyDetected)
             {
-                if (buttons[0].distance < 150) { this.setUniqueId(buttons); return buttons[0]; }
-                if (buttons[0].distance < 190 && window.location.hostname.match(/accounts.google.com/)) { this.setUniqueId(buttons); return buttons[0]; }
+                // Ensure that button has been labeled as selected
+                if (buttons[0].getAttribute("data-mp-id")) {
+                    if (buttons[0].distance < 150) return buttons[0];
+                    if (buttons[0].distance < 190 && window.location.hostname.match(/accounts.google.com/)) return buttons[0];
+                }
+            }
+            else
+            {
+                // Ensure button was not previously labeled as selected
+                if (!buttons[0].getAttribute("data-mp-id")) {
+                    if (buttons[0].distance < 150) { this.setUniqueId(buttons); return buttons[0]; }
+                    if (buttons[0].distance < 190 && window.location.hostname.match(/accounts.google.com/)) { this.setUniqueId(buttons); return buttons[0]; }
+                }
             }
         }
     }
 
     // If we haven't detected submit button yet, try to find it in parent container.
     if (container[0] != mpJQ('body')[0]) {
-        return this.detectSubmitButton(field, container.parent())
+        return this.detectSubmitButton(field, container.parent(), isSubmitButtonPreviouslyDetected)
     }
 }
 
@@ -1574,7 +1585,7 @@ mcCombinations.prototype.doSubmit = function doSubmit(currentForm) {
 
     // Trying to find submit button and trigger click event.
     var field = currentForm.combination.fields.password || currentForm.combination.fields.username,
-        submitButton = this.detectSubmitButton(field, field.parent())
+        submitButton = this.detectSubmitButton(field, field.parent(), true)
 
     if (submitButton) {
         // Select innermost element to trigger click because handler can be on it.
