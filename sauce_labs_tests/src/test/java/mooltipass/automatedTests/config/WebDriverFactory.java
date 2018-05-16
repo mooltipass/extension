@@ -165,7 +165,7 @@ public class WebDriverFactory {
 		String firefoxExtension = config.getString("FIREFOX_EXTENSION");
 		String browser = config.getString("BROWSER");
 		WebDriver driver;
-		driver =chrome(chromeExtension);
+		//driver =chrome(chromeExtension);
 		if(browser.equals("firefox"))
 			driver = remoteFirefox(sauceLabsUser,sauceLabsKey,firefoxExtension);
 		else
