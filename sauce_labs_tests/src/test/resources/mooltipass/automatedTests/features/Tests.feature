@@ -1,6 +1,5 @@
 Feature: First feature
 
-@ignore
 Scenario: Simple Login
 Given I navigate to 'http://simple_login.mooltipass-tests.com'
 When I login to simple login with 'mooltipass'
@@ -16,7 +15,6 @@ Then I should be logged in http login
 Given I navigate to 'http://httpauth.mooltipass-tests.com'
 Then I should be logged in http login
 
-@ignore
 Scenario: 2 step Login
 Given I navigate to 'http://2-step-login.mooltipass-tests.com/ci/2-step-login/'
 When I login to 2 step Login with 'mooltipass'
@@ -24,7 +22,6 @@ Then I should be logged in 2 step Login
 Given I navigate to 'http://2-step-login.mooltipass-tests.com/ci/2-step-login/'
 Then I should be logged in 2 step Login
 
-@ignore
 Scenario: Modal Login
 Given I navigate to 'http://modal-login.mooltipass-tests.com/ci/modal-login/'
 When I go to Modal login page
