@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuite failures="0" name="cucumber.runtime.formatter.JUnitFormatter" skipped="0" tests="1" time="17.228667">
+<testcase classname="First feature" name="Etsy Login" time="17.228667">
+<system-out><![CDATA[Given I navigate to 'http://etsy_login.mooltipass-tests.com/ci/etsy_login/'.passed
+When I go to Etsy login page................................................passed
+When I login to Etsy Login with 'mooltipass'................................passed
+Then I should be logged in Etsy Login.......................................passed
+Given I navigate to 'http://etsy_login.mooltipass-tests.com/ci/etsy_login/'.passed
+When I go to Etsy login page................................................passed
+Then I should be logged in Etsy Login.......................................passed
+]]></system-out>
+</testcase>
+</testsuite>
