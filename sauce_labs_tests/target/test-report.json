@@ -1,0 +1,146 @@
+[
+  {
+    "line": 1,
+    "elements": [
+      {
+        "before": [
+          {
+            "result": {
+              "duration": 4233739164,
+              "status": "passed"
+            },
+            "match": {
+              "location": "BeforeAfter.beforeScenario(Scenario)"
+            }
+          }
+        ],
+        "line": 38,
+        "name": "Etsy Login",
+        "description": "",
+        "id": "first-feature;etsy-login",
+        "after": [
+          {
+            "result": {
+              "duration": 141366615,
+              "status": "passed"
+            },
+            "match": {
+              "location": "BeforeAfter.afterScenario(Scenario)"
+            }
+          }
+        ],
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 3857461903,
+              "status": "passed"
+            },
+            "line": 39,
+            "name": "I navigate to \u0027http://etsy_login.mooltipass-tests.com/ci/etsy_login/\u0027",
+            "match": {
+              "arguments": [
+                {
+                  "val": "http://etsy_login.mooltipass-tests.com/ci/etsy_login/",
+                  "offset": 15
+                }
+              ],
+              "location": "GitHubSteps.navigateToURL(String)"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 1646419421,
+              "status": "passed"
+            },
+            "line": 40,
+            "name": "I go to Etsy login page",
+            "match": {
+              "location": "EtsySteps.goTologinPage()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 538083502,
+              "status": "passed"
+            },
+            "line": 41,
+            "name": "I login to Etsy Login with \u0027mooltipass\u0027",
+            "match": {
+              "arguments": [
+                {
+                  "val": "mooltipass",
+                  "offset": 28
+                }
+              ],
+              "location": "EtsySteps.login(String)"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 83899409,
+              "status": "passed"
+            },
+            "line": 42,
+            "name": "I should be logged in Etsy Login",
+            "match": {
+              "location": "EtsySteps.checkLogin()"
+            },
+            "keyword": "Then "
+          },
+          {
+            "result": {
+              "duration": 3278978917,
+              "status": "passed"
+            },
+            "line": 43,
+            "name": "I navigate to \u0027http://etsy_login.mooltipass-tests.com/ci/etsy_login/\u0027",
+            "match": {
+              "arguments": [
+                {
+                  "val": "http://etsy_login.mooltipass-tests.com/ci/etsy_login/",
+                  "offset": 15
+                }
+              ],
+              "location": "GitHubSteps.navigateToURL(String)"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 1614246643,
+              "status": "passed"
+            },
+            "line": 44,
+            "name": "I go to Etsy login page",
+            "match": {
+              "location": "EtsySteps.goTologinPage()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 1834471764,
+              "status": "passed"
+            },
+            "line": 45,
+            "name": "I should be logged in Etsy Login",
+            "match": {
+              "location": "EtsySteps.checkLogin()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      }
+    ],
+    "name": "First feature",
+    "description": "",
+    "id": "first-feature",
+    "keyword": "Feature",
+    "uri": "mooltipass/automatedTests/features/Tests.feature"
+  }
+]
