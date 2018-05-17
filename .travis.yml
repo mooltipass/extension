@@ -10,7 +10,6 @@ env:
   - TEST_SUITE=Tests.feature
   global:
   - SAUCE_USERNAME: mooltipass
-  - secure: pMkSZBCY7kHFlLKoxnn6PUWqQVYdUmfBkdmf7bcdUGzzlen3ZIEjdeuFDsc1Aee5dlLgHgE07mpSwZMd4WTndHiFA3OtMq8ElKRAW8npv1mpMT7tkE1RjKKo7ipXhgHyvgTME340Ytr5YySWOsmj8gNqjdKwJPnlHDrM4/3VPwMzRU730RDtcmlyE6CCBskqFhXCuxDjZuy/W43QLrv/wnACNuF0T/14tPO5t17Dxd3nBVmUze2b9aIyeMGya+Hcu0hyC769zN0nbo2T1ZyTPziFWYfqYEMW2fUCHmF6XKcrDeqmxnPf96XnLUufk0mKLAV6XWG3s3D73TR/s1rsHMWIYqmYVQ6Q9+SJZUIej3O46ZvqCsjMAKuj+x/73/DNrF2ZEHTk8Lt+f512afum3qD5ZuNQPlh/nOklc7CVHZNcW1sx871gheBIAcCkecKugZ5x9eg0DwuBbZvv1Ad0qRbuYTY34ObJRwcXvof8/rZ1fFrmW6QXVZ0D0II67ECmYgrlj7MEHy1yCBuCXc4DVwTYh0igtIN4rublD+R1vb2rfVtZkt9NcLpQzqWGQhV5ycwfHw33GHFE07iZbCBhro+t868WursCgaR9n6cCkplrV81IXz8Gckg+UOWjeER3EAXcglrNCnM1ZBFCWzb+2GIx9bWY7p1DjhlEy3aaY8c=
 script:
 - if [[ $TRAVIS_COMMIT_MESSAGE == *"[ci-ext-quiet]"* ]]; then mvn clean install -q -Dcucumber.options="src/test/resources/mooltipass/automatedTests/features/$TEST_SUITE"; fi;
   if [[ $TRAVIS_COMMIT_MESSAGE == *"[ci-ext]"* ]]; then mvn clean test -Dcucumber.options="src/test/resources/mooltipass/automatedTests/features/$TEST_SUITE"; fi;
