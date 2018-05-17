@@ -2,9 +2,8 @@ language: java
 jdk:
 - oraclejdk8
 before_script:
-- if [[ $TRAVIS_COMMIT_MESSAGE == *"[ci-ext]"* ]]; then bash
-  updateCleanVersion.sh --emulation-mode; mv mooltipass-extension.zip ./sauce_labs_tests/chrome_extension.crx;
-  cd ./sauce_labs_tests; fi;
+ bash updateCleanVersion.sh --emulation-mode; mv mooltipass-extension.zip ./sauce_labs_tests/chrome_extension.crx;
+  cd ./sauce_labs_tests; 
 env:
   matrix:
   - TEST_SUITE=Tests.feature
@@ -13,4 +12,4 @@ env:
   - secure: "BN9SIDRnh7lfDJAXZaY20EAn2jbVRsZLLphjVKEbbBzP8VuuEWjiu5C+laAyboqPAZzqWpk1V4LW2f1GtplQGvEXrMpfhJnQn/2wEvGUaiMUkcyRsz/BwtI/jbTTM+CFlbCzW4vamx9Kv4B8NArWDxwrF+knRF0KiCfkjT5qMAkyDdkjq/r5y8tQkQ1sG5JJihLJFwzFtwdr0Xhw2YA9y5OBZ5T/T1tFr2iawp4iyYeIQ9hcZWfWpjj2Bd2xOQtKI32EmKOngiGPCa5J9nmOkmEUyFtN+Zy+OGR/UEOeEFLh3xzNnoS2826WP7flgqZXReO7WZXfJOH4rqU5nx+T0zrcr6hU5VbojSiAJi6nkuks6MxRx81yAUpKMGw4hI4zlNrI4upQk8+SGotHvT/FDFTUe+hHObcsktdFBRZwx//SkAf9S8Y81jJB13AE0XKvvmn5IuFFjuljea0hjtyUMzlYk76NoQZXF7EWDs0xL5JMsKXt1JNKyfrzAPBPZ9TmMvd1VcihshoYghSl2acLBxqPs8IylfeisEJDp0aooHXYFPbKl+EhDM3Puy7OD3Q4XLHMouzf+ijK//PZIP4d97O0Qo5kfnD5mShbsFm/C0Y92/JeXNm6kUROOHLPE1XwvOnin16v4oM62G08zWQA8D/nGlx12ZEXvS5aasbOITM="
  script:
 - if [[ $TRAVIS_COMMIT_MESSAGE == *"[ci-ext-quiet]"* ]]; then mvn clean install -q -Dcucumber.options="src/test/resources/mooltipass/automatedTests/features/$TEST_SUITE"; fi;
-  if [[ $TRAVIS_COMMIT_MESSAGE == *"[ci-ext]"* ]]; then mvn clean test -Dcucumber.options="src/test/resources/mooltipass/automatedTests/features/$TEST_SUITE"; fi;
+   mvn clean test -Dcucumber.options="src/test/resources/mooltipass/automatedTests/features/$TEST_SUITE";
