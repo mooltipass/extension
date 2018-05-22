@@ -1519,16 +1519,14 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
             {
                 // Ensure that button has been labeled as selected
                 if (buttons[0].getAttribute("data-mp-id")) {
-                    if (buttons[0].distance < 150) return buttons[0];
-                    if (buttons[0].distance < 190 && window.location.hostname.match(/accounts.google.com/)) return buttons[0];
+                    if (buttons[0].distance < 200) return buttons[0];
                 }
             }
             else
             {
                 // Ensure button was not previously labeled as selected
                 if (!buttons[0].getAttribute("data-mp-id")) {
-                    if (buttons[0].distance < 150) { this.setUniqueId(buttons); return buttons[0]; }
-                    if (buttons[0].distance < 190 && window.location.hostname.match(/accounts.google.com/)) { this.setUniqueId(buttons); return buttons[0]; }
+                    if (buttons[0].distance < 200) { this.setUniqueId(buttons); return buttons[0]; }
                 }
             }
         }
