@@ -52,22 +52,9 @@ public class WebDriverFactory {
 		System.setProperty("webdriver.gecko.driver","src/test/resources/geckodriver");
 		FirefoxOptions options = new FirefoxOptions();
 		FirefoxProfile profile = new FirefoxProfile();
-		profile.addExtension(new File("/Users/mohamedmahmoud/git/extension/"));
-//		profile.setPreference("general.useragent.override", "UA-STRING");
-//		profile.setPreference("extensions.modify_headers.currentVersion", "0.7.1.1-signed");
-//		profile.setPreference("modifyheaders.headers.count", 1);
-//		profile.setPreference("modifyheaders.headers.action0", "Add");
-//		profile.setPreference("modifyheaders.headers.name0", "X-Forwarded-For");
-//		profile.setPreference("modifyheaders.headers.value0", "161.76.79.1");
-//		profile.setPreference("modifyheaders.headers.enabled0", true);
-//		profile.setPreference("modifyheaders.config.active", true);
-//		profile.setPreference("modifyheaders.config.alwaysOn", true);
-//		profile.setPreference("modifyheaders.config.start", true);
-	//	profile.setPreference("xpinstall.signatures.required", false);
-//		profile.setPreference("xpinstall.whitelist.required", false);
+		profile.addExtension(new File(extension));
 		options.setBinary("/Applications/Firefox Developer Edition.app/Contents/MacOS/firefox");
 		options.setProfile(profile);
-//		options.addArguments("-install-global-extension /Users/mohamedmahmoud/git/extension/CleanVersion");
 		driver = new FirefoxDriver(options);
 		driver.get("about:addons");
 		
@@ -142,7 +129,7 @@ public class WebDriverFactory {
 	{
 
 		FirefoxProfile profile = new FirefoxProfile();
-		profile.addExtension(new File("./extension"));
+		profile.addExtension(new File("../extension"));
 		profile.setPreference("general.useragent.override", "UA-STRING");
 		profile.setPreference("extensions.modify_headers.currentVersion", "0.7.1.1-signed");
 		profile.setPreference("modifyheaders.headers.count", 1);
