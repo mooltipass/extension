@@ -145,7 +145,7 @@ public class WebDriverFactory {
 		caps.setBrowserName("firefox");
 		caps.setVersion("dev");
 
-		caps.setCapability(CapabilityType.PLATFORM,	"Windows 10");
+		caps.setCapability(CapabilityType.PLATFORM,"Windows 10");
 		caps.setCapability(FirefoxDriver.PROFILE, profile);
 		URL url = null;
 		try {
