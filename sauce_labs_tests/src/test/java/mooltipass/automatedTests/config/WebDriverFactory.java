@@ -129,7 +129,7 @@ public class WebDriverFactory {
 	{
 
 		FirefoxProfile profile = new FirefoxProfile();
-		profile.addExtension(new File("../extension"));
+		profile.addExtension(new File("mooltipass-extension.zip"));
 		profile.setPreference("general.useragent.override", "UA-STRING");
 		profile.setPreference("extensions.modify_headers.currentVersion", "0.7.1.1-signed");
 		profile.setPreference("modifyheaders.headers.count", 1);
