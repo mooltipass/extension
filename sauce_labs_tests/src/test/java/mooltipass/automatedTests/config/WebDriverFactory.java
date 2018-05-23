@@ -13,6 +13,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -47,16 +48,18 @@ public class WebDriverFactory {
 	}
 	
 	//for local testing on firefox
-//	private static WebDriver firefox(String extension){
-//		System.setProperty("webdriver.gecko.driver","src/test/resources/geckodriver.exe");
-//		FirefoxOptions options = new FirefoxOptions();
-//		FirefoxProfile profile = new FirefoxProfile();
-//		profile.addExtension(new File("path"));
-//		driver = new FirefoxDriver(profile);
-//		driver.get("about:addons");
-//		
-//		return driver;
-//	}
+	private static WebDriver firefox(String extension){
+		System.setProperty("webdriver.gecko.driver","src/test/resources/geckodriver");
+		FirefoxOptions options = new FirefoxOptions();
+		FirefoxProfile profile = new FirefoxProfile();
+		profile.addExtension(new File(extension));
+		options.setBinary("/Applications/Firefox Developer Edition.app/Contents/MacOS/firefox");
+		options.setProfile(profile);
+		driver = new FirefoxDriver(options);
+		driver.get("about:addons");
+		
+		return driver;
+	}
 	//for local testing on chrome
 	private static WebDriver chrome(String extension){
 		System.setProperty("webdriver.chrome.driver","src/test/resources/chromedriver");
@@ -126,7 +129,7 @@ public class WebDriverFactory {
 	{
 
 		FirefoxProfile profile = new FirefoxProfile();
-		profile.addExtension(new File(extensionPath));
+		profile.addExtension(new File("mooltipass-extension.zip"));
 		profile.setPreference("general.useragent.override", "UA-STRING");
 		profile.setPreference("extensions.modify_headers.currentVersion", "0.7.1.1-signed");
 		profile.setPreference("modifyheaders.headers.count", 1);
@@ -140,9 +143,9 @@ public class WebDriverFactory {
 		
 		DesiredCapabilities caps = new DesiredCapabilities();
 		caps.setBrowserName("firefox");
-		caps.setVersion("58");
+		caps.setVersion("dev");
 
-		caps.setCapability(CapabilityType.PLATFORM,	"Windows 10");
+		caps.setCapability(CapabilityType.PLATFORM,"Windows 10");
 		caps.setCapability(FirefoxDriver.PROFILE, profile);
 		URL url = null;
 		try {
@@ -164,8 +167,10 @@ public class WebDriverFactory {
 		String chromeExtension = config.getString("CHROME_EXTENSION");
 		String firefoxExtension = config.getString("FIREFOX_EXTENSION");
 		String browser = config.getString("BROWSER");
+		if(browser==null|| browser.isEmpty())
+			browser=System.getenv("browser");
 		WebDriver driver;
-		//driver =chrome(chromeExtension);
+	//	driver =firefox(firefoxExtension);
 		if(browser.equals("firefox"))
 			driver = remoteFirefox(sauceLabsUser,sauceLabsKey,firefoxExtension);
 		else
