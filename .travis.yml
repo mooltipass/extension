@@ -2,7 +2,8 @@ language: java
 jdk:
 - oraclejdk8
 before_script:
-- if [[ $TRAVIS_COMMIT_MESSAGE == *"[ci-ext]"* ]]; then foo="{ \"applications\":{ \"gecko\":{ \"id\":\"addon@example.com\",\"strict_min_version\":\"42.0\"}}," bash
+- if [[ $TRAVIS_COMMIT_MESSAGE == *"[ci-ext]"* ]]; then foo="{ \"applications\":{ \"gecko\":{ \"id\":\"addon@example.com\",\"strict_min_version\":\"42.0\"}},";
+  sed -i "1s/.*/$foo/" manifest.json; bash
   updateCleanVersion.sh --emulation-mode; mv mooltipass-extension.zip ./sauce_labs_tests/chrome_extension.crx;
   cd ./sauce_labs_tests; cp chrome_extension.crx mooltipass-extension.zip; fi;
 env:
