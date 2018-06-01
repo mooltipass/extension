@@ -17,6 +17,13 @@ var cipDebug = {};
 var content_debug_msg;
 var mcCombs;
 
+// Unify messaging method - And eliminate callbacks (a message is replied with another message instead)
+function messaging(message) {
+    if (content_debug_msg > 4) cipDebug.log('%c Sending message to background:', 'background-color: #0000FF; color: #FFF; padding: 5px; ', message);
+    if (isSafari) safari.self.tab.dispatchMessage("messageFromContent", message);
+    else chrome.runtime.sendMessage(message);
+};
+
 // ContentScript Entry-Point
 function init() {
     // Init variables
@@ -39,38 +46,38 @@ function init() {
         cipDebug.error = function () { }
     }
 
+    if (isSafari) { startContentScripts(); return; }
+
     // Check if URL is BlackListed
-    chrome.runtime.sendMessage({ "action": "check_if_blacklisted", "url": window.location.href }, function (response) {
-        // If URL is BlackListed, don't initialize content scripts
-        if (response.isBlacklisted) return;
-
-        // Don't initialize in user targeting iframes, captchas, etc.
-        var stopInitialization =
-            window.self != window.top &&
-            !window.location.hostname.match('chase.com') &&
-            !window.location.hostname.match('apple.com') && (
-                mpJQ('body').text().trim() == '' ||
-                window.innerWidth <= 1 ||
-                window.innerHeight <= 1 ||
-                window.location.href.match('recaptcha') ||
-                window.location.href.match('youtube') ||
-                window.location.href.match('pixel')
-            );
-        if (stopInitialization) return;
-
-        cipEvents.startEventHandling();
-        mcCombs = new mcCombinations();
-        mcCombs.settings.debugLevel = content_debug_msg;
-        messaging({ 'action': 'remove_credentials_from_tab_information' });
-        messaging({ 'action': 'content_script_loaded' });
+    chrome.runtime.sendMessage({ 'action': 'check_if_blacklisted', 'url': window.location.href }, function (response) {
+        startContentScripts(response);
     });
 };
 
-// Unify messaging method - And eliminate callbacks (a message is replied with another message instead)
-function messaging(message) {
-    if (content_debug_msg > 4) cipDebug.log('%c Sending message to background:', 'background-color: #0000FF; color: #FFF; padding: 5px; ', message);
-    if (isSafari) safari.self.tab.dispatchMessage("messageFromContent", message);
-    else chrome.runtime.sendMessage(message);
+// Checks if the URL is not BlackListed and starts the content scripts
+function startContentScripts(data) {
+    // If URL is BlackListed, don't initialize content scripts
+    if (data && data.isBlacklisted) return;
+
+    // Don't initialize in user targeting iframes, captchas, etc.
+    var stopInitialization =
+        window.self != window.top &&
+        !window.location.hostname.match('chase.com') &&
+        !window.location.hostname.match('apple.com') && (
+            mpJQ('body').text().trim() == '' ||
+            window.innerWidth <= 1 ||
+            window.innerHeight <= 1 ||
+            window.location.href.match('recaptcha') ||
+            window.location.href.match('youtube') ||
+            window.location.href.match('pixel')
+        );
+    if (stopInitialization) return;
+
+    cipEvents.startEventHandling();
+    mcCombs = new mcCombinations();
+    mcCombs.settings.debugLevel = content_debug_msg;
+    messaging({ 'action': 'remove_credentials_from_tab_information' });
+    messaging({ 'action': 'content_script_loaded' });
 };
 
 // Deprecated code
