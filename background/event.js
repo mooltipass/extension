@@ -85,7 +85,7 @@ mooltipassEvent.onMessage = function (request, sender, callback) {
     }
     else if (tab && request.action === 'check_if_blacklisted') {
         var isBlackListed = mooltipassEvent.isBlacklisted(request.url);
-        callback({ isBlacklisted: isBlackListed }); 
+        messaging({ 'action': 'response-' + request.action, 'isBlacklisted': isBlackListed }, tab); 
     }
 
     return true;

@@ -46,19 +46,6 @@ function init() {
         cipDebug.error = function () { }
     }
 
-    if (isSafari) { startContentScripts(); return; }
-
-    // Check if URL is BlackListed
-    chrome.runtime.sendMessage({ 'action': 'check_if_blacklisted', 'url': window.location.href }, function (response) {
-        startContentScripts(response);
-    });
-};
-
-// Checks if the URL is not BlackListed and starts the content scripts
-function startContentScripts(data) {
-    // If URL is BlackListed, don't initialize content scripts
-    if (data && data.isBlacklisted) return;
-
     // Don't initialize in user targeting iframes, captchas, etc.
     var stopInitialization =
         window.self != window.top &&
@@ -73,10 +60,26 @@ function startContentScripts(data) {
         );
     if (stopInitialization) return;
 
+    // Initialize MessageListener
     cipEvents.startEventHandling();
+
+    // Initialize mcCombinations
     mcCombs = new mcCombinations();
     mcCombs.settings.debugLevel = content_debug_msg;
+
+    // Delete tab info from previous navigation
     messaging({ 'action': 'remove_credentials_from_tab_information' });
+
+    // Check if URL is BlackListed
+    messaging({ 'action': 'check_if_blacklisted', 'url': window.location.href });
+};
+
+// Triggers as a response to the "check_if_blacklisted" msg
+function startContentScripts(data) {
+    // If URL is BlackListed, don't initialize content scripts
+    if (data && data.isBlacklisted) return;
+
+    // Inform background script initialization is complete
     messaging({ 'action': 'content_script_loaded' });
 };
 
