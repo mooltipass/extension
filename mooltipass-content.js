@@ -60,6 +60,49 @@ function init() {
         );
     if (stopInitialization) return;
 
+    // Capture messages recieved from the background script
+    startTemporaryEventListener();
+
+    // Check if URL is BlackListed
+    messaging({ 'action': 'check_if_blacklisted', 'url': window.location.href });
+};
+
+// Registers a temporary messageListener for msg's recieved from background script
+function startTemporaryEventListener() {
+
+    // Define temporary messageListener
+    tempListenerCallback = function (req, sender, callback) {
+        if (isSafari) req = req.message;
+        if (content_debug_msg > 5) cipDebug.log('%c onMessage: %c ' + req.action, 'background-color: #68b5dc', 'color: #000000');
+        else if (content_debug_msg > 4 && req.action != 'check_for_new_input_fields') cipDebug.log('%c onMessage: %c ' + req.action, 'background-color: #68b5dc', 'color: #000000');
+
+        // check message recieved
+        switch (req.action) {
+            case 'response-check_if_blacklisted':
+
+                // Remove event listener
+                if (isSafari) safari.self.removeEventListener("message", tempListenerCallback, false);
+                else chrome.runtime.onMessage.removeListener(tempListenerCallback);
+
+                // Init the content scripts
+                startContentScripts(req);
+                break;
+        }
+    };
+
+    // Register the temporary messageListener
+    if (isSafari) safari.self.addEventListener("message", tempListenerCallback, false);
+    else {
+        chrome.runtime.onMessage.removeListener(tempListenerCallback);
+        chrome.runtime.onMessage.addListener(tempListenerCallback);
+    }
+};
+
+// Checks the response of the "check_if_blacklisted" msg and initializes the content scripts
+function startContentScripts(data) {
+    // If URL is BlackListed, don't initialize content scripts
+    if (data && data.isBlacklisted) return;
+
     // Initialize MessageListener
     cipEvents.startEventHandling();
 
@@ -69,15 +112,6 @@ function init() {
 
     // Delete tab info from previous navigation
     messaging({ 'action': 'remove_credentials_from_tab_information' });
-
-    // Check if URL is BlackListed
-    messaging({ 'action': 'check_if_blacklisted', 'url': window.location.href });
-};
-
-// Triggers as a response to the "check_if_blacklisted" msg
-function startContentScripts(data) {
-    // If URL is BlackListed, don't initialize content scripts
-    if (data && data.isBlacklisted) return;
 
     // Inform background script initialization is complete
     messaging({ 'action': 'content_script_loaded' });

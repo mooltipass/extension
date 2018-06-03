@@ -63,9 +63,6 @@ var cipEvents = {
                         }]
                     });
                     break;
-                case 'response-check_if_blacklisted':
-                    startContentScripts(req);
-                    break;
             }
 
             // TODO: change IF for SWITCH
