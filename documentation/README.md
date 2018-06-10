@@ -76,6 +76,30 @@ The above mentioned behavior can be observed in the main content script ***moolt
  
 Here, the main content script sends a message to the background script which holds a copy of the local blacklist. The message contains the ***window.location.href*** which is the currently surfed URL. It then awaits the response from the background script. If the response is true (***response.isBlacklisted***), the content script returns and stops all further processing/initialization.
 
+# Content-Script Message Handling
+
+As previously described, the content-scripts & background-scripts communicate together via sending native messages to each other. In order to capture the messages, a message listener needs to be implemented.
+
+Within the content-scripts, 2 message listeners are implemented:
+1) Temporary message listener (***mooltipass-content.js***)
+2) Main message listener (***cipEvents.js***)
+
+In the ***mooltipass-content.js***, a temporary message listener is defined at the beginning. This message listener is intended to capture the response of the ***check_if_blacklisted*** message mentioned in the previous section.
+
+    // Capture messages recieved from the background script
+    startTemporaryEventListener();
+    
+Once the message response is recieved, the temporary message listener is decommisioned and the main message listener is initialized and started as shown in the below code snippet.
+
+    // Remove event listener
+    if (isSafari) safari.self.removeEventListener("message", tempListenerCallback, false);
+    else chrome.runtime.onMessage.removeListener(tempListenerCallback);
+
+    // Init the content scripts
+    startContentScripts(req);
+
+As for the ***cipEvents.js***, it is the main message listener for all content-scripts. It captures all messages being sent and reacts accordingly based on the message type/content.
+
 # Credential Caching
 
 Not all websites implement simple login dialogs where both; the username and password fields appear side by side on the same page. Some websites resort to implementing a 2-page authentication prompt. On such pages, the user enters first his username. This username is then validated by the website, and only if it appears to exist, a new prompt appears for the user including the password field. The user can then finalize the login procedure by inputting his password and proceeding on with the authentication.
