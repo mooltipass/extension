@@ -112,7 +112,7 @@ public class WebDriverFactory {
 				"Windows 10");
 		caps.setCapability(ChromeOptions.CAPABILITY, options);
 		caps.setCapability("name", scenarioName+" "+System.currentTimeMillis());
-		caps.setCapability("public", "public restricted");
+		caps.setCapability("public", "public");
 		URL url = null;
 		try {
 			url = new URL("http://"+sauceLabsUser+":"+sauceLabsKey+"@ondemand.saucelabs.com:80/wd/hub");
@@ -147,6 +147,7 @@ public class WebDriverFactory {
 
 		caps.setCapability(CapabilityType.PLATFORM,"Windows 10");
 		caps.setCapability(FirefoxDriver.PROFILE, profile);
+		caps.setCapability("public", "public");
 		URL url = null;
 		try {
 			url = new URL("http://"+sauceLabsUser+":"+sauceLabsKey+"@ondemand.saucelabs.com:80/wd/hub");
