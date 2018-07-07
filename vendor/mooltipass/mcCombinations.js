@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Extendable objects for special cases
  *
  */
@@ -1448,6 +1448,7 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
 
     IGNORE_PATTERNS = [
         /forgot/i,
+        /oublié/i,
         /lost/i,
         /lostlogin/i,
         /closeModal/i,
