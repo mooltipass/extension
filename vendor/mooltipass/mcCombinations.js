@@ -975,6 +975,14 @@ mcCombinations.prototype.detectForms = function () {
             var matching = currentForm.fields.some(function (field) {
                 if (this.settings.debugLevel > 3) cipDebug.log('\t\t %c mcCombinations - Form Detection: %c Checking field ', 'background-color: #c3c6b4', 'color: #777777', field.prop('type'));
 
+                // Check if field's ID starts with "fake"
+                if (field[0].id.startsWith("fake"))
+                {
+                    // Mark the field so as not to traverse it again
+                    field.data('passed', true);
+                    return false;
+                }
+
                 // Initialize field as not passed
                 field.data('passed', false);
 
