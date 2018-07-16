@@ -359,7 +359,7 @@ var extendedCombinations = {
             }
         }
     },
-    protonmail: function (forms) {
+    protonmailuservoice: function (forms) {
         if (mcCombs.getAllForms() == 0) return;
         for (form in forms) {
             var currentForm = forms[form];
@@ -555,10 +555,10 @@ mcCombinations.prototype.possibleCombinations = [
         callback: extendedCombinations.mooltipassTest
     },
     {
-        combinationId: 'protonMail',
-        combinationName: 'Proton Mail Login Procedure',
+        combinationId: 'protonmailuservoice',
+        combinationName: 'Proton Mail User Voice Login Procedure',
         requiredUrl: 'protonmail.uservoice.com',
-        callback: extendedCombinations.protonmail
+        callback: extendedCombinations.protonmailuservoice
     },
     {
         // Seen at icloud.com, seems to comform to an Apple's proprietary identity management system (IDMS)
