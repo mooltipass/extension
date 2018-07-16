@@ -359,6 +359,41 @@ var extendedCombinations = {
             }
         }
     },
+    protonmailuservoice: function (forms) {
+        if (mcCombs.getAllForms() == 0) return;
+        for (form in forms) {
+            var currentForm = forms[form];
+            if (currentForm.element) { // Skip noform form
+                currentForm.combination = {
+                    special: true,
+                    fields: {
+                        username: '',
+                        password: ''
+                    },
+                    savedFields: {
+                        username: '',
+                        password: ''
+                    },
+                    autoSubmit: false,
+                    extraFunction: function (fields) {
+                        if (!fields.username) return;
+
+                        // Submit Username field
+                        setTimeout(function () { mpJQ(fields.username).trigger('blur'); }, 200);
+                    }
+                }
+
+                if (mpJQ('input.uvFieldText[type=email]:visible').length > 0) { // Step 1: Email
+                    currentForm.combination.fields.username = mpJQ('input.uvFieldText[type=email]:visible');
+                    currentForm.combination.autoSubmit = false;
+                }
+                if (mpJQ('input.uvFieldPassword[type=password]:visible').length > 0) { // Step 2: Password
+                    currentForm.combination.fields.password = mpJQ('input.uvFieldPassword[type=password]:visible');
+                    currentForm.combination.autoSubmit = true;
+                }
+            }
+        }
+    },
 };
 
 var extendedPost = {
@@ -518,6 +553,12 @@ mcCombinations.prototype.possibleCombinations = [
         combinationName: 'Mooltipass Test Two Page Login Procedure',
         requiredUrl: '2-step-login.mooltipass-tests.com',
         callback: extendedCombinations.mooltipassTest
+    },
+    {
+        combinationId: 'protonmailuservoice',
+        combinationName: 'Proton Mail User Voice Login Procedure',
+        requiredUrl: 'protonmail.uservoice.com',
+        callback: extendedCombinations.protonmailuservoice
     },
     {
         // Seen at icloud.com, seems to comform to an Apple's proprietary identity management system (IDMS)
