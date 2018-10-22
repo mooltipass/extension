@@ -1648,6 +1648,27 @@ cipEvents.triggerActivatedTab = function() {
 	mcCombs.init();
 }
 
+// define content-script MutationObserver to check for new input field whenever DOM is changed
+const initMutationObserver = () => {
+	const MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+	// target
+	const targetElement = document.querySelector(`body`);
+	// options
+	const config = {
+		attributes: true,
+		childList: true,
+		characterData: true,
+		subtree: true,
+	};
+	// instance
+	const observer = new MutationObserver(function(mutations) {
+		mutations.forEach(function(mutation) {
+			cip.checkForNewInputs();
+		});
+	});
+	observer.observe(targetElement, config);
+}
+
 // Don't initialize in user targeting iframes, captchas, etc.
 var stopInitialization = 
 	window.self != window.top &&
@@ -1668,6 +1689,7 @@ if (!stopInitialization) {
 	mcCombs.settings.debugLevel = content_debug_msg;
 
 	messaging( {'action': 'content_script_loaded' } );
+	initMutationObserver();
 }
 
 var mpDialog = {
