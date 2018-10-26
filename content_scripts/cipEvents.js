@@ -10,6 +10,13 @@ var cipEvents = {
 
     temporaryActions: {},
 
+    /*
+    cipEvents flags that prevent a lot of CPU usage
+    ******************************************************************************************/
+    isContentScriptLoaded: false,
+    isSettingGot: false,
+    /*****************************************************************************************/
+
     /**
     * Creates an event handler for all incoming messages from the background-script [listenerCallback()].
     * Creates an event handler for key presses to detect HOTKEYS defined within the extension.
@@ -36,17 +43,23 @@ var cipEvents = {
             // Safari Specific
             switch (req.action) {
                 case 'response-content_script_loaded':
-                    mcCombs.init(function () {
-                        cip.settings = mcCombs.settings;
+                    if (!cipEvents.isContentScriptLoaded) { // Ensure that this part is called only once because it is causing a lot of CPU usage
+                        cipEvents.isContentScriptLoaded = true;
+                        mcCombs.init(function () {
+                            cip.settings = mcCombs.settings;
 
-                        var definedCredentialFields = cip.settings["defined-credential-fields"][document.location.origin]
-                        cipDefine.selection.username = definedCredentialFields ? definedCredentialFields.username : null
-                        cipDefine.selection.password = definedCredentialFields ? definedCredentialFields.password : null
-                        cipDefine.selection.fields = definedCredentialFields ? definedCredentialFields.fields : null
-                    });
+                            var definedCredentialFields = cip.settings["defined-credential-fields"][document.location.origin]
+                            cipDefine.selection.username = definedCredentialFields ? definedCredentialFields.username : null
+                            cipDefine.selection.password = definedCredentialFields ? definedCredentialFields.password : null
+                            cipDefine.selection.fields = definedCredentialFields ? definedCredentialFields.fields : null
+                        });
+                    }
                     break;
                 case 'response-get_settings':
-                    mcCombs.gotSettings(req.data);
+                    if (!cipEvents.isSettingGot) { // Ensure that this part is called only once because it is causing a lot of CPU usage
+                        mcCombs.gotSettings(req.data);
+                        cipEvents.isSettingGot = true;
+                    }
                     break;
                 case 'response-retrieve_credentials':
                     mcCombs.retrieveCredentialsCallback(req.data);

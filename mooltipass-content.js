@@ -15,7 +15,8 @@ var isSafari;
 var _called = {};
 var cipDebug = {};
 var content_debug_msg;
-var mcCombs;
+var mcCombs = null;
+var isContentScriptStarted = false;
 
 // Unify messaging method - And eliminate callbacks (a message is replied with another message instead)
 function messaging(message) {
@@ -98,15 +99,49 @@ function startTemporaryEventListener() {
     }
 };
 
+let mutationTimer = null;
+
+// define content-script MutationObserver to check for new input field whenever DOM is changed
+const initMutationObserver = () => {
+	const MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+	// target
+	const targetElement = document.querySelector(`body`);
+	// options
+	const config = {
+		attributes: true,
+		childList: true,
+		characterData: true,
+		subtree: true,
+	};
+	// instance
+	const observer = new MutationObserver(function(mutations) {
+		mutations.forEach(function(mutation) {
+			if (mutationTimer !== null) {
+				clearTimeout(mutationTimer); // only apply for the latest event
+			}
+			mutationTimer = setTimeout((mutation) => {
+				cip.checkForNewInputs();
+			}, 100, mutation);
+		});
+	});
+	observer.observe(targetElement, config);
+}
+
 // Checks the response of the "check_if_blacklisted" msg and initializes the content scripts
 function startContentScripts(data) {
     // If URL is BlackListed, don't initialize content scripts
-    if (data && data.isBlacklisted) return;
+    // Also, ensure that this function is called only once
+    if (data && data.isBlacklisted || isContentScriptStarted) return;
 
+    isContentScriptStarted = true;
     // Initialize MessageListener
     cipEvents.startEventHandling();
 
     // Initialize mcCombinations
+    if (mcCombs !== null) {
+        delete mcCombs;
+        mcCombs = null;
+    }
     mcCombs = new mcCombinations();
     mcCombs.settings.debugLevel = content_debug_msg;
 
@@ -115,6 +150,7 @@ function startContentScripts(data) {
 
     // Inform background script initialization is complete
     messaging({ 'action': 'content_script_loaded' });
+    initMutationObserver();
 };
 
 // Deprecated code
