@@ -300,12 +300,14 @@ mooltipass.device.sendCredentialRequestMessageFromQueue = function()
             setTimeout(function()
             {
                 var credentials = [];
+                var credentials_found = false;
                 
                 for (var i = 0; i < mooltipass.device.emulation_credentials.length; i++)
                 {
-                    if (mooltipass.device.emulation_credentials[i]["subdomain"] == mooltipass.device.retrieveCredentialsQueue[0].domain)
+                    if ((mooltipass.device.emulation_credentials[i]["domain"] == mooltipass.device.retrieveCredentialsQueue[0].subdomain + '.' + mooltipass.device.retrieveCredentialsQueue[0].domain) || (mooltipass.device.emulation_credentials[i]["domain"] == mooltipass.device.retrieveCredentialsQueue[0].domain))
                     {
                         if (background_debug_msg > 3) mpDebug.log("%c Emulation mode: found credential in buffer:", mpDebug.css('00ff00'), mooltipass.device.emulation_credentials[i]);
+                        credentials_found = true;
                         credentials.push(
                           {
                               Login: mooltipass.device.emulation_credentials[i]["login"],
@@ -317,7 +319,7 @@ mooltipass.device.sendCredentialRequestMessageFromQueue = function()
                         );
                     }
                 }
-                if (background_debug_msg > 3) mpDebug.log("%c Emulation mode: nothing in buffer!", mpDebug.css('00ff00'));
+                if ((background_debug_msg > 3) && (!credentials_found)) mpDebug.log("%c Emulation mode: nothing in buffer!", mpDebug.css('00ff00'));
                 
                 setTimeout(function()
                 {
