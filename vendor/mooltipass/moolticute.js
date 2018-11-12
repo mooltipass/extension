@@ -28,6 +28,9 @@ moolticute._qCallbacks = {};
 //create a unique id to map requests to responses
 moolticute._currCallbackId = 0;
 
+// moolticute protocol version
+moolticute._protocolVersion = "1.0"
+
 /*
     Allows to have a delayed response
     Set to false for normal operation or timeout in millisecs
@@ -79,6 +82,7 @@ moolticute.askPassword = function( request ) {
         msg: 'ask_password',
         client_id: id,
         data: {
+            extension_version: moolticute._protocolVersion,
             service: context,
             fallback_service: subcontext,
             login: '',
@@ -110,6 +114,7 @@ moolticute.sendRequest = function( request ) {
         var message = {
             "msg": "set_credential",
             "data": {
+                "extension_version": moolticute._protocolVersion,
                 "service": request.update.context,
                 "login": request.update.login,
                 "password": request.update.password,

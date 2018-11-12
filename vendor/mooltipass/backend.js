@@ -46,6 +46,10 @@ mooltipass.backend._blacklist = typeof(localStorage.mpBlacklist)=='undefined' ? 
  */
 mooltipass.backend.disableNonUnlockedNotifications = false;
 
+/** 
+ * Last icon name set 
+ */
+mooltipass.backend.lastIconSetName = "";
 
 
 mooltipass.backend.setStatusIcon = function(icon_name) {
@@ -60,10 +64,14 @@ mooltipass.backend.setStatusIcon = function(icon_name) {
         var theFunction = chrome.browserAction.setIcon;
     }
 
-    theFunction({
-        tabId: page.currentTabId,
-        path: "/images/icon_" + icon_name + "_19.png"
-    });
+    if (mooltipass.backend.lastIconSetName != icon_name)
+    {
+        mooltipass.backend.lastIconSetName = icon_name;
+        theFunction({
+            //tabId: page.currentTabId,
+            path: "/images/icon_" + icon_name + "_19.png"
+        });
+    }
 }
 
 mooltipass.backend.updateStatusIcon = function() {

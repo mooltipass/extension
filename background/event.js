@@ -401,85 +401,89 @@ mooltipassEvent.onUpdateNotify = function (callback, tab, username, password, ur
             });
             return;
         }
+        
+        // Update credentials, subdomain selection performed by moolticute
+        mooltipass.device.updateCredentials(null, tab, 0, username, password, toBeProcessedUrl);
 
-        if (subdomain == null) {
-            // Single domain
-            // Here we should send a request to the mooltipass to know if the username exists!
-            if (true) {
-                // Unknown user
-                var noteId = 'mpUpdate.' + mooltipassEvent.notificationCount.toString();
-
-                // Store our event
-                mooltipassEvent.mpUpdate[noteId] = { tab: tab, username: username, password: password, url: domain, url2: domain, type: "singledomainadd" };
-
-                // Send request by default
-                mooltipass.device.updateCredentials(null, tab, 0, username, password, domain);
-
-                // Create notification to blacklist
-                if (mooltipass.device._status.unlocked) {
-                    cross_notification(noteId,
-                        {
-                            type: 'basic',
-                            title: chrome.i18n.getMessage("EventJs_Notification_DetectedCredentials_Title"),
-                            message: chrome.i18n.getMessage("EventJs_Notification_DetectedCredentials_Message"),
-                            iconUrl: '/icons/mooltipass-128.png',
-                            buttons: [{ title: chrome.i18n.getMessage("EventJs_Notification_Button_BlackList"), iconUrl: '/icons/forbidden-icon.png' }]
-                        },
-                        function (id) {
-                            //console.log('notification created for',id);
-                        });
-                }
-            }
-            else { }
-        }
-        else {
-            // Subdomain exists
-            // Here we should send a request to the mooltipass to know if the username exists!
-
-            // first let's check to make sure the device is connected
-            if (mooltipass.device._status.state == 'NotConnected') {
-                //console.log('mooltipass not connected - do not ask which domain to store');
-            }
-            else if (mooltipass.device.emulation_mode) {
-                var notification = {
-                    type: 'basic',
-                    title: chrome.i18n.getMessage("EventJs_Notification_SubDomainDetected_Title"),
-                    message: chrome.i18n.getMessage("EventJs_Notification_SubDomainDetected_Message_1"),
-                    iconUrl: '/icons/question.png',
-                };
-
-                mooltipass.device.updateCredentials(null, tab, 0, username, password, domain);
-                cross_notification(noteId, notification);
-            }
-            else {
-
-                // Unknown user
-                var noteId = 'mpUpdate.' + mooltipassEvent.notificationCount.toString();
-
-                // Store our event
-                mooltipassEvent.mpUpdate[noteId] = { tab: tab, username: username, password: password, url: domain, url2: subdomain + "." + domain, type: "subdomainadd" };
-
-                var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-                var notification = {
-                    type: 'basic',
-                    title: chrome.i18n.getMessage("EventJs_Notification_SubDomainDetected_Title"),
-                    message: chrome.i18n.getMessage("EventJs_Notification_SubDomainDetected_Message_2"),
-                    iconUrl: '/icons/question.png',
-                };
-
-                // Firefox doesn't support buttons on notifications
-                if (!isFirefox && !isSafari) {
-                    notification.buttons = [{ title: chrome.i18n.getMessage("EventJs_Notification_Button_StoreDomain") + domain }, { title: chrome.i18n.getMessage("EventJs_Notification_Button_StoreDomain") + subdomain + '.' + domain }];
-                    notification.requireInteraction = true;
-                } else {
-                    // Firefox: Use domain (we should check against subdomain and later domain if missing tho...)
-                    notification.message = chrome.i18n.getMessage("EventJs_Notification_SubDomainDetected_Message_1");
-                    mooltipass.device.updateCredentials(null, tab, 0, username, password, subdomain + '.' + domain);
-                }
-
-                cross_notification(noteId, notification);
-            }
-        }
+        // Commented below: all domain selection logic has been migrated to moolticute!        
+        //if (subdomain == null) {
+        //    // Single domain
+        //    // Here we should send a request to the mooltipass to know if the username exists!
+        //    if (true) {
+        //        // Unknown user
+        //        var noteId = 'mpUpdate.' + mooltipassEvent.notificationCount.toString();
+        //
+        //        // Store our event
+        //        mooltipassEvent.mpUpdate[noteId] = { tab: tab, username: username, password: password, url: domain, url2: domain, type: "singledomainadd" };
+        //
+        //        // Send request by default
+        //        mooltipass.device.updateCredentials(null, tab, 0, username, password, domain);
+        //
+        //        // Create notification to blacklist
+        //        if (mooltipass.device._status.unlocked) {
+        //            cross_notification(noteId,
+        //                {
+        //                    type: 'basic',
+        //                    title: chrome.i18n.getMessage("EventJs_Notification_DetectedCredentials_Title"),
+        //                    message: chrome.i18n.getMessage("EventJs_Notification_DetectedCredentials_Message"),
+        //                    iconUrl: '/icons/mooltipass-128.png',
+        //                    buttons: [{ title: chrome.i18n.getMessage("EventJs_Notification_Button_BlackList"), iconUrl: '/icons/forbidden-icon.png' }]
+        //                },
+        //                function (id) {
+        //                    //console.log('notification created for',id);
+        //                });
+        //        }
+        //    }
+        //    else { }
+        //}
+        //else {
+        //    // Subdomain exists
+        //    // Here we should send a request to the mooltipass to know if the username exists!
+        //
+        //    // first let's check to make sure the device is connected
+        //    if (mooltipass.device._status.state == 'NotConnected') {
+        //        //console.log('mooltipass not connected - do not ask which domain to store');
+        //    }
+        //    else if (mooltipass.device.emulation_mode) {
+        //        var notification = {
+        //            type: 'basic',
+        //            title: chrome.i18n.getMessage("EventJs_Notification_SubDomainDetected_Title"),
+        //            message: chrome.i18n.getMessage("EventJs_Notification_SubDomainDetected_Message_1"),
+        //            iconUrl: '/icons/question.png',
+        //        };
+        //
+        //        mooltipass.device.updateCredentials(null, tab, 0, username, password, domain);
+        //        cross_notification(noteId, notification);
+        //    }
+        //    else {
+        //
+        //        // Unknown user
+        //        var noteId = 'mpUpdate.' + mooltipassEvent.notificationCount.toString();
+        //
+        //        // Store our event
+        //        mooltipassEvent.mpUpdate[noteId] = { tab: tab, username: username, password: password, url: domain, url2: subdomain + "." + domain, type: "subdomainadd" };
+        //
+        //        var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+        //        var notification = {
+        //            type: 'basic',
+        //            title: chrome.i18n.getMessage("EventJs_Notification_SubDomainDetected_Title"),
+        //            message: chrome.i18n.getMessage("EventJs_Notification_SubDomainDetected_Message_2"),
+        //            iconUrl: '/icons/question.png',
+        //        };
+        //
+        //        // Firefox doesn't support buttons on notifications
+        //        if (!isFirefox && !isSafari) {
+        //            notification.buttons = [{ title: chrome.i18n.getMessage("EventJs_Notification_Button_StoreDomain") + domain }, { title: chrome.i18n.getMessage("EventJs_Notification_Button_StoreDomain") + subdomain + '.' + domain }];
+        //            notification.requireInteraction = true;
+        //        } else {
+        //            // Firefox: Use domain (we should check against subdomain and later domain if missing tho...)
+        //            notification.message = chrome.i18n.getMessage("EventJs_Notification_SubDomainDetected_Message_1");
+        //            mooltipass.device.updateCredentials(null, tab, 0, username, password, subdomain + '.' + domain);
+        //        }
+        //
+        //        cross_notification(noteId, notification);
+        //    }
+        //}
     }
 }
 
