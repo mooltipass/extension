@@ -303,7 +303,7 @@ mooltipass.device.sendCredentialRequestMessageFromQueue = function()
                 
                 for (var i = 0; i < mooltipass.device.emulation_credentials.length; i++)
                 {
-                    if (mooltipass.device.emulation_credentials[i]["domain"] == mooltipass.device.retrieveCredentialsQueue[0].domain)
+                    if (mooltipass.device.emulation_credentials[i]["subdomain"] == mooltipass.device.retrieveCredentialsQueue[0].domain)
                     {
                         if (background_debug_msg > 3) mpDebug.log("%c Emulation mode: found credential in buffer:", mpDebug.css('00ff00'), mooltipass.device.emulation_credentials[i]);
                         credentials.push(
