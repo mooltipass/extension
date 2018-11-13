@@ -8,7 +8,13 @@ function messaging(message, tab, callback) {
         //console.log( tab, tab.page );
         if (tab && tab.page) tab.page.dispatchMessage("messageFromBackground", message);
         else mooltipassEvent.onMessage({ message: message }, 1, tab);
-    } else chrome.tabs.sendMessage(typeof (tab) == 'number' ? tab : tab.id, message, function (response) { });
+    } else {
+     if(typeof (tab) == "number"){//some messages are "broadcast", some are callbacks and should go only to specific frame
+        chrome.tabs.sendMessage(tab, message, function (response) { });
+    }else{
+        chrome.tabs.sendMessage(tab.id, message,{frameId:tab.frameId} ,function (response) { });    
+    }
+    }
 };
 
 /*
@@ -65,7 +71,7 @@ mooltipassEvent.onMessage = function (request, sender, callback) {
         tab = sender;
     } else { // Chrome and FF sends Request and Sender separately
         tab = sender.tab;
-
+        tab.frameId = sender.frameId;//CPU load fix , save frame ID, that sent request
         /* trade lightly below: for getStatus message ONLY we allow overwrite of the current tab object as the sender url is marked as "chrome-extension://" */
         /* worst case: another extension may ask if a given website is blacklisted */
         if (request.action == 'get_status' && (sender.url.startsWith("chrome-extension://") || sender.url.startsWith("moz-extension://"))) {
