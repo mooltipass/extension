@@ -49,7 +49,20 @@ var cipEvents = {
                             if (mutation.type == 'attributes' && mutation.attributeName != "style") {
                                 return;
                             }
+                            if (mutation.type == 'childList') {
+                                for(var i=0; i < mutation.addedNodes.length;i++){
+                                    if(mutation.addedNodes[i].tagName.toLowerCase() == "input"){
+                                        break;
+                                    }
+                                }
+                                if(i == mutation.addedNodes.length){
+                                   return;
+                                }
+                            }
+                            
                             setTimeout(function(){cip.checkForNewInputs();},500);//Wait while nodes actually added/removed, so we can find it.
+                            setTimeout(function(){cip.checkForNewInputs();},1500);//safeguard , to be sure all nodes added and rendered.
+                            
                             });
                         });
                         observer.observe(document, {attributes:true,childList: true,subtree: true});
