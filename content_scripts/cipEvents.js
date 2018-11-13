@@ -45,15 +45,14 @@ var cipEvents = {
                         cipDefine.selection.fields = definedCredentialFields ? definedCredentialFields.fields : null
                         //rescan all fields if any node added/removed
                         var observer = new MutationObserver(function(mutations) {
-                            setTimeout(function(){cip.checkForNewInputs();},100);//Wait while nodes actually added/removed, so we can find it.
-                            /*mutations.forEach(function(mutation) {
-                                if (!mutation.addedNodes.length) {
-                                    return;
-                                }
-                                cip.checkForNewInputs();
-                            });*/
+                            mutations.forEach(function(mutation) {
+                            if (mutation.type == 'attributes' && mutation.attributeName != "style") {
+                                return;
+                            }
+                            setTimeout(function(){cip.checkForNewInputs();},500);//Wait while nodes actually added/removed, so we can find it.
+                            });
                         });
-                        observer.observe(document, {childList: true,subtree: true});
+                        observer.observe(document, {attributes:true,childList: true,subtree: true});
                     });
                     break;
                 case 'response-get_settings':
