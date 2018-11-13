@@ -45,15 +45,27 @@ var cipEvents = {
                         cipDefine.selection.fields = definedCredentialFields ? definedCredentialFields.fields : null
                         //rescan all fields if any node added/removed
                         var observer = new MutationObserver(function(mutations) {
-                            setTimeout(function(){cip.checkForNewInputs();},100);//Wait while nodes actually added/removed, so we can find it.
-                            /*mutations.forEach(function(mutation) {
-                                if (!mutation.addedNodes.length) {
-                                    return;
+                            mutations.forEach(function(mutation) {
+                            if (mutation.type == 'attributes' && mutation.attributeName != "style") {
+                                return;
+                            }
+                            if (mutation.type == 'childList') {
+                                for(var i=0; i < mutation.addedNodes.length;i++){
+                                    if(mutation.addedNodes[i].tagName.toLowerCase() == "input"){
+                                        break;
+                                    }
                                 }
-                                cip.checkForNewInputs();
-                            });*/
+                                if(i == mutation.addedNodes.length){
+                                   return;
+                                }
+                            }
+                            
+                            setTimeout(function(){cip.checkForNewInputs();},500);//Wait while nodes actually added/removed, so we can find it.
+                            setTimeout(function(){cip.checkForNewInputs();},1500);//safeguard , to be sure all nodes added and rendered.
+                            
+                            });
                         });
-                        observer.observe(document, {childList: true,subtree: true});
+                        observer.observe(document, {attributes:true,childList: true,subtree: true});
                     });
                     break;
                 case 'response-get_settings':
