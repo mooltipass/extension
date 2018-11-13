@@ -43,6 +43,17 @@ var cipEvents = {
                         cipDefine.selection.username = definedCredentialFields ? definedCredentialFields.username : null
                         cipDefine.selection.password = definedCredentialFields ? definedCredentialFields.password : null
                         cipDefine.selection.fields = definedCredentialFields ? definedCredentialFields.fields : null
+                        //rescan all fields if any node added/removed
+                        var observer = new MutationObserver(function(mutations) {
+                            setTimeout(function(){cip.checkForNewInputs();},100);//Wait while nodes actually added/removed, so we can find it.
+                            /*mutations.forEach(function(mutation) {
+                                if (!mutation.addedNodes.length) {
+                                    return;
+                                }
+                                cip.checkForNewInputs();
+                            });*/
+                        });
+                        observer.observe(document, {childList: true,subtree: true});
                     });
                     break;
                 case 'response-get_settings':
@@ -107,9 +118,10 @@ var cipEvents = {
                 else if (req.action == "activated_tab") {
                     cipEvents.triggerActivatedTab();
                 }
+                /* new added/removed fields monitored by mutation observer
                 else if (req.action == "check_for_new_input_fields") {
                     cip.checkForNewInputs();
-                }
+                }*/
                 else if (req.action == "redetect_fields") {
                     chrome.runtime.sendMessage({
                         "action": "get_settings",

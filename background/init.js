@@ -249,11 +249,13 @@ startMooltipass = function () {
         browserAction.update(_interval);
     }, _interval);
 
-    window.setInterval(function () {
+    /* //new and removed fields monitored by mutation observer in content script
+    window.setInterval(function () { 
         if (page.currentTabId && page.currentTabId != -1 && page.allLoaded) {
             messaging({ action: "check_for_new_input_fields" }, page.currentTabId);
         }
     }, _intervalCheckForNewInputs);
+    */
 
     // ArrayBuffer to JSON (by Gaston)
     var arrayBufferToData = {
