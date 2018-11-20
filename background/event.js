@@ -66,7 +66,9 @@ mooltipassEvent.onMessage = function (request, sender, callback) {
         tab = sender;
     } else { // Chrome and FF sends Request and Sender separately
         tab = sender.tab;
+        if (tab) {
         tab.frameId = sender.frameId;//CPU load fix , save frame ID, that sent request
+        }
         /* trade lightly below: for getStatus message ONLY we allow overwrite of the current tab object as the sender url is marked as "chrome-extension://" */
         /* worst case: another extension may ask if a given website is blacklisted */
         if (request.action == 'get_status' && (sender.url.startsWith("chrome-extension://") || sender.url.startsWith("moz-extension://"))) {
