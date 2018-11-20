@@ -109,7 +109,7 @@ moolticute.askPassword = function( request ) {
 
 /* Signal moolticute to show a status notification if needed */
 moolticute.sendStatusNotificationTrigger = function() {
-    moolticute.websocket.send(JSON.stringify({"message":"show_status_notification_warning", "data":{}}));
+    moolticute.websocket.send(JSON.stringify({"msg":"show_status_notification_warning", "data":{}}));
 }
 
 /* Raw send request */
