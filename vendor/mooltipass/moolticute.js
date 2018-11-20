@@ -107,6 +107,11 @@ moolticute.askPassword = function( request ) {
     }));
  }
 
+/* Signal moolticute to show a status notification if needed */
+moolticute.sendStatusNotificationTrigger = function() {
+    moolticute.websocket.send(JSON.stringify({"message":"show_status_notification_warning", "data":{}}));
+}
+
 /* Raw send request */
 moolticute.sendRequest = function( request ) {
     if (background_debug_msg > 4) mpDebug.log('%c Moolticute sendRequest', mpDebug.css('FFC6A0'), request);
