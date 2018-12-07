@@ -559,7 +559,7 @@ mooltipassEvent.createAction = function (callback, tab, data) {
     messaging({
         action: data.action,
         args: data.args
-    }, tab)
+    }, isSafari ? tab : tab.id ) //createAction should be a broadcast message for all frames in tab, remove frameID and use only tabId
 }
 
 /*
