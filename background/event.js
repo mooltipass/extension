@@ -32,11 +32,6 @@ function getSafariTabId(tab) {
 }
 
 function cross_notification(notificationId, options) {
-    // Show notification about device status only once.
-    if (notificationId.indexOf('mpNotConnected') == 0 || notificationId.indexOf('mpNotUnlocked') == 0) {
-        mooltipass.backend.disableNonUnlockedNotifications = true;
-    }
-
     // Firefox doesn't support buttons in options and refuses to show notification.
     if (isFirefox) delete options.buttons
 
@@ -71,7 +66,9 @@ mooltipassEvent.onMessage = function (request, sender, callback) {
         tab = sender;
     } else { // Chrome and FF sends Request and Sender separately
         tab = sender.tab;
+        if (tab) {
         tab.frameId = sender.frameId;//CPU load fix , save frame ID, that sent request
+        }
         /* trade lightly below: for getStatus message ONLY we allow overwrite of the current tab object as the sender url is marked as "chrome-extension://" */
         /* worst case: another extension may ask if a given website is blacklisted */
         if (request.action == 'get_status' && (sender.url.startsWith("chrome-extension://") || sender.url.startsWith("moz-extension://"))) {
@@ -207,9 +204,9 @@ mooltipassEvent.onRemoveCredentialsFromTabInformation = function (callback, tab)
 }
 
 mooltipassEvent.onNotifyButtonClick = function (id, buttonIndex) {
+    /* In theory, all the code below is not used anymore as notifications are a thing of the past */
     // Check the kind of notification
     if (id.indexOf('mpNotConnected') == 0 || id.indexOf('mpNotUnlocked') == 0) {
-        mooltipass.backend.disableNonUnlockedNotifications = true;
     }
     else {
         // Check notification type
@@ -257,20 +254,12 @@ mooltipassEvent.isMooltipassUnlocked = function () {
         return false;
     }
 
-    // If the device is not connected and not unlocked and the user disabled the notifications, return
-    if (!(mooltipass.device._status.connected && mooltipass.device._status.unlocked)) {
-        if (mooltipass.backend.disableNonUnlockedNotifications) {
-            //console.log('Not showing a notification as they are disabled');
-            return false;
-        }
-    }
-
     // Increment notification count
     mooltipassEvent.notificationCount++;
     var noteId = 'mpNotUnlocked.' + mooltipassEvent.notificationCount.toString();
 
     // Check that the Mooltipass app is installed and enabled
-    if (!mooltipass.device.emulation_mode && !mooltipass.device.connectedToExternalApp && !mooltipass.device.connectedToApp) {
+    if (!mooltipass.device.emulation_mode && !mooltipass.device.connectedToExternalApp && !mooltipass.device.connectedToApp && !mooltipass.backend.noAppNotifShown) {
         //console.log('notify: mooltipass app not ready');
         noteId = "mpNotUnlockedStaticMooltipassAppNotReady." + mooltipassEvent.notificationCount.toString();
 
@@ -280,13 +269,21 @@ mooltipassEvent.isMooltipassUnlocked = function () {
                 type: 'basic',
                 title: chrome.i18n.getMessage("EventJs_Notification_AppNotInstalled_Title"),
                 message: chrome.i18n.getMessage("EventJs_Notification_AppNotInstalled_Message"),
-                iconUrl: '/icons/warning_icon.png',
-                buttons: [{ title: chrome.i18n.getMessage("EventJs_Notification_Button_HideNotifications"), iconUrl: '/icons/forbidden-icon.png' }]
+                iconUrl: '/icons/warning_icon.png'
             });
+            
+        mooltipass.backend.noAppNotifShown = true;
 
         return false;
     }
 
+    // If the device is not connected and not unlocked and the user disabled the notifications, return
+    if (!(mooltipass.device._status.connected && mooltipass.device._status.unlocked)) {
+        moolticute.sendStatusNotificationTrigger();
+        return false;
+    }
+
+    /* Notifications are now implemented in moolticute!
     // Check that our device actually is connected
     if (!mooltipass.device._status.connected) {
         //console.log('notify: device not connected');
@@ -353,7 +350,7 @@ mooltipassEvent.isMooltipassUnlocked = function () {
         cross_notification(noteId, notification);
 
         return false;
-    }
+    }*/
 
     return true;
 }

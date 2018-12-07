@@ -41,10 +41,9 @@ mooltipass.backend = mooltipass.backend || {};
 mooltipass.backend._blacklist = typeof(localStorage.mpBlacklist)=='undefined' ? {} : JSON.parse(localStorage.mpBlacklist);
 
 /**
- * Disable notificatons about unlocked device
- * TODO: add this parameter to the settings dialog and let the user decide
+ * Boolean to only display once the notification about missing app
  */
-mooltipass.backend.disableNonUnlockedNotifications = false;
+mooltipass.backend.noAppNotifShown = false;
 
 /** 
  * Last icon name set 
