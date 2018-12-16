@@ -62,7 +62,7 @@
   "PopupStatusHtml_Menu_Settings": { "message": "Settings" },
   "PopupStatusHtml_Menu_Website": { "message": "Mooltipass website" },
   "PopupStatusHtml_Menu_OpenApp": { "message": "Open Mooltipass App" },
-  "PopupStatusHtml_Menu_NoApp": { "message": "(no app installed)" },
+  "PopupStatusHtml_Menu_NoApp": { "message": "(No Installed App)" },
   "PopupStatusHtml_Menu_ReportIssue": { "message": "Report incompatibilities with this website" },
   "PopupStatusHtml_StatusBar_CheckStatus": { "message": "checking status " },
   "PopupStatusHtml_StatusBar_DeviceUnlocked": { "message": "Device Unlocked" },
