@@ -138,6 +138,10 @@ function getStatusCallback(object) {
     // No app found
     else if (!object.status.connectedToApp) {
         mpJQ('#app-missing').show();
+        mpJQ("#btn-open-app").text(chrome.i18n.getMessage("PopupStatusHtml_Menu_OpenApp")+chrome.i18n.getMessage("PopupStatusHtml_Menu_NoApp"));
+        mpJQ("#btn-open-app").css("color","gray");
+        mpJQ("#btn-open-app").css("cursor","default");
+        mpJQ("#btn-open-app").off();
     }
     // Unknown error
     else {
