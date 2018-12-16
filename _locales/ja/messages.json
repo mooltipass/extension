@@ -69,7 +69,8 @@
   "PopupStatusHtml_StatusBar_DeviceDisconnected": { "message": "Device Disconnected" },
   "PopupStatusHtml_StatusBar_AppMissing": { "message": "Mooltipass Application Missing!" },
   "PopupStatusHtml_StatusBar_Unknown": { "message": "Unknown Status" },
-  
+  "PopupStatusHtml_Menu_NoApp": { "message": "(no app installed)" },
+
   "EventJs_Notification_AppNotInstalled_Title": { "message": "No Mooltipass App Installed" },
   "EventJs_Notification_AppNotInstalled_Message": { "message": "Please Install our Application on www.themooltipass.com/setup" },
   "EventJs_Notification_AppNotConnected_Title": { "message": "Mooltipass Not Connected" },
