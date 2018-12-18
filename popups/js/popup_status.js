@@ -43,11 +43,7 @@ function initSettings() {
         }
     });
 
-    mpJQ("#btn-open-app").click(function (e) {
-        e.preventDefault();
-        messaging({ action: "show_app" }, function () { });
-        if (!isSafari) close();
-    });
+
 
     mpJQ("#btn-report-error").click(function (e) {
         if (isSafari) {
@@ -123,6 +119,17 @@ function getStatusCallback(object) {
 
     mpJQ('#btn-select-credential-fields').toggleClass('disabled', object.hideCustomCredentials)
 
+    if (object.status.connectedToApp) {  
+        mpJQ("#btn-open-app").click(function (e) {
+            e.preventDefault();
+            messaging({ action: "show_app" }, function () { });
+            if (!isSafari) close();
+        });
+        $("#btn-open-app").text(chrome.i18n.getMessage("PopupStatusHtml_Menu_OpenApp"));
+        mpJQ('#app-missing').hide();
+        mpJQ("#btn-open-app").css("color","");
+        mpJQ("#btn-open-app").css("cursor","");
+    }
     // Connection to app established, device connected and unlocked
     if (object.status.deviceUnlocked && object.status.connectedToDevice && object.status.connectedToApp) {
         mpJQ('#device-unlocked').show();
@@ -155,6 +162,7 @@ function getStatusCallback(object) {
         mpJQ('#btn-add-site-to-blacklist').show();
         mpJQ('#btn-remove-site-from-blacklist').hide();
     }
+
 }
 
 function updateStatusInfo() {
