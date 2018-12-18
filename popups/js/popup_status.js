@@ -125,7 +125,11 @@ function getStatusCallback(object) {
             messaging({ action: "show_app" }, function () { });
             if (!isSafari) close();
         });
-        $("#btn-open-app").text(chrome.i18n.getMessage("PopupStatusHtml_Menu_OpenApp"));
+        if(isSafari){
+            $("#btn-open-app").text("Open Mooltipass App");
+        }else{
+                 $("#btn-open-app").text(chrome.i18n.getMessage("PopupStatusHtml_Menu_OpenApp"));     
+        }
         mpJQ('#app-missing').hide();
         mpJQ("#btn-open-app").css("color","");
         mpJQ("#btn-open-app").css("cursor","");
@@ -145,7 +149,12 @@ function getStatusCallback(object) {
     // No app found
     else if (!object.status.connectedToApp) {
         mpJQ('#app-missing').show();
+        if(isSafari){
+            $("#btn-open-app").text("Open Mooltipass App (no app installed)");
+        }
+        else{
         mpJQ("#btn-open-app").text(chrome.i18n.getMessage("PopupStatusHtml_Menu_OpenApp")+chrome.i18n.getMessage("PopupStatusHtml_Menu_NoApp"));
+        }
         mpJQ("#btn-open-app").css("color","gray");
         mpJQ("#btn-open-app").css("cursor","default");
         mpJQ("#btn-open-app").off();
