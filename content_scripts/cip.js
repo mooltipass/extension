@@ -647,7 +647,7 @@ var cip = {
                 });
             }
 
-            var url = event.target && event.target.action;
+            var url = event && event.target && event.target.action; //event is null when called from context menu
             // Action property can be DOM element with name="action".
             if (!url || typeof url != 'string' || url == 'javascript:void(0)' || url.indexOf('javascript') == 0) {
                 url = document.location.href;

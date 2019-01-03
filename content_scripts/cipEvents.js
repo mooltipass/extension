@@ -51,7 +51,7 @@ var cipEvents = {
                             }
                             if (mutation.type == 'childList') {
                                 for(var i=0; i < mutation.addedNodes.length;i++){
-                                    if(mutation.addedNodes[i].tagName.toLowerCase() == "input"){
+                                    if(mutation.addedNodes[i].tagName && mutation.addedNodes[i].tagName.toLowerCase() == "input"){
                                         break;
                                     }
                                 }
