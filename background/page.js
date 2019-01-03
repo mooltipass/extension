@@ -85,6 +85,12 @@ page.initSettings = function() {
 page.cacheLogin = function( callback, tab, arguments ) {
 	if (background_debug_msg > 4) mpDebug.log('%c page: %c cacheLogin ','background-color: #ffeef9','color: #246', arguments);
 	page.tabs[ tab.id ].loginList = {'Login': arguments };
+	var tab_id = tab.id;
+
+	setTimeout(function(){
+		page.tabs[ tab_id ].loginList = { };
+	},30*1000);//clear cache item after 30 seconds
+
 }
 
 /*
