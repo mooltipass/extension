@@ -30,7 +30,7 @@ function init() {
     isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
     isSafari = typeof (safari) == 'object' ? true : false;
     content_debug_msg = (!isFirefox && !isSafari && chrome.runtime && !('update_url' in chrome.runtime.getManifest())) ? 55 : false;
-
+    
     // Initialize logging
     if (content_debug_msg) {
         cipDebug.log = function (message) { this.log(message); }
@@ -50,7 +50,8 @@ function init() {
     var stopInitialization =
         window.self != window.top &&
         !window.location.hostname.match('chase.com') &&
-        !window.location.hostname.match('apple.com') && (
+        !window.location.hostname.match('apple.com') &&
+        !window.location.hostname.match('sso.garmin.com') && (
             mpJQ('body').text().trim() == '' ||
             window.innerWidth <= 1 ||
             window.innerHeight <= 1 ||
