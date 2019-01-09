@@ -662,7 +662,7 @@ mcCombinations.prototype.possibleCombinations = [
         combinationName: 'Login Form mixed with Registration Form (ie: showroomprive.com)',
         requiredFields: [
             {
-                selector: 'input[type=email],input:not([type]), input[type=text]:not([name=fakeusernameremembered])',
+                selector: 'input[type=text]:not([name=fakeusernameremembered]),input[type=email],input:not([type])',
                 mapsTo: 'username'
             },
             {
@@ -678,6 +678,13 @@ mcCombinations.prototype.possibleCombinations = [
         extraFunction: function (fields) {
             if (!this.fields.username) {
                 this.fields.username = cipFields.getUsernameField(fields.password.prop('id'));
+            }
+        },
+        extraFunctionSave: function (fields) {
+            if(this.fields.password){
+                tempField = cipFields.getUsernameField(this.fields.password.prop('id'));
+                if(tempField)
+                    this.fields.username = tempField;
             }
         }
     },
@@ -1062,6 +1069,10 @@ mcCombinations.prototype.detectForms = function () {
                             if (!currentForm.combination.fields) currentForm.combination.fields = {};
                             currentForm.combination.fields[requiredField.mapsTo] = field;
                             requiredField.mapsTo = null;
+                        }
+                        if (currentForm.combination.extraFunctionSave) {
+                            if (this.settings.debugLevel > 4) cipDebug.log('%c mcCombinations: %c Running ExtraFunction for combination', 'background-color: #c3c6b4', 'color: #333333');
+                            currentForm.combination.extraFunctionSave(currentForm.combination.fields);
                         }
 
                         // Check current score
