@@ -100,6 +100,15 @@ Once the message response is recieved, the temporary message listener is decommi
 
 As for the ***cipEvents.js***, it is the main message listener for all content-scripts. It captures all messages being sent and reacts accordingly based on the message type/content.
 
+Background sends 2 types of messages :
+  -response message - "callback" with results for some message from content script. This message sent to tab and subframe that sent original message.
+  -broadcast messages - send to all tabs, all subframes.
+
+# Page content monitoring
+
+Content script constantly monitors page changes using Mutation observer (https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver).
+"checkForNewInputs" function called if mutation observer detects input fields added or "style" attribute updated(in case some fields showed or hidden) 
+
 # Credential Caching
 
 Not all websites implement simple login dialogs where both; the username and password fields appear side by side on the same page. Some websites resort to implementing a 2-page authentication prompt. On such pages, the user enters first his username. This username is then validated by the website, and only if it appears to exist, a new prompt appears for the user including the password field. The user can then finalize the login procedure by inputting his password and proceeding on with the authentication.
