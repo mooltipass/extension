@@ -199,6 +199,4 @@ The *STRING_RESOURCE_NAME* should be common across all locale resource files per
 
 # Possible Improvements
 
-- ~~Replace hard-coded strings within the extension with **LOCALE** resources.~~
 - Refactor the *mooltipass-content.js* into smaller, readable, debugable scripts as is the case with all *background-scripts*.
-- **Chrome.webRequest.onBeforeRequest** is used heavily within the extension. This is very resource intensive and can add major noticable delay to the user experience in cases where the extension is used along side another network trafficing or security extension. Discuss the possibility of limiting it to capturing *HTTP POST* requests being made from within the *main_frame* instead of *all_frames*.
