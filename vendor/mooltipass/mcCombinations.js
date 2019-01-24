@@ -1659,7 +1659,7 @@ mcCombinations.prototype.doSubmit = function doSubmit(currentForm) {
         setTimeout(function () {
             if (this.settings.debugLevel > 4) cipDebug.log('%c mcCombinations: %c doSubmit:submitButton', 'background-color: #c3c6b4', 'color: #333333', submitButton);
             submitButton.click()
-        }.bind(this), 100)
+        }.bind(this), 500)
     } else {
         // If we haven't found submit button, check if <FORM> has a submit event handler defined & trigger it.
         if (!mpJQ(currentForm.element)[0].outerHTML.match(/ng-submit/i)) mpJQ(currentForm.element).trigger('submit');
