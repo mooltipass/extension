@@ -166,14 +166,17 @@ startMooltipass = function () {
                 // Deal both with RAW DATA and FORM DATA
                 // If we notice the extension being slow because of it intercepting too much data, uncomment the following line
                 //if (details && details.type === "xmlhttprequest") { // Raw data (multipart posts, etc)
+                if (details && details.type != "csp_report") {     
                 if (details && details.requestBody && details.requestBody.raw && details.requestBody.raw[0]) {
-                    var buffer = details.requestBody.raw[0].bytes;
-                    var parsed = arrayBufferToData.toJSON(buffer);
-                    if (details.tabId) chrome.tabs.sendMessage(details.tabId, { action: 'post_detected', post_data: parsed });
-                    //} 
-                } else { // Standard POST
-                    chrome.tabs.sendMessage(details.tabId, { action: 'post_detected', details: details });
-                }
+//                    if(background_debug_msg > 4) mpDebug.log('%c init: onBeforeRequest - Post request type:'+details.type , 'background-color: #4CAF50; color: #FFF', details);
+                        var buffer = details.requestBody.raw[0].bytes;
+                        var parsed = arrayBufferToData.toJSON(buffer); //parsed can be null if we failed to parse buffer
+                        if (details.tabId && parsed) chrome.tabs.sendMessage(details.tabId, { action: 'post_detected', post_data: parsed });
+                        //} 
+                    } else { // Standard POST
+                        chrome.tabs.sendMessage(details.tabId, { action: 'post_detected', details: details });
+                   }
+            }
             }
         }, { urls: ["<all_urls>"] }, webRequestOptions);
 
@@ -288,7 +291,11 @@ startMooltipass = function () {
                 if (string.substr(0, 1) == '<') { // Posibly XML
                     return string;
                 } else {
-                    return JSON.parse('{"' + decodeURI(string).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
+                    var result = null;
+                    try{ //not a valid JSON for some urls, parse error.
+                        result = JSON.parse('{"' + decodeURI(string).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
+                    }catch(e){}
+                    return result;
                 }
 
             }
