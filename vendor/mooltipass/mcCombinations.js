@@ -1772,7 +1772,8 @@ mcCombinations.prototype.postDetected = function (details) {
                 }
 
                 // Only update if they differ from our database values (and if new values are filled in)
-                if (((storedUsernameValue != usernameValue) || (storedPasswordValue != passwordValue)) && (usernameValue != '' && passwordValue != '')) {
+                //usernameValue and passwordValue can be undefined in some cases.
+                if (((storedUsernameValue != usernameValue) || (storedPasswordValue != passwordValue)) && (usernameValue && passwordValue && usernameValue != '' && passwordValue != '')) {
                     var url = document.location.origin;
                     chrome.runtime.sendMessage({
                         'action': 'update_notify',
