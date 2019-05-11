@@ -36,7 +36,8 @@
       "vendor/mooltipass/moolticute.js",
       "vendor/mooltipass/device.js",
       "background/event.js",
-      "background/init.js"
+      "background/init.js",
+      "background/installAction.js"
     ]
   },
   "content_scripts": [
