@@ -1,11 +1,15 @@
-if(navigator.userAgent.indexOf("Chrome") != -1 )
-{
+var isFirefox = typeof(browser) == "object";
+
+if(isFirefox){
+	browser.runtime.onInstalled.addListener(function() {
+		browser.tabs.create({url: "first_run_documents/firefox/firefox.html"});
+	});
+}else if(navigator.userAgent.indexOf("OPR/") != -1 ){
+	chrome.runtime.onInstalled.addListener(function (object) {
+		chrome.tabs.create({url: "first_run_documents/opera/opera.html"});
+	});
+}else if(navigator.userAgent.indexOf("Chrome") != -1 ){
 	chrome.runtime.onInstalled.addListener(function (object) {
 		chrome.tabs.create({url: "first_run_documents/chrome/chrome.html"});
 	});
-}
-
-if(navigator.userAgent.indexOf("Firefox") != -1 )
-{
-	browser.runtime.onInstalled.addListener(function() {browser.windows.create({url: "first_run_documents/firefox/firefox.html"});});
 }
