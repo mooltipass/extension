@@ -1584,6 +1584,7 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
 
     IGNORE_PATTERNS = [
         /forgot/i,
+        /trouble/i,
         /signup/,
         /reset/i,
         /oublié/i,
