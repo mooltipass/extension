@@ -63,6 +63,36 @@ var extendedCombinations = {
             }
         }
     },
+    booking: function (forms) {
+        //console.log('skype combination');
+        if (mcCombs.getAllForms() == 0) return;
+        for (form in forms) {
+            var currentForm = forms[form];
+            if (currentForm.element) { // Skip noform form
+                currentForm.combination = {
+                    special: true,
+                    fields: {
+                        username: '',
+                        password: ''
+                    },
+                    savedFields: {
+                        username: '',
+                        password: ''
+                    },
+                    autoSubmit: false
+                }
+
+                if (mpJQ('input[id=password]:visible').length > 0) { // Step 2: pass
+                    currentForm.combination.fields.password = mpJQ('input[id=password]');
+                    currentForm.combination.autoSubmit = true;
+                }
+                if (mpJQ('input[id=username]:visible').length > 0) { // Step 1: Email
+                    currentForm.combination.fields.username = mpJQ('input[id=username]');
+                    currentForm.combination.autoSubmit = true;
+                }
+            }
+        }
+    },
     autodesk: function (forms) {
         //console.log('autodesk combination');
         if (mcCombs.getAllForms() == 0) return;
@@ -516,6 +546,12 @@ mcCombinations.prototype.possibleCombinations = [
         requiredUrl: 'id.atlassian.com',
         combinationName: 'Atlassian Two Page Login Procedure',
         callback: extendedCombinations.atlassian
+    },
+    {
+        combinationId: 'bookingTwoPageAuth',
+        combinationName: 'Booking Two Page Login Procedure',
+        requiredUrl: 'account.booking.com',
+        callback: extendedCombinations.booking
     },
     {
         combinationId: 'skypeTwoPageAuth',
