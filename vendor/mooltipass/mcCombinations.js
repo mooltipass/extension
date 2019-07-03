@@ -1563,6 +1563,8 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
     var ACCEPT_PATTERNS = [
         /submit/i,
         /login/i,
+        /logon/i,
+        /log on/i,
         /log in/i,
         /sign/i,
         /sign in/i,
