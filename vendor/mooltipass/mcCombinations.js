@@ -1602,7 +1602,7 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
         /resetform/i,
         /remember_login/i,
         /obtenir/i,
-        //info/,//conflict with logINFOrm text 
+        /info\b/,
         /sign up/i,
         /facebook/i,
         /google/i,
