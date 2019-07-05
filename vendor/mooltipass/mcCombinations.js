@@ -63,6 +63,35 @@ var extendedCombinations = {
             }
         }
     },
+    backblaze: function (forms) {
+        if (mcCombs.getAllForms() == 0) return;
+        for (form in forms) {
+            var currentForm = forms[form];
+            if (currentForm.element) { // Skip noform form
+                currentForm.combination = {
+                    special: true,
+                    fields: {
+                        username: '',
+                        password: ''
+                    },
+                    savedFields: {
+                        username: '',
+                        password: ''
+                    },
+                    autoSubmit: false
+                }
+
+                if (mpJQ('input[type=password]:visible').length > 0) { // Step 1: Email
+                    currentForm.combination.fields.password = mpJQ('input[type=password]');
+                    currentForm.combination.autoSubmit = true;
+                }
+                if (mpJQ('input[name=email-field]:visible').length > 0) { // Step 1: Email
+                    currentForm.combination.fields.username = mpJQ('input[name=email-field]');
+                    currentForm.combination.autoSubmit = true;
+                }
+            }
+        }
+    },
     booking: function (forms) {
         //console.log('skype combination');
         if (mcCombs.getAllForms() == 0) return;
@@ -558,6 +587,12 @@ mcCombinations.prototype.possibleCombinations = [
         combinationName: 'Skype Two Page Login Procedure',
         requiredUrl: 'login.live.com',
         callback: extendedCombinations.skype
+    },
+    {
+        combinationId: 'backblazaTwoPageAuth',
+        combinationName: 'Backblaze Two Page Login Procedure',
+        requiredUrl: 'secure.backblaze.com',
+        callback: extendedCombinations.backblaze
     },
     {
         combinationId: 'autodeskTwoPageAuth',

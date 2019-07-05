@@ -49,7 +49,7 @@ var cipEvents = {
                             if (mutation.type == 'attributes' && (mutation.attributeName != "style" && mutation.attributeName != "class")) {
                                 return;
                             }
-                            if (mutation.type == 'childList') {
+                            if (mutation.type == 'childList' && mutation.addedNodes.length) {
                                 for(var i=0; i < mutation.addedNodes.length;i++){
                                     if(mutation.addedNodes[i].tagName && mutation.addedNodes[i].tagName.toLowerCase() == "input"){
                                         break;
