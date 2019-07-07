@@ -76,6 +76,7 @@ var mpDialog = {
             }));
 
         $(iframe).addClass('mp-ui-password-dialog').hide()
+        $(iframe).css({ background: "none" });
         mpJQ("body").append(iframe)
 
         this.dialog = $(iframe)

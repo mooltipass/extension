@@ -46,10 +46,10 @@ var cipEvents = {
                         //rescan all fields if any node added/removed
                         var observer = new MutationObserver(function(mutations) {
                             mutations.forEach(function(mutation) {
-                            if (mutation.type == 'attributes' && mutation.attributeName != "style") {
+                            if (mutation.type == 'attributes' && (mutation.attributeName != "style" && mutation.attributeName != "class")) {
                                 return;
                             }
-                            if (mutation.type == 'childList') {
+                            if (mutation.type == 'childList' && mutation.addedNodes.length) {
                                 for(var i=0; i < mutation.addedNodes.length;i++){
                                     if(mutation.addedNodes[i].tagName && mutation.addedNodes[i].tagName.toLowerCase() == "input"){
                                         break;

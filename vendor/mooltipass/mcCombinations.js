@@ -3,6 +3,64 @@
  *
  */
 var extendedCombinations = {
+        atlassian: function (forms) {
+        console.log('atlassian combination');
+        if (mcCombs.getAllForms() == 0) return;
+        for (form in forms) {
+            var currentForm = forms[form];
+            if (currentForm.element) { // Skip noform form
+                currentForm.combination = {
+                    special: true,
+                    fields: {
+                        username: '',
+                        password: ''
+                    },
+                    savedFields: {
+                        username: '',
+                        password: ''
+                    },
+                    autoSubmit: false
+                }
+
+                if (mpJQ('input[id=password]:visible').length > 0) { // Step 2:pass
+                    currentForm.combination.fields.password = mpJQ('input[id=password]');
+                    currentForm.combination.autoSubmit = true;
+                }
+                if (mpJQ('input[id=username]:visible').length > 0) { // Step 1: Email
+                    currentForm.combination.fields.username = mpJQ('input[id=username]');
+                    currentForm.combination.autoSubmit = true;
+                }
+            }
+        }
+    },
+        hp: function (forms) {
+        //console.log('hp combination');
+        if (mcCombs.getAllForms() == 0) return;
+        for (form in forms) {
+            var currentForm = forms[form];
+                currentForm.combination = {
+                    special: true,
+                    fields: {
+                        username: '',
+                        password: ''
+                    },
+                    savedFields: {
+                        username: '',
+                        password: ''
+                    },
+                    autoSubmit: false
+                }
+
+                if (mpJQ('input[type=password]:visible').length > 0) { // Step 1: Email
+                    currentForm.combination.fields.password = mpJQ('input[type=password]');
+                    currentForm.combination.autoSubmit = true;
+                }
+                if (mpJQ('input[id=username]:visible').length > 0) { // Step 1: Email
+                    currentForm.combination.fields.username = mpJQ('input[id=username]');
+                    currentForm.combination.autoSubmit = true;
+                }
+        }
+    },
     skype: function (forms) {
         //console.log('skype combination');
         if (mcCombs.getAllForms() == 0) return;
@@ -28,6 +86,65 @@ var extendedCombinations = {
                 }
                 if (mpJQ('input[name=loginfmt]:visible').length > 0) { // Step 1: Email
                     currentForm.combination.fields.username = mpJQ('input[name=loginfmt]');
+                    currentForm.combination.autoSubmit = true;
+                }
+            }
+        }
+    },
+    backblaze: function (forms) {
+        if (mcCombs.getAllForms() == 0) return;
+        for (form in forms) {
+            var currentForm = forms[form];
+            if (currentForm.element) { // Skip noform form
+                currentForm.combination = {
+                    special: true,
+                    fields: {
+                        username: '',
+                        password: ''
+                    },
+                    savedFields: {
+                        username: '',
+                        password: ''
+                    },
+                    autoSubmit: false
+                }
+
+                if (mpJQ('input[type=password]:visible').length > 0) { // Step 1: Email
+                    currentForm.combination.fields.password = mpJQ('input[type=password]');
+                    currentForm.combination.autoSubmit = true;
+                }
+                if (mpJQ('input[name=email-field]:visible').length > 0) { // Step 1: Email
+                    currentForm.combination.fields.username = mpJQ('input[name=email-field]');
+                    currentForm.combination.autoSubmit = true;
+                }
+            }
+        }
+    },
+    booking: function (forms) {
+        //console.log('skype combination');
+        if (mcCombs.getAllForms() == 0) return;
+        for (form in forms) {
+            var currentForm = forms[form];
+            if (currentForm.element) { // Skip noform form
+                currentForm.combination = {
+                    special: true,
+                    fields: {
+                        username: '',
+                        password: ''
+                    },
+                    savedFields: {
+                        username: '',
+                        password: ''
+                    },
+                    autoSubmit: false
+                }
+
+                if (mpJQ('input[id=password]:visible').length > 0) { // Step 2: pass
+                    currentForm.combination.fields.password = mpJQ('input[id=password]');
+                    currentForm.combination.autoSubmit = true;
+                }
+                if (mpJQ('input[id=username]:visible').length > 0) { // Step 1: Email
+                    currentForm.combination.fields.username = mpJQ('input[id=username]');
                     currentForm.combination.autoSubmit = true;
                 }
             }
@@ -436,7 +553,7 @@ function mcCombinations() { }
 mcCombinations.prototype = (function () {
     return {
         constructor: mcCombinations,
-        inputQueryPattern: "input[type='text']:not([class='search']), input[type='email'], input[type='login'], input[type='password']:not(.notinview):not([tabindex='-1']), input[type='tel'], input[type='number'], input:not([type]), input[name='username']",
+        inputQueryPattern: "input[type='username'], input[type='text']:not([class='search']), input[type='email'], input[type='login'], input[type='password']:not(.notinview):not([tabindex='-1']), input[type='tel'], input[type='number'], input:not([type]), input[name='username']",
         forms: {
             noform: { fields: [] }
         },
@@ -482,10 +599,34 @@ mcCombinations.prototype.gotSettings = function (response) {
 */
 mcCombinations.prototype.possibleCombinations = [
     {
+        combinationId: 'atlassianTwoPageAuth',
+        requiredUrl: 'id.atlassian.com',
+        combinationName: 'Atlassian Two Page Login Procedure',
+        callback: extendedCombinations.atlassian
+    },
+    {
+        combinationId: 'bookingTwoPageAuth',
+        combinationName: 'Booking Two Page Login Procedure',
+        requiredUrl: 'account.booking.com',
+        callback: extendedCombinations.booking
+    },
+    {
+        combinationId: 'hpTwoPageAuth',
+        combinationName: 'HP Two Page Login Procedure',
+        requiredUrl: 'id.hp.com',
+        callback: extendedCombinations.hp
+    },
+    {
         combinationId: 'skypeTwoPageAuth',
         combinationName: 'Skype Two Page Login Procedure',
         requiredUrl: 'login.live.com',
         callback: extendedCombinations.skype
+    },
+    {
+        combinationId: 'backblazaTwoPageAuth',
+        combinationName: 'Backblaze Two Page Login Procedure',
+        requiredUrl: 'secure.backblaze.com',
+        callback: extendedCombinations.backblaze
     },
     {
         combinationId: 'autodeskTwoPageAuth',
@@ -614,7 +755,7 @@ mcCombinations.prototype.possibleCombinations = [
         combinationName: 'Simple Login Form with Text',
         requiredFields: [
             {
-                selector: 'input[type=text],input[type=login],input[type=tel],input:not([type]),input[name=username]',
+                selector: 'input[type=text],input[type=login],input[type=tel],input:not([type]),input[name=username],input[type=username]',
                 mapsTo: 'username'
             },
             {
@@ -1491,8 +1632,11 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
     var ACCEPT_PATTERNS = [
         /submit/i,
         /login/i,
+        /logon/i,
+        /log on/i,
         /log in/i,
         /sign/i,
+        /sign in/i,
         /connexion/i,
         /valider/i,
         /connecter/i,
@@ -1509,6 +1653,9 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
 
     IGNORE_PATTERNS = [
         /forgot/i,
+        /trouble/i,
+        /signup/,
+        /reset/i,
         /oublié/i,
         /vergeten/i,
         /problemen/i,
@@ -1524,7 +1671,7 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
         /resetform/i,
         /remember_login/i,
         /obtenir/i,
-        /info/,
+        /info\b/,
         /sign up/i,
         /facebook/i,
         /google/i,
