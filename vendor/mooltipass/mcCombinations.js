@@ -33,6 +33,34 @@ var extendedCombinations = {
             }
         }
     },
+        hp: function (forms) {
+        //console.log('hp combination');
+        if (mcCombs.getAllForms() == 0) return;
+        for (form in forms) {
+            var currentForm = forms[form];
+                currentForm.combination = {
+                    special: true,
+                    fields: {
+                        username: '',
+                        password: ''
+                    },
+                    savedFields: {
+                        username: '',
+                        password: ''
+                    },
+                    autoSubmit: false
+                }
+
+                if (mpJQ('input[type=password]:visible').length > 0) { // Step 1: Email
+                    currentForm.combination.fields.password = mpJQ('input[type=password]');
+                    currentForm.combination.autoSubmit = true;
+                }
+                if (mpJQ('input[id=username]:visible').length > 0) { // Step 1: Email
+                    currentForm.combination.fields.username = mpJQ('input[id=username]');
+                    currentForm.combination.autoSubmit = true;
+                }
+        }
+    },
     skype: function (forms) {
         //console.log('skype combination');
         if (mcCombs.getAllForms() == 0) return;
@@ -581,6 +609,12 @@ mcCombinations.prototype.possibleCombinations = [
         combinationName: 'Booking Two Page Login Procedure',
         requiredUrl: 'account.booking.com',
         callback: extendedCombinations.booking
+    },
+    {
+        combinationId: 'hpTwoPageAuth',
+        combinationName: 'HP Two Page Login Procedure',
+        requiredUrl: 'id.hp.com',
+        callback: extendedCombinations.hp
     },
     {
         combinationId: 'skypeTwoPageAuth',
