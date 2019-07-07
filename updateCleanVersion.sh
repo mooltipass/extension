@@ -296,7 +296,7 @@ function _inject_scripts()
     cp "${CWD}/mooltipass-content.css" "${OUTPUT_DIR}/mooltipass-content.css"
     cp "${CWD}/manifest.json" "${OUTPUT_DIR}/"
 
-    for ext_dir in vendor popups css options background images icons ui content_scripts _locales shared_scripts; do
+    for ext_dir in vendor popups css options background images icons ui content_scripts _locales first_run_documents shared_scripts; do
         cp -Rf "${CWD}/${ext_dir}" "${OUTPUT_DIR}/"
     done
 
