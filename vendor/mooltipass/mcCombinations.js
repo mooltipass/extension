@@ -1809,6 +1809,10 @@ mcCombinations.prototype.doSubmit = function doSubmit(currentForm) {
         }.bind(this), 500)
     } else {
         // If we haven't found submit button, check if <FORM> has a submit event handler defined & trigger it.
+            // Do not autosubmit form with two-factor auth for Steam.
+        if (window.location.hostname.match(/steamcommunity.com|steampowered.com/)) {//avoid second submit(incorrect) on steam sites
+            return
+        }
         if (!mpJQ(currentForm.element)[0].outerHTML.match(/ng-submit/i)) mpJQ(currentForm.element).trigger('submit');
     }
 }
