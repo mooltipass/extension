@@ -126,9 +126,9 @@ function getStatusCallback(object) {
             if (!isSafari) close();
         });
         if(isSafari){
-            $("#btn-open-app").text("Open Mooltipass App");
+            mpJQ("#btn-open-app").text("Open Mooltipass App");
         }else{
-                 $("#btn-open-app").text(chrome.i18n.getMessage("PopupStatusHtml_Menu_OpenApp"));     
+            mpJQ("#btn-open-app").text(chrome.i18n.getMessage("PopupStatusHtml_Menu_OpenApp"));     
         }
         mpJQ('#app-missing').hide();
         mpJQ("#btn-open-app").css("color","");
