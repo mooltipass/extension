@@ -68,7 +68,7 @@ mooltipass.website.reportError = function(callback) {
     },
     function(response){
         var $ = jQuery.noConflict(true);
-        if ("url" in response) {
+        if (response && "url" in response) {
             var url = response.url;
         } else {
             var url = "not-set";
