@@ -75,7 +75,7 @@ options.initAbout = function () {
             $("#contributor-list").html("");
             for (_contributor in contributors) {
                 contributor = contributors[_contributor];
-                e = $("<a class='pure-u-1-3 contributor' href='" + contributor.html_url + "'><img src='" + contributor.avatar_url + "' />" + contributor.login + "</a>");
+                e = $(DOMPurify.sanitize("<a class='pure-u-1-3 contributor' href='" + contributor.html_url + "'><img src='" + contributor.avatar_url + "' />" + contributor.login + "</a>", { SAFE_FOR_JQUERY: true }));
                 $("#contributor-list").append(e);
             }
         });
