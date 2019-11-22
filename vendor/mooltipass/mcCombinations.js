@@ -1541,6 +1541,7 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
     }
 
     for (form in this.forms) {
+        var wasFilled = false;
         currentForm = this.forms[form];
         if (this.settings.debugLevel > 1) cipDebug.log('%c mcCombinations - %c retrieveCredentialsCallback filling form', 'background-color: #c3c6b4', 'color: #FF0000', currentForm);
         if (!currentForm.combination || !currentForm.combination.fields) continue;
@@ -1562,6 +1563,7 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
                     } catch (e) { }
                     currentForm.combination.fields.username[0].dispatchEvent(new Event('change'));
                     currentForm.combination.savedFields.username.value = credentials[0].Login;
+                    wasFilled = true;
                 }
             }
 
@@ -1586,6 +1588,7 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
                     } catch (e) { }
                     currentForm.combination.fields.password[0].dispatchEvent(new Event('change'));
                     currentForm.combination.savedFields.password.value = credentials[0].Password;
+                    wasFilled = true;
                 }
             }
 
@@ -1601,7 +1604,8 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
                 cip.initPasswordGenerator(inputs);
             }
 
-            if (currentForm.combination.autoSubmit &&
+            if (wasFilled &&
+                currentForm.combination.autoSubmit &&
                 !currentForm.definedCredentialFields &&
                 !this.settings.doNotSubmitAfterFill &&
                 (!currentForm.combination.fields.username || mpJQ.contains(document, currentForm.combination.fields.username[0])) &&
