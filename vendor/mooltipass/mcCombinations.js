@@ -1653,6 +1653,7 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
         /weiter/i,
         /next/i,
         /inloggen/i,
+        /identifierNext/i /*google*/
     ],
 
     IGNORE_PATTERNS = [
@@ -1735,14 +1736,14 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
             {
                 // Ensure that button has been labeled as selected
                 if (buttons[0].getAttribute("data-mp-id")) {
-                    if (buttons[0].distance < 200) return buttons[0];
+                    if (buttons[0].distance < 210) return buttons[0];//google has 203px distance
                 }
             }
             else
             {
                 // Ensure button was not previously labeled as selected
                 if (!buttons[0].getAttribute("data-mp-id")) {
-                    if (buttons[0].distance < 200) { this.setUniqueId(buttons); return buttons[0]; }
+                    if (buttons[0].distance < 210) { this.setUniqueId(buttons); return buttons[0]; }
                 }
             }
         }
