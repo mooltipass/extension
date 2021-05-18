@@ -7,14 +7,18 @@
   "icons": {
     "19" : "images/icon_extension_19.png",
     "32" : "images/icon_extension_32.png",
-    "128" : "images/icon_extension_128.png"
+    "128" : "images/icon_extension_128.png",
+    "256" : "images/icon_extension_256.png",
+    "512" : "images/icon_extension_512.png"
   },
 
   "browser_action": {
     "default_icon": {
       "19" : "images/icon_normal_19.png",
       "32" : "images/icon_normal_32.png",
-      "128" : "images/icon_normal_128.png"
+      "128" : "images/icon_normal_128.png",
+      "256" : "images/icon_normal_256.png",
+      "512" : "images/icon_normal_512.png"
     },
     "default_title": "Mooltipass Extension",
     "default_popup": "popups/popup_status.html"
