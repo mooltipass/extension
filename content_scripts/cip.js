@@ -20,6 +20,7 @@ var cip = {
     visibleInputsHash: 0,
     waitingForPost: true,   // Post could be either by form submit or XHR. Either way, we wait for it.
     autoSubmit: true,       // Auto-submit form
+    fillUserOnly: false,// Flag setting that we only wish to fill in the user name	
     fillPasswordOnly: false,// Flag setting that we only wish to fill in the password
 
     init: function ()
@@ -212,6 +213,7 @@ var cip = {
             // Due to browser extension sand-boxing, and basic jQuery functionality, you cannot trigger a non-jQuery click event with trigger or click.
             cip.p[0].dispatchEvent(new Event('change'));
         }
+		cip.fillUserOnly = false;
         cip.fillPasswordOnly = false;
     },
 
@@ -283,6 +285,16 @@ var cip = {
             });
         }
     },
+	
+    /**
+    * Triggers when the user selects the "Fill user only" context-menu.
+    */
+    retrieveAndFillUser: function ()
+    {
+		cip.fillUserOnly = true;
+		mcCombs.fillUserOnly = true;
+        this.initCredentialFields(true);
+    },	
 
     /**
     * Triggers when the user selects the "Fill user+pass" context-menu.
@@ -298,6 +310,7 @@ var cip = {
     retrieveAndFillPassword: function ()
     {
         cip.fillPasswordOnly = true;
+			mcCombs.fillPasswordOnly = true;
         this.initCredentialFields(true);
     },
 

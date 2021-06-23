@@ -192,6 +192,20 @@ startMooltipass = function () {
 
     if (!isSafari) {
         /**
+         * Add context menu entry for filling in username only
+         */
+        chrome.contextMenus.create({
+            "title": chrome.i18n.getMessage("InitJs_ContextMenu_FillUserOnly"),
+			//"title": "Fill username only",
+            "contexts": ["editable"],
+            "onclick": function (info, tab) {
+                chrome.tabs.sendMessage(tab.id, {
+                    action: "fill_user_only"
+                });
+            }
+        });		
+		
+        /**
          * Add context menu entry for filling in username + password
          */
         chrome.contextMenus.create({
@@ -203,6 +217,7 @@ startMooltipass = function () {
                 });
             }
         });
+			
 
         /**
          * Add context menu entry for filling in only password which matches for given username
