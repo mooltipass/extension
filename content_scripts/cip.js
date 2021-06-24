@@ -310,7 +310,7 @@ var cip = {
     retrieveAndFillPassword: function ()
     {
         cip.fillPasswordOnly = true;
-			mcCombs.fillPasswordOnly = true;
+		mcCombs.fillPasswordOnly = true;
         this.initCredentialFields(true);
     },
 

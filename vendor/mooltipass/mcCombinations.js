@@ -1555,7 +1555,6 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
         }
         // Unsure about this restriction. Probably should always make a retrieve credentials call (need to think about it)
         else if (currentForm.combination) {
-			//if (credentials[0].Login && currentForm.combination.fields.username) {
             if (credentials[0].Login && currentForm.combination.fields.username && this.fillPasswordOnly === false) {
                 if (this.settings.debugLevel > 3) cipDebug.log('%c mcCombinations - %c retrieveCredentialsCallback filling form - Username', 'background-color: #c3c6b4', 'color: #FF0000');
                 // Fill-in Username
@@ -1572,7 +1571,6 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
                 }
             }
 			
-			//if (credentials[0].Password && currentForm.combination.fields.password && currentForm.combination.combinationId != 'passwordreset001') {
             if (credentials[0].Password && currentForm.combination.fields.password && currentForm.combination.combinationId != 'passwordreset001' && this.fillUserOnly === false) {
                 if (this.settings.debugLevel > 3) cipDebug.log('%c mcCombinations - %c retrieveCredentialsCallback filling form - Password', 'background-color: #c3c6b4', 'color: #FF0000');
                 // Fill-in Password
