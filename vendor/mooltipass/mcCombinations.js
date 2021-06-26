@@ -564,8 +564,8 @@ mcCombinations.prototype = (function () {
             debugLevel: 0,
             postDetectionFeature: true
         },
-		fillUserOnly: false,
-		fillPasswordOnly: false
+        fillUserOnly: false,
+        fillPasswordOnly: false
     };
 })();
 
@@ -1628,8 +1628,8 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
         if (this.forms['noform'].definedCredentialFields) break
     }
 	
-	this.fillUserOnly = false;
-	this.fillPasswordOnly = false;
+    this.fillUserOnly = false;
+    this.fillPasswordOnly = false;
 }
 
 /*

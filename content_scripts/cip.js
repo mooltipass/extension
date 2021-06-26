@@ -213,7 +213,7 @@ var cip = {
             // Due to browser extension sand-boxing, and basic jQuery functionality, you cannot trigger a non-jQuery click event with trigger or click.
             cip.p[0].dispatchEvent(new Event('change'));
         }
-		cip.fillUserOnly = false;
+        cip.fillUserOnly = false;
         cip.fillPasswordOnly = false;
     },
 
@@ -291,8 +291,8 @@ var cip = {
     */
     retrieveAndFillUser: function ()
     {
-		cip.fillUserOnly = true;
-		mcCombs.fillUserOnly = true;
+        cip.fillUserOnly = true;
+        mcCombs.fillUserOnly = true;
         this.initCredentialFields(true);
     },	
 
@@ -310,7 +310,7 @@ var cip = {
     retrieveAndFillPassword: function ()
     {
         cip.fillPasswordOnly = true;
-		mcCombs.fillPasswordOnly = true;
+        mcCombs.fillPasswordOnly = true;
         this.initCredentialFields(true);
     },
 
