@@ -563,7 +563,9 @@ mcCombinations.prototype = (function () {
         settings: {
             debugLevel: 0,
             postDetectionFeature: true
-        }
+        },
+        fillUserOnly: false,
+        fillPasswordOnly: false
     };
 })();
 
@@ -1513,6 +1515,7 @@ mcCombinations.prototype.triggerChangeEvent = function (node, value) {
 * Parses the credentials obtained
 */
 mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
+	
     if (!credentials || credentials.length < 1) {
         if (this.settings.debugLevel > 1) cipDebug.log('%c mcCombinations: %c retrieveCredentialsCallback returned empty', 'background-color: #c3c6b4', 'color: #FF0000');
         return;
@@ -1541,6 +1544,7 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
     }
 
     for (form in this.forms) {
+			
         var wasFilled = false;
         currentForm = this.forms[form];
         if (this.settings.debugLevel > 1) cipDebug.log('%c mcCombinations - %c retrieveCredentialsCallback filling form', 'background-color: #c3c6b4', 'color: #FF0000', currentForm);
@@ -1551,7 +1555,7 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
         }
         // Unsure about this restriction. Probably should always make a retrieve credentials call (need to think about it)
         else if (currentForm.combination) {
-            if (credentials[0].Login && currentForm.combination.fields.username) {
+            if (credentials[0].Login && currentForm.combination.fields.username && this.fillPasswordOnly === false) {
                 if (this.settings.debugLevel > 3) cipDebug.log('%c mcCombinations - %c retrieveCredentialsCallback filling form - Username', 'background-color: #c3c6b4', 'color: #FF0000');
                 // Fill-in Username
                 if (currentForm.combination.fields.username && typeof currentForm.combination.fields.username !== 'string') {
@@ -1566,8 +1570,8 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
                     wasFilled = true;
                 }
             }
-
-            if (credentials[0].Password && currentForm.combination.fields.password && currentForm.combination.combinationId != 'passwordreset001') {
+			
+            if (credentials[0].Password && currentForm.combination.fields.password && currentForm.combination.combinationId != 'passwordreset001' && this.fillUserOnly === false) {
                 if (this.settings.debugLevel > 3) cipDebug.log('%c mcCombinations - %c retrieveCredentialsCallback filling form - Password', 'background-color: #c3c6b4', 'color: #FF0000');
                 // Fill-in Password
                 if (
@@ -1623,6 +1627,9 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
         // Don't proceed other forms when we have defined credential fields.
         if (this.forms['noform'].definedCredentialFields) break
     }
+	
+    this.fillUserOnly = false;
+    this.fillPasswordOnly = false;
 }
 
 /*

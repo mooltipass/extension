@@ -108,6 +108,9 @@ var cipEvents = {
                     // wish I could clear out _logins and _u, but a subsequent
                     // selection may be requested.
                 }
+                else if (req.action == "fill_user_only") {
+                    cip.retrieveAndFillUser();
+                }
                 else if (req.action == "fill_user_pass") {
                     cip.retrieveAndFillUserAndPassword();
                 }

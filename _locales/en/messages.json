@@ -36,6 +36,7 @@
   "BlacklistedSitesHtml_BlackListed_Site_Form_Placeholder": { "message": "Domain name (e.g. sub.domain.com)" },
   "BlacklistedSitesHtml_BlackListed_Site_Form_Submit": { "message": "Add" },
   
+  "InitJs_ContextMenu_FillUserOnly": { "message": "Fill username only" },
   "InitJs_ContextMenu_FillUserPass": { "message": "Fill User + Pass" },
   "InitJs_ContextMenu_FillPass": { "message": "Fill Pass Only" },
   "InitJs_ContextMenu_ShowPassGenIcons": { "message": "Show Password Generator Icons" },
