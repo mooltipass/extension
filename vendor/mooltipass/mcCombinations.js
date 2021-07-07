@@ -267,9 +267,62 @@ var extendedCombinations = {
                     currentForm.combination.fields.username = mpJQ('input[type=email]');
                     currentForm.combination.autoSubmit = true;
                 }
+				
+                if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){
+                    var parentForm = currentForm.combination.fields.password[0].closest('form');
+                    if (parentForm){
+                        var inputEmail = parentForm.querySelector('input#identifierId');
+                        if (inputEmail){
+                            currentForm.combination.fields.username = mpJQ(inputEmail);
+                            currentForm.combination.autoSubmit = true;
+                            currentForm.combination.fields.username.attr('data-mp-id', "identifierId");
+                        }
+                    }	
+                }
             }
         }
     },
+    firefox: function (forms) {
+        if (mcCombs.getAllForms() == 0) return;
+        for (form in forms) {
+            var currentForm = forms[form];
+            if (currentForm.element) { // Skip noform form
+                currentForm.combination = {
+                    special: true,
+                    fields: {
+                        username: '',
+                        password: ''
+                    },
+                    savedFields: {
+                        username: '',
+                        password: ''
+                    },
+                    autoSubmit: false
+                }
+
+                if (mpJQ('input[type=password]:visible').length > 0) { 
+                    currentForm.combination.fields.password = mpJQ('input[type=password]');
+                    currentForm.combination.autoSubmit = true;
+                }
+                if (mpJQ('input[type=email]:visible').length > 0) { 
+                    currentForm.combination.fields.username = mpJQ('input[type=email]');
+                    currentForm.combination.autoSubmit = true;
+                }
+				
+                if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){
+                    var parentForm = currentForm.combination.fields.password[0].closest('form');
+                    if (parentForm){
+                        var inputEmail = parentForm.querySelector('input[type=email]');
+                        if (inputEmail){
+                            currentForm.combination.fields.username = mpJQ(inputEmail);
+                            currentForm.combination.autoSubmit = true;						
+                            currentForm.combination.fields.username.attr('data-mp-id', "login_email");
+                        }
+                    }	
+                }				
+            }
+        }
+    },	
     soundcloud: function (forms) {
         if (mcCombs.getAllForms() == 0) return;
         for (form in forms) {
@@ -353,6 +406,14 @@ var extendedCombinations = {
                 if (mpJQ('input[id=login_password]:visible').length > 0) {
                     currentForm.combination.fields.password = mpJQ('input[id=login_password]');
                     currentForm.combination.autoSubmit = true;
+                }
+
+                if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){	
+                    if (mpJQ('form#login input[type=text]').length > 0) {
+                        currentForm.combination.fields.username = mpJQ('form#login input[type=text]');
+                        currentForm.combination.autoSubmit = true;
+                        currentForm.combination.fields.username.attr('data-mp-id', "login_username");
+                    }	
                 }
             }
         }
@@ -643,6 +704,12 @@ mcCombinations.prototype.possibleCombinations = [
         requiredUrl: 'accounts.google.com',
         callback: extendedCombinations.google
     },
+    {
+        combinationId: 'firefoxTwoPageAuth',
+        combinationName: 'Firefox Two Page Login Procedure',
+        requiredUrl: 'accounts.firefox.com',
+        callback: extendedCombinations.firefox
+    },	
     {
         combinationId: 'soundcloudTwoPageAuth',
         combinationName: 'SoundCloud Two Page Login Procedure',
