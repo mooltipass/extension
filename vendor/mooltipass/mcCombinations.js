@@ -1892,6 +1892,13 @@ mcCombinations.prototype.doSubmit = function doSubmit(currentForm) {
         if (window.location.hostname.match(/steamcommunity.com|steampowered.com/)) {//avoid second submit(incorrect) on steam sites
             return
         }
+        if (window.location.hostname.match(/accounts.google.com/)) {  //for google trigger('submit') not works. So, simulate the pressing of the ENTER key
+            var ke1 = new KeyboardEvent('keydown', {bubbles: true, cancelable: true, keyCode: 13});	
+            if (field){
+                field[0].dispatchEvent(ke1);	
+            }			
+            return
+        }	
         if (!mpJQ(currentForm.element)[0].outerHTML.match(/ng-submit/i)) mpJQ(currentForm.element).trigger('submit');
     }
 }
