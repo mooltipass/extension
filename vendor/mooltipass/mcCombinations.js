@@ -33,6 +33,43 @@ var extendedCombinations = {
             }
         }
     },
+        box: function (forms) {
+        console.log('box combination');
+        if (mcCombs.getAllForms() == 0) return;
+        for (form in forms) {
+            var currentForm = forms[form];
+            if (currentForm.element) { // Skip noform form
+                currentForm.combination = {
+                    special: true,
+                    fields: {
+                        username: '',
+                        password: ''
+                    },
+                    savedFields: {
+                        username: '',
+                        password: ''
+                    },
+                    autoSubmit: false
+                }
+
+                if (mpJQ('input[id=password-login]:visible').length > 0) { // Step 2:pass
+                    currentForm.combination.fields.password = mpJQ('input[id=password-login]');
+                    currentForm.combination.autoSubmit = true;
+                }
+                if (mpJQ('input[id=login-email]:visible').length > 0) { // Step 1: Email
+                    currentForm.combination.fields.username = mpJQ('input[id=login-email]');
+                    currentForm.combination.autoSubmit = true;
+                }
+                if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){	
+                    if (mpJQ('form#login-form input[name=login]').length > 0) {
+                        currentForm.combination.fields.username = mpJQ('form#login-form input[name=login]');
+                        currentForm.combination.autoSubmit = true;
+                        currentForm.combination.fields.username.attr('data-mp-id', "login-email");
+                    }	
+                }				
+            }
+        }
+    },	
         hp: function (forms) {
         //console.log('hp combination');
         if (mcCombs.getAllForms() == 0) return;
@@ -746,6 +783,12 @@ mcCombinations.prototype.possibleCombinations = [
         requiredUrl: 'upwork.com',
         callback: extendedCombinations.upwork
     },
+    {
+        combinationId: 'boxAuth',
+        combinationName: 'Box Login Procedure',
+        requiredUrl: 'account.box.com',
+        callback: extendedCombinations.box
+    },	
     {
         combinationId: 'googleTwoPageAuth',
         combinationName: 'Google Two Page Login Procedure',
