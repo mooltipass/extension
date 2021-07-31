@@ -1825,8 +1825,10 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
         var selector = BUTTON_SELECTORS[selectorIndex]
 
         var buttons = container.find(selector).filter(function (index, button) {
-            for (var i = 0; i < IGNORE_PATTERNS.length; i++) {
-                if (mpJQ(button).clone().children().remove().end()[0].outerHTML.match(IGNORE_PATTERNS[i])) return false
+            if (!window.location.hostname.match(/nextcloud.com/)) {
+                for (var i = 0; i < IGNORE_PATTERNS.length; i++) {
+                    if (mpJQ(button).clone().children().remove().end()[0].outerHTML.match(IGNORE_PATTERNS[i])) return false
+			    }
             }
 
             for (var i = 0; i < ACCEPT_PATTERNS.length; i++) {
@@ -1900,6 +1902,7 @@ mcCombinations.prototype.formHasCaptcha = function (form) {
 */
 mcCombinations.prototype.doSubmit = function doSubmit(currentForm) {
     var DISABLE_AUTOSUBMIT_DOMAINS = ['gls-online-filiale.de', 'mohela.com']
+
 
     if (this.formHasCaptcha()) {
         if (this.settings.debugLevel > 4) cipDebug.log('%c mcCombinations: %c Captcha detected', 'background-color: #c3c6b4', 'color: #800000')
