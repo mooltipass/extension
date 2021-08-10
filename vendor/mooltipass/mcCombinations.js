@@ -33,6 +33,43 @@ var extendedCombinations = {
             }
         }
     },
+        box: function (forms) {
+        console.log('box combination');
+        if (mcCombs.getAllForms() == 0) return;
+        for (form in forms) {
+            var currentForm = forms[form];
+            if (currentForm.element) { // Skip noform form
+                currentForm.combination = {
+                    special: true,
+                    fields: {
+                        username: '',
+                        password: ''
+                    },
+                    savedFields: {
+                        username: '',
+                        password: ''
+                    },
+                    autoSubmit: false
+                }
+
+                if (mpJQ('input[id=password-login]:visible').length > 0) { // Step 2:pass
+                    currentForm.combination.fields.password = mpJQ('input[id=password-login]');
+                    currentForm.combination.autoSubmit = true;
+                }
+                if (mpJQ('input[id=login-email]:visible').length > 0) { // Step 1: Email
+                    currentForm.combination.fields.username = mpJQ('input[id=login-email]');
+                    currentForm.combination.autoSubmit = true;
+                }
+                if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){	
+                    if (mpJQ('form#login-form input[name=login]').length > 0) {
+                        currentForm.combination.fields.username = mpJQ('form#login-form input[name=login]');
+                        currentForm.combination.autoSubmit = true;
+                        currentForm.combination.fields.username.attr('data-mp-id', "login-email");
+                    }	
+                }				
+            }
+        }
+    },	
         hp: function (forms) {
         //console.log('hp combination');
         if (mcCombs.getAllForms() == 0) return;
@@ -746,6 +783,12 @@ mcCombinations.prototype.possibleCombinations = [
         requiredUrl: 'upwork.com',
         callback: extendedCombinations.upwork
     },
+    {
+        combinationId: 'boxAuth',
+        combinationName: 'Box Login Procedure',
+        requiredUrl: 'account.box.com',
+        callback: extendedCombinations.box
+    },	
     {
         combinationId: 'googleTwoPageAuth',
         combinationName: 'Google Two Page Login Procedure',
@@ -1782,8 +1825,10 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
         var selector = BUTTON_SELECTORS[selectorIndex]
 
         var buttons = container.find(selector).filter(function (index, button) {
-            for (var i = 0; i < IGNORE_PATTERNS.length; i++) {
-                if (mpJQ(button).clone().children().remove().end()[0].outerHTML.match(IGNORE_PATTERNS[i])) return false
+            if (!window.location.hostname.match(/nextcloud.com/)) {
+                for (var i = 0; i < IGNORE_PATTERNS.length; i++) {
+                    if (mpJQ(button).clone().children().remove().end()[0].outerHTML.match(IGNORE_PATTERNS[i])) return false
+			    }
             }
 
             for (var i = 0; i < ACCEPT_PATTERNS.length; i++) {
@@ -1857,6 +1902,7 @@ mcCombinations.prototype.formHasCaptcha = function (form) {
 */
 mcCombinations.prototype.doSubmit = function doSubmit(currentForm) {
     var DISABLE_AUTOSUBMIT_DOMAINS = ['gls-online-filiale.de', 'mohela.com']
+
 
     if (this.formHasCaptcha()) {
         if (this.settings.debugLevel > 4) cipDebug.log('%c mcCombinations: %c Captcha detected', 'background-color: #c3c6b4', 'color: #800000')
