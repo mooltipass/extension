@@ -393,7 +393,7 @@ mooltipassEvent.onUpdateNotify = function (callback, tab, username, password, ur
         // Increment notification count
         mooltipassEvent.notificationCount++;
 
-        if (mp_unlocked && password.length > 31) {
+        if (mp_unlocked && password.length > 64) {
             var noteId = 'mpPasswordTooLong.' + mooltipassEvent.notificationCount.toString();
 
             cross_notification(noteId, {
@@ -622,7 +622,8 @@ mooltipassEvent.messageHandlers = {
     'cache_retrieve': page.cacheRetrieve,
     'content_script_loaded': page.setAllLoaded,
     'show_app': mooltipassEvent.showApp,
-    'create_action': mooltipassEvent.createAction
+    'create_action': mooltipassEvent.createAction,
+    'wait_for_postdata': page.addtoWaitForPostArray
 };
 
 if (!isSafari) {
