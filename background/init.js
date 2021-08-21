@@ -90,6 +90,14 @@ startMooltipass = function () {
          */
         chrome.tabs.onRemoved.addListener(function (tabId, removeInfo) {
             delete page.tabs[tabId];
+
+            //remove closed tab from array of tabs interester in POST data
+            for (var i = 0; i < page.interestedInPostData.length; i++){                         
+                if (page.interestedInPostData[i] === tabId) { 
+                    page.interestedInPostData.splice(i, 1); 
+                    break;
+                }
+            }
             if (page.currentTabId == tabId) {
                 page.currentTabId = -1;
             }
@@ -153,6 +161,11 @@ startMooltipass = function () {
         chrome.webRequest.onBeforeRequest.addListener(function (details) {
             // Ignore requests if not originating from current active tab
             if (details.tabId != page.currentTabId) return;
+			
+            //Do not process the request of there are no tabs that interested in it (tabId for request not in interestedInPostData array)
+            if (!page.interestedInPostData.includes(details.tabId)){
+                return;
+            }
 
             // Uncomment to improve performance (Intercepts less requests)
             // Ignore requests originating from internal browser pages (debugger, settings page, new-tab page, etc...)
@@ -167,7 +180,7 @@ startMooltipass = function () {
                 // If we notice the extension being slow because of it intercepting too much data, uncomment the following line
                 //if (details && details.type === "xmlhttprequest") { // Raw data (multipart posts, etc)
                 if (details && details.type != "csp_report") {     
-                if (details && details.requestBody && details.requestBody.raw && details.requestBody.raw[0]) {
+                    if (details && details.requestBody && details.requestBody.raw && details.requestBody.raw[0]) {
 //                    if(background_debug_msg > 4) mpDebug.log('%c init: onBeforeRequest - Post request type:'+details.type , 'background-color: #4CAF50; color: #FFF', details);
                         var buffer = details.requestBody.raw[0].bytes;
                         var parsed = arrayBufferToData.toJSON(buffer); //parsed can be null if we failed to parse buffer
@@ -175,8 +188,8 @@ startMooltipass = function () {
                         //} 
                     } else { // Standard POST
                         chrome.tabs.sendMessage(details.tabId, { action: 'post_detected', details: details });
-                   }
-            }
+                    }
+                 }
             }
         }, { urls: ["<all_urls>"] }, webRequestOptions);
 

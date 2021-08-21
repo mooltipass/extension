@@ -9,6 +9,8 @@ var page = {
 // special information for every tab
 page.tabs = {};
 
+//arry for  tabID of tabs that interested to receive POST data
+page.interestedInPostData = [];
 // Check for complete load and rendering before trying to act
 page.allLoaded = false;
 
@@ -131,9 +133,26 @@ page.switchTab = function(callback, tab) {
 page.setAllLoaded = function( callback, tab ) {
 	if (background_debug_msg > 4) mpDebug.log('%c page: setAllLoaded ', mpDebug.css('ffeef9'));
 	page.allLoaded = true;
-	callback({}, tab );
+	
+    //remove closed tab from array of tabs interester in POST data	
+    if (tab.id){
+        for (var i = 0; i < page.interestedInPostData.length; i++){                         
+            if (page.interestedInPostData[i] === tab.id) { 
+                page.interestedInPostData.splice(i, 1); 
+                break;
+            }
+        }
+    }
+    callback({}, tab );
 }
 
+page.addtoWaitForPostArray = function( callback, tab ){
+    if (tab.id){
+        if (!page.interestedInPostData.includes(tab.id)){
+            page.interestedInPostData.push(tab.id);
+        }	
+    }
+}
 page.setCurrentTab = function(callback, tab) {
     if(page.currentTabId != tab.id) {
         page.currentTabId = tab.id;

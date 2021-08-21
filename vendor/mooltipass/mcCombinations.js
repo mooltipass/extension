@@ -1337,6 +1337,7 @@ mcCombinations.prototype.detectForms = function () {
                             }
 
                             this.waitingForPost = true;
+                            messaging({ 'action': 'wait_for_postdata' });
                             combinations++;
                             if (this.settings.debugLevel > 3) cipDebug.log('\t\t\t %c mcCombinations - Form Detection: %c Combination Match!', 'background-color: #c3c6b4', 'color: #800000', currentForm.combination.combinationName);
                             return true;
