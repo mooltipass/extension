@@ -72,7 +72,7 @@
   "PopupStatusHtml_StatusBar_AppMissing": { "message": "Mooltipass Application Missing!" },
   "PopupStatusHtml_StatusBar_Unknown": { "message": "Unknown Status" },
   
-  "EventJs_Notification_AppNotInstalled_Title": { "message": "No Mooltipass App Installed" },
+  "EventJs_Notification_AppNotInstalled_Title": { "message": "Please Install Moolticute" },
   "EventJs_Notification_AppNotInstalled_Message": { "message": "Please Install our Application on www.themooltipass.com/setup" },
   "EventJs_Notification_AppNotConnected_Title": { "message": "Mooltipass Not Connected" },
   "EventJs_Notification_AppNotConnected_Message": { "message": "Please Connect Your Mooltipass" },

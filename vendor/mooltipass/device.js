@@ -120,6 +120,49 @@ mooltipass.device._latestRandomStringRequest = null;
 mooltipass.device.lastRetrieveReqTabId = null;
 mooltipass.device.tabUpdatedEventPrevented = false;
 
+/**
+ * The array ol last requests for credentials
+ * Array have 3 last requests for credentials
+ * Each item stores the tab.id, submitURL and time in seconds
+ */
+mooltipass.device.lastCredentialsRequests = [];
+
+/**
+ * add the request for credentials to lastCredentialsRequests array
+ */
+mooltipass.device.addToLastCredentialsRequests = function(tabid, submitURL)
+{
+    var newLastRequestObj = {};
+        newLastRequestObj.tabid = tabid;
+        newLastRequestObj.submitURL = submitURL;
+        newLastRequestObj.submitTime = new Date().getTime();
+    mooltipass.device.lastCredentialsRequests.unshift(newLastRequestObj);
+    if (mooltipass.device.lastCredentialsRequests.length > 2){
+        mooltipass.device.lastCredentialsRequests.pop(); 
+    }
+}
+
+/**
+ * check if the request for credentials in the lastCredentialsRequests array
+ */
+mooltipass.device.checkInLastCredentialsRequests = function(tabid, submitURL)
+{
+    var currTime = new Date().getTime();
+	
+    var wasRequests = 0;
+    for (i = 0; i < mooltipass.device.lastCredentialsRequests.length; i++){
+        if ((mooltipass.device.lastCredentialsRequests[i].tabid == tabid) && (mooltipass.device.lastCredentialsRequests[i].submitURL == submitURL)){
+            if (wasRequests > 0){
+                if (Math.abs(mooltipass.device.lastCredentialsRequests[i].submitTime - currTime) < 30000){
+                    return true;
+                } 
+            } else {
+                wasRequests++;
+            }
+        }
+    }
+    return false;
+}
 
 /**
  * Reset Mooltipass device status 
@@ -657,7 +700,13 @@ mooltipass.device.retrieveCredentials = function(callback, tab, url, submiturl, 
             return;
         }
     }
-    
+    if (mooltipass.device.checkInLastCredentialsRequests(tab.id, submiturl)){
+        mooltipass.device.addToLastCredentialsRequests(tab.id, submiturl);
+        return;
+    }
+	
+    mooltipass.device.addToLastCredentialsRequests(tab.id, submiturl);	
+     
     // If our retrieveCredentialsQueue is empty and the device is unlocked, send the request to the app. Otherwise, queue it
     mooltipass.device.retrieveCredentialsQueue.push({'tabid': tab.id, 'callback': callback, 'domain': parsed_url.domain, 'subdomain': parsed_url.subdomain, 'tabupdated': false, 'reqid': mooltipass.device.retrieveCredentialsCounter, 'tab': tab});
 
