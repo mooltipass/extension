@@ -2,6 +2,8 @@
  * Extendable objects for special cases
  *
  */
+var clickedElement = null;
+
 var extendedCombinations = {
         atlassian: function (forms) {
         console.log('atlassian combination');
@@ -663,7 +665,8 @@ mcCombinations.prototype = (function () {
             postDetectionFeature: true
         },
         fillUserOnly: false,
-        fillPasswordOnly: false
+        fillPasswordOnly: false,
+        forceFilling: false
     };
 })();
 
@@ -689,6 +692,9 @@ mcCombinations.prototype.gotSettings = function (response) {
 
         if (this.callback) this.callback.apply(this, response);
         this.detectCombination();
+        document.addEventListener("contextmenu", function(event){
+            clickedElement = event.target;	
+		}, true);	
     } else {
         if (this.settings.debugLevel > 0) cipDebug.warn('Get settings returned empty!', runtime.lastError);
     }
@@ -1654,93 +1660,112 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
         }.bind(this));
     }
 
-    for (form in this.forms) {
+    if (this.forceFilling && this.fillPasswordOnly && clickedElement){
+        var passwordField = mpJQ(clickedElement); 
+        passwordField.val('');
+
+        try {
+            passwordField.click();
+        } catch (e) { }
+
+        try {
+            passwordField.sendkeys(credentials[0].Password);
+            this.triggerChangeEvent(passwordField[0], credentials[0].Password)
+            passwordField.trigger('blur')
+        } catch (e) { }
+        passwordField[0].dispatchEvent(new Event('change'));
+        wasFilled = true;			
+    } 
+	else {
+        for (form in this.forms) {
 			
-        var wasFilled = false;
-        currentForm = this.forms[form];
-        if (this.settings.debugLevel > 1) cipDebug.log('%c mcCombinations - %c retrieveCredentialsCallback filling form', 'background-color: #c3c6b4', 'color: #FF0000', currentForm);
-        if (!currentForm.combination || !currentForm.combination.fields) continue;
+            var wasFilled = false;
+            currentForm = this.forms[form];
+            if (this.settings.debugLevel > 1) cipDebug.log('%c mcCombinations - %c retrieveCredentialsCallback filling form', 'background-color: #c3c6b4', 'color: #FF0000', currentForm);
+            if (!currentForm.combination || !currentForm.combination.fields) continue;
 
-        if (currentForm.combination && currentForm.combination.submitHandler) {
-            currentForm.combination.submitHandler(credentials[0]);
-        }
-        // Unsure about this restriction. Probably should always make a retrieve credentials call (need to think about it)
-        else if (currentForm.combination) {
-            if (credentials[0].Login && currentForm.combination.fields.username && this.fillPasswordOnly === false) {
-                if (this.settings.debugLevel > 3) cipDebug.log('%c mcCombinations - %c retrieveCredentialsCallback filling form - Username', 'background-color: #c3c6b4', 'color: #FF0000');
-                // Fill-in Username
-                if (currentForm.combination.fields.username && typeof currentForm.combination.fields.username !== 'string') {
-                    currentForm.combination.fields.username.val('');
-                    currentForm.combination.fields.username.click();
-                    try {
-                        this.triggerChangeEvent(currentForm.combination.fields.username[0], credentials[0].Login)
-                        currentForm.combination.fields.username.trigger('blur')
-                    } catch (e) { }
-                    currentForm.combination.fields.username[0].dispatchEvent(new Event('change'));
-                    currentForm.combination.savedFields.username.value = credentials[0].Login;
-                    wasFilled = true;
-                }
+            if (currentForm.combination && currentForm.combination.submitHandler) {
+                currentForm.combination.submitHandler(credentials[0]);
             }
+            // Unsure about this restriction. Probably should always make a retrieve credentials call (need to think about it)
+            else if (currentForm.combination) {
+                if (credentials[0].Login && currentForm.combination.fields.username && this.fillPasswordOnly === false) {
+                    if (this.settings.debugLevel > 3) cipDebug.log('%c mcCombinations - %c retrieveCredentialsCallback filling form - Username', 'background-color: #c3c6b4', 'color: #FF0000');
+                    // Fill-in Username
+                    if (currentForm.combination.fields.username && typeof currentForm.combination.fields.username !== 'string') {
+                        currentForm.combination.fields.username.val('');
+                        currentForm.combination.fields.username.click();
+                        try {
+                            this.triggerChangeEvent(currentForm.combination.fields.username[0], credentials[0].Login)
+                            currentForm.combination.fields.username.trigger('blur')
+                        } catch (e) { }
+                        currentForm.combination.fields.username[0].dispatchEvent(new Event('change'));
+                        currentForm.combination.savedFields.username.value = credentials[0].Login;
+                        wasFilled = true;
+                    }
+                }
 			
-            if (credentials[0].Password && currentForm.combination.fields.password && currentForm.combination.combinationId != 'passwordreset001' && this.fillUserOnly === false) {
-                if (this.settings.debugLevel > 3) cipDebug.log('%c mcCombinations - %c retrieveCredentialsCallback filling form - Password', 'background-color: #c3c6b4', 'color: #FF0000');
-                // Fill-in Password
-                if (
-                    typeof currentForm.combination.fields.password === 'object' &&  // It is a field and not a string
-                    currentForm.combination.fields.password.length > 0 // && // It exists
-                    // !currentForm.combination.fields.password.hasClass('mooltipass-password-do-not-update')
-                ) {
-                    currentForm.combination.fields.password.val('');
+                if (credentials[0].Password && currentForm.combination.fields.password && currentForm.combination.combinationId != 'passwordreset001' && this.fillUserOnly === false) {
+                    if (this.settings.debugLevel > 3) cipDebug.log('%c mcCombinations - %c retrieveCredentialsCallback filling form - Password', 'background-color: #c3c6b4', 'color: #FF0000');
+                    // Fill-in Password
+                    if (
+                        typeof currentForm.combination.fields.password === 'object' &&  // It is a field and not a string
+                        currentForm.combination.fields.password.length > 0 // && // It exists
+                        // !currentForm.combination.fields.password.hasClass('mooltipass-password-do-not-update')
+                    ) {
+                        currentForm.combination.fields.password.val('');
 
-                    try {
-                        currentForm.combination.fields.password.click();
-                    } catch (e) { }
+                        try {
+                            currentForm.combination.fields.password.click();
+                        } catch (e) { }
 
-                    try {
-                        currentForm.combination.fields.password.sendkeys(credentials[0].Password);
-                        this.triggerChangeEvent(currentForm.combination.fields.password[0], credentials[0].Password)
-                        currentForm.combination.fields.password.trigger('blur')
-                    } catch (e) { }
-                    currentForm.combination.fields.password[0].dispatchEvent(new Event('change'));
-                    currentForm.combination.savedFields.password.value = credentials[0].Password;
-                    wasFilled = true;
+                        try {
+                            currentForm.combination.fields.password.sendkeys(credentials[0].Password);
+                            this.triggerChangeEvent(currentForm.combination.fields.password[0], credentials[0].Password)
+                            currentForm.combination.fields.password.trigger('blur')
+                        } catch (e) { }
+                        currentForm.combination.fields.password[0].dispatchEvent(new Event('change'));
+                        currentForm.combination.savedFields.password.value = credentials[0].Password;
+                        wasFilled = true;
+                    }
                 }
-            }
 
-            //console.log( currentForm.combination );
-            if (currentForm.combination.extraFunction) {
-                if (this.settings.debugLevel > 4) cipDebug.log('%c mcCombinations: %c Running ExtraFunction for combination', 'background-color: #c3c6b4', 'color: #333333');
-                currentForm.combination.extraFunction(currentForm.combination.fields);
-            }
+                //console.log( currentForm.combination );
+                if (currentForm.combination.extraFunction) {
+                    if (this.settings.debugLevel > 4) cipDebug.log('%c mcCombinations: %c Running ExtraFunction for combination', 'background-color: #c3c6b4', 'color: #333333');
+                    currentForm.combination.extraFunction(currentForm.combination.fields);
+                }
 
-            if (currentForm.combination.usePasswordGenerator && mcCombs.settings.usePasswordGenerator) {
-                if (this.settings.debugLevel > 4) cipDebug.log('%c mcCombinations: %c Running Password generator for combination', 'background-color: #c3c6b4', 'color: #333333');
-                var inputs = cipFields.getAllFields();
-                cip.initPasswordGenerator(inputs);
-            }
+                if (currentForm.combination.usePasswordGenerator && mcCombs.settings.usePasswordGenerator) {
+                    if (this.settings.debugLevel > 4) cipDebug.log('%c mcCombinations: %c Running Password generator for combination', 'background-color: #c3c6b4', 'color: #333333');
+                    var inputs = cipFields.getAllFields();
+                    cip.initPasswordGenerator(inputs);
+                }
 
-            if (wasFilled &&
-                currentForm.combination.autoSubmit &&
-                !currentForm.definedCredentialFields &&
-                !this.settings.doNotSubmitAfterFill &&
-                (!currentForm.combination.fields.username || mpJQ.contains(document, currentForm.combination.fields.username[0])) &&
-                (!currentForm.combination.fields.password || mpJQ.contains(document, currentForm.combination.fields.password[0]))) {
-                this.doSubmit(currentForm);
+                if (wasFilled &&
+                    currentForm.combination.autoSubmit &&
+                    !currentForm.definedCredentialFields &&
+                    !this.settings.doNotSubmitAfterFill &&
+                    (!currentForm.combination.fields.username || mpJQ.contains(document, currentForm.combination.fields.username[0])) &&
+                    (!currentForm.combination.fields.password || mpJQ.contains(document, currentForm.combination.fields.password[0]))) {
+                    this.doSubmit(currentForm);
 
-                // Stop processing forms if we're going to submit
-                // TODO: Weight the importance of each form and submit the most important, not the first!
-                return;
-            } else if (currentForm.combination.enterFromPassword) { // Try to send the enter key while focused on password
-                try { currentForm.combination.fields.password.focus().sendkeys("{enter}"); } catch (e) { }
-            }
+                    // Stop processing forms if we're going to submit
+                    // TODO: Weight the importance of each form and submit the most important, not the first!
+                    return;
+                } else if (currentForm.combination.enterFromPassword) { // Try to send the enter key while focused on password
+                    try { currentForm.combination.fields.password.focus().sendkeys("{enter}"); } catch (e) { }
+                }
+	    }
+
+            // Don't proceed other forms when we have defined credential fields.
+            if (this.forms['noform'].definedCredentialFields) break
         }
-
-        // Don't proceed other forms when we have defined credential fields.
-        if (this.forms['noform'].definedCredentialFields) break
     }
 	
     this.fillUserOnly = false;
     this.fillPasswordOnly = false;
+	this.forceFilling = false;	
 }
 
 /*
@@ -1823,7 +1848,7 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
     ];
 
     for (var selectorIndex = 0; selectorIndex < BUTTON_SELECTORS.length; selectorIndex++) {
-        var selector = BUTTON_SELECTORS[selectorIndex]
+        var selector = BUTTON_SELECTORS[selectorIndex];
 
         var buttons = container.find(selector).filter(function (index, button) {
             if (!window.location.hostname.match(/nextcloud.com/)) {
@@ -1919,6 +1944,7 @@ mcCombinations.prototype.doSubmit = function doSubmit(currentForm) {
 
     if (this.settings.debugLevel > 4) cipDebug.log('%c mcCombinations: %c doSubmit', 'background-color: #c3c6b4', 'color: #333333');
 
+
     // Trying to find submit button and trigger click event.
     var field = currentForm.combination.fields.password || currentForm.combination.fields.username,
         submitButton = this.detectSubmitButton(field, field.parent(), true)
@@ -1926,7 +1952,7 @@ mcCombinations.prototype.doSubmit = function doSubmit(currentForm) {
     if (submitButton) {
         // Select innermost element to trigger click because handler can be on it.
         // Event will be propagated anyway.
-        submitButton = mpJQ(submitButton).find(':not(:has(*))')[0] || submitButton
+        submitButton = mpJQ(submitButton).find(':not(:has(*))')[0] || submitButton;
 
         // Button can be disabled, waiting for update.
         setTimeout(function () {
