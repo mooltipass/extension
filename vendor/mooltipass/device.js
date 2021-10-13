@@ -159,6 +159,8 @@ mooltipass.device.checkInLastCredentialsRequests = function(tabid, submitURL)
             } else {
                 wasRequests++;
             }
+        } else {
+            return false;
         }
     }
     return false;

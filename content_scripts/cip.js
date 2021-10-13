@@ -293,6 +293,7 @@ var cip = {
     {
         cip.fillUserOnly = true;
         mcCombs.fillUserOnly = true;
+        mcCombs.forceFilling = true;
         this.initCredentialFields(true);
     },	
 
@@ -302,6 +303,7 @@ var cip = {
     retrieveAndFillUserAndPassword: function ()
     {
         cip.initCredentialFields(true);
+        mcCombs.forceFilling = true;
     },
 
     /**
@@ -311,6 +313,7 @@ var cip = {
     {
         cip.fillPasswordOnly = true;
         mcCombs.fillPasswordOnly = true;
+        mcCombs.forceFilling = true;
         this.initCredentialFields(true);
     },
 
