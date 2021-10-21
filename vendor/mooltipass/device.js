@@ -137,7 +137,7 @@ mooltipass.device.addToLastCredentialsRequests = function(tabid, submitURL)
         newLastRequestObj.submitURL = submitURL;
         newLastRequestObj.submitTime = new Date().getTime();
     mooltipass.device.lastCredentialsRequests.unshift(newLastRequestObj);
-    if (mooltipass.device.lastCredentialsRequests.length > 3){
+    if (mooltipass.device.lastCredentialsRequests.length > 2){
         mooltipass.device.lastCredentialsRequests.pop(); 
     }
 }
@@ -152,7 +152,7 @@ mooltipass.device.checkInLastCredentialsRequests = function(tabid, submitURL)
     var wasRequests = 0;
     for (i = 0; i < mooltipass.device.lastCredentialsRequests.length; i++){
         if ((mooltipass.device.lastCredentialsRequests[i].tabid == tabid) && (mooltipass.device.lastCredentialsRequests[i].submitURL == submitURL)){
-            if (wasRequests > 1){
+            if (wasRequests > 0){
                 if (Math.abs(mooltipass.device.lastCredentialsRequests[i].submitTime - currTime) < 30000){
                     return true;
                 } 
