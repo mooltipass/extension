@@ -13,7 +13,7 @@ The extension supports the [WebExtensions model](https://developer.mozilla.org/e
 
 # Extension Architecture
 
-The browser e    xtension is composed of a number of different components which fall under the following categories:
+The browser extension is composed of a number of different components which fall under the following categories:
 - [Content-Scripts](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Anatomy_of_a_WebExtension#Content_scripts): Content scripts are extension-provided scripts which run in the context of a web page. Content scripts can see and manipulate the page's DOM, just like normal scripts loaded by the page.  
 - [Background-Scripts](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Anatomy_of_a_WebExtension#Background_scripts): Background scripts are loaded as soon as the extension is loaded and stay loaded until the extension is disabled or uninstalled. They are often used to maintain long-term state or perform long-term operations independently of the lifetime of any particular web page or browser tab.  
 - [Browser-Actions](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/user_interface/Browser_action): Browser actions are toolbar buttons. Users click the button to interact with your extension.  
