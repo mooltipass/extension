@@ -109,6 +109,71 @@ Background sends 2 types of messages :
 Content script constantly monitors page changes using Mutation observer (https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver).
 "checkForNewInputs" function called if mutation observer detects input fields added or "style" attribute updated(in case some fields showed or hidden) 
 
+# The retrieveCredentialsQueue
+
+The extension asks/receives the credentials  from the external application via retrieveCredentialsQueue
+This is the array of objects.
+Each object has such fields:
+```
+`{'tabid': ..., 
+'callback': ..., 
+'domain': ..., 
+'subdomain': ..., 
+'tabupdated': ..., 
+'reqid': ..., 
+'tab': ...}`
+```
+When extension needs credentials, it places the request to retrieveCredentialsQueue.
+When credentials received from the external application, the callback function of the first object in queue will be called with credentials
+After this the object will be removed from the queue
+
+# Asking for credentials
+
+The credentials can be asked with two ways
+1. When  the user opens the page and credentials will be filled automatically
+2. User choose the right-click menu ("Fill username only", "Fill User + Pass", "Fill Pass Only")
+For the second case will be set the flag `forceFilling=true` and will be set flags `fillPasswordOnly` and `fillUserOnly`
+Also the extension memorize the element where right-click occurs (variable clickedElement)
+When page need the credentials, it sends to background script the message retrieve_credentials with such arguments   
+ **url** - url of the page,   
+ **submitUrl** - submit url of the form that credentials required
+ **forceCallback**,  - true  
+ **triggerUnlock** - not used
+The event handler in background script creates the callback function and adds it to the list of arguments
+The goal of the callback function - send to page with given ID the message _<"response-" + MESSAGE_NAME>_
+(in our case response-retrieve_credentials)
+The message retrieve_credentials will be processed in mooltipass.device.retrieveCredentials function
+Logic of the function:
+From submitUrl will be extracted domain, subdomain and URL will be checked (valid and blacklisted)
+Will be returned parsed_url object
+Will be checked if such request already in retrieveCredentialsQueue
+Will be checked if we have more than 3 requests from the certain tab within 30 sec (mooltipass.device.checkInLastCredentialsRequests function)
+Current request will be added to _lastCredentialsRequests_ array (function ooltipass.device.addToLastCredentialsRequests)
+Current request will be added to _retrieveCredentialsQueue_ array
+If retrieveCredentialsQueue has only one element (mooltipass.device.retrieveCredentialsQueue.length == 1) will be called mooltipass.device.sendCredentialRequestMessageFromQueue() to pass the request to device
+If more than 1 - this means that we already wait other credentials from the device and the queue will be processed after response from device
+
+# Receiving the credentials from the device
+
+The extension communicates with device via external application
+Communication with external application via WebSocket (module moolticute.js)
+The message from external application processed in onMessage handler
+The external application sends the _ask_password_ message with credentials
+In onMessage handler will be created wrapper (object) to be passed as the message object to mooltipass.device.messageListener
+Login and password will be placed to wrapped.credentials
+The function mooltipass.device.messageListener will call the callback function of the first object in the queue (`retrieveCredentialsQueue[0].callback`),
+remove this object from the queue (`mooltipass.device.retrieveCredentialsQueue.shift()`)
+and start the processing of the next pending request (`mooltipass.device.sendCredentialRequestMessageFromQueue()`)
+The callback function adds to message "response-" and sends the message
+"_response-retrieve_credential_" to mcCombinations
+This message has necessary credentials
+When mcCombinations receives the message "_response-retrieve_credential_" it processes it in the
+retrieveCredentialsCallback function.
+The retrieveCredentialsCallback function updates credentialsCache with current credentials, 
+For case when credentials asked from right-click menu and mode fillPasswordOnly the extension fills the password field saved in clickedElement variable
+In other case the extension fills the fields for all combinations on the page
+.If combination successfully filled, when flag _wasFilled_ is set to true and for current form will be called doSubmit function
+
 # Credential Caching
 
 Not all websites implement simple login dialogs where both; the username and password fields appear side by side on the same page. Some websites resort to implementing a 2-page authentication prompt. On such pages, the user enters first his username. This username is then validated by the website, and only if it appears to exist, a new prompt appears for the user including the password field. The user can then finalize the login procedure by inputting his password and proceeding on with the authentication.
