@@ -1660,6 +1660,7 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
         }.bind(this));
     }
 
+
     if (this.forceFilling && this.fillPasswordOnly && clickedElement){
         var passwordField = mpJQ(clickedElement); 
         passwordField.val('');
@@ -1851,14 +1852,19 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
         var selector = BUTTON_SELECTORS[selectorIndex];
 
         var buttons = container.find(selector).filter(function (index, button) {
+            var buttonOuterHTML = mpJQ(button).clone().children().remove().end()[0].outerHTML;
             if (!window.location.hostname.match(/nextcloud.com/)) {
                 for (var i = 0; i < IGNORE_PATTERNS.length; i++) {
-                    if (mpJQ(button).clone().children().remove().end()[0].outerHTML.match(IGNORE_PATTERNS[i])) return false
+                    if (buttonOuterHTML.match(IGNORE_PATTERNS[i])) {			
+                        return false
+                    }
 			    }
             }
 
             for (var i = 0; i < ACCEPT_PATTERNS.length; i++) {
-                if (mpJQ(button).clone().children().remove().end()[0].outerHTML.match(ACCEPT_PATTERNS[i])) return true
+                if (buttonOuterHTML.match(ACCEPT_PATTERNS[i])) {	
+                    return true
+                }
             }
         })
 
