@@ -121,9 +121,9 @@ mooltipass.device.lastRetrieveReqTabId = null;
 mooltipass.device.tabUpdatedEventPrevented = false;
 
 /**
- * The array ol last requests for credentials
- * Array have 3 last requests for credentials
- * Each item stores the tab.id, submitURL and time in seconds
+ * The array of last requests for credentials
+ * Array have not more than 3 last requests for credentials
+ * Each item stores the tab.id, submitURL and time in seconds when request was made (unix time)
  */
 mooltipass.device.lastCredentialsRequests = [];
 
@@ -137,7 +137,7 @@ mooltipass.device.addToLastCredentialsRequests = function(tabid, submitURL)
         newLastRequestObj.submitURL = submitURL;
         newLastRequestObj.submitTime = new Date().getTime();
     mooltipass.device.lastCredentialsRequests.unshift(newLastRequestObj);
-    if (mooltipass.device.lastCredentialsRequests.length > 2){
+    if (mooltipass.device.lastCredentialsRequests.length > 3){
         mooltipass.device.lastCredentialsRequests.pop(); 
     }
 }
@@ -149,10 +149,12 @@ mooltipass.device.checkInLastCredentialsRequests = function(tabid, submitURL)
 {
     var currTime = new Date().getTime();
 	
-    var wasRequests = 0;
+    var wasRequests = 0;  //for the first element wasRequests == 0, for second - wasRequests == 1, for third - wasRequests > 1
     for (i = 0; i < mooltipass.device.lastCredentialsRequests.length; i++){
         if ((mooltipass.device.lastCredentialsRequests[i].tabid == tabid) && (mooltipass.device.lastCredentialsRequests[i].submitURL == submitURL)){
-            if (wasRequests > 0){
+            if (wasRequests > 1){
+				//we process the third element in the array
+	            //so, we check the time between current request and third (most oldest) request - not more than 30 sec - 30000 milisec
                 if (Math.abs(mooltipass.device.lastCredentialsRequests[i].submitTime - currTime) < 30000){
                     return true;
                 } 
