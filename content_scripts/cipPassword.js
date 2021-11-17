@@ -300,8 +300,35 @@ var cipPassword = {
         cipPassword.setIconPosition($icon, field);
         cipPassword.observedIcons.push($icon);
         $icon.insertAfter(field);
+        cipPassword.checkTogglePasswordButton(field, $icon[0]);
     },
 
+    /**
+    * Checks if the password <INPUT> field contains a TogglePassword (Show Password) button.
+    *
+    * @param {HTMLElement} field
+    *   The password <INPUT> field.
+    * @param {HTMLElement} iconElem
+    *   The password icon <IFRAME> element.	
+    *
+    * If parent element of the password field have the BUTTON element with position=='absolute'
+    * chech if distanse between center of our icon and center of BUTTON element less than 20px
+    * if yes - move BUTTON element 28px left
+    */	
+    checkTogglePasswordButton: function (field, iconElem){
+        var parentElem = field[0].parentElement;
+        var buttonColl = parentElem.querySelectorAll("button");
+        if (buttonColl.length > 0){
+            for (var i=0; i < buttonColl.length; i++){
+                var compStyle = getComputedStyle(buttonColl[i]);
+                if (compStyle.position == 'absolute'){
+                    if (Math.abs((iconElem.offsetLeft + iconElem.offsetWidth/2) - (buttonColl[i].offsetLeft + buttonColl[i].offsetWidth/2)) < 20){
+                        buttonColl[i].style.left = (buttonColl[i].offsetLeft - 28) + "px";
+                    }	
+                }
+            }
+        }
+    },
     /**
     * Triggers when the user clicks on icons appended to the "password" field.
     * Toggels the displays the UI/password-dialog.html <IFRAME>.
