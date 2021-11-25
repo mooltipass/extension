@@ -51,7 +51,7 @@ page.initSettings = function() {
         changed = true;
     }
     if(!("usePasswordGeneratorLength" in page.settings) || parseInt(page.settings.usePasswordGeneratorLength) < 6) {
-        page.settings.usePasswordGeneratorLength = 12;
+        page.settings.usePasswordGeneratorLength = 16;
         changed = true;
     }
     if(!("usePasswordGeneratorLowercase" in page.settings)) {
