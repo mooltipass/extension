@@ -209,6 +209,9 @@ var cipEvents = {
                         fields: {}
                     }
                 }
+                else if (req.action == "clear_mscombs_cache") {
+                     mcCombs.credentialsCache = []; 				 
+                }
             }
         };
 
