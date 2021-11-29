@@ -734,6 +734,19 @@ mooltipass.device.retrieveCredentials = function(callback, tab, url, submiturl, 
     }
 };
 
+/**
+ * Informs tabs that card was removed and they need clear cache
+ */
+mooltipass.device.needClearTabsCache = function(){
+    chrome.tabs.query({}, function(tabs) {
+        for (var i=0; i<tabs.length; i++) {
+            chrome.tabs.sendMessage(tabs[i].id, {
+                action: "clear_mscombs_cache"
+            });
+        }
+    });	
+};
+
 /****************************************************************************************************************/
 
 mooltipass.device.messageListener = function(message, sender, sendResponse) {
@@ -785,6 +798,11 @@ mooltipass.device.messageListener = function(message, sender, sendResponse) {
                 mooltipass.device.wasPreviouslyUnlocked = true;
             }            
         }
+
+        if ((message.deviceStatus.state) && (message.deviceStatus.state == 'NoCard')){
+            mooltipass.device.needClearTabsCache();
+        }	
+	
         //console.log(mooltipass.device._status)
     }
     // Returned on request for a random number
