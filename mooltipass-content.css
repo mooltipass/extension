@@ -640,13 +640,13 @@ input.mp-hover-password {
 }
 
 .mp-ui-password-dialog-toggle__small {
-	width: 16px;
-	height: 16px;
+	width: 16px !important;
+	height: 16px !important;
 }
 
 .mp-ui-password-dialog-toggle__big {
-	width: 24px;
-	height: 24px;
+	width: 24px !important;
+	height: 24px !important;
 }
 
 /* ui-login-icon */
@@ -657,13 +657,13 @@ input.mp-hover-password {
 }
 
 .mp-ui-login-icon__small {
-	width: 16px;
-	height: 16px;
+	width: 16px !important;
+	height: 16px !important;
 }
 
 .mp-ui-login-icon__big {
-	width: 24px;
-	height: 24px;
+	width: 24px !important;
+	height: 24px !important;
 }
 
 /* ui-password-dialog */
