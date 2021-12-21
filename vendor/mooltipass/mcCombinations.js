@@ -403,6 +403,47 @@ var extendedCombinations = {
             }
         }
     },	
+    revolut: function (forms) {
+        if (mcCombs.getAllForms() == 0) return;
+        for (form in forms) {
+            var currentForm = forms[form];
+            if (currentForm.element) { // Skip noform form
+                currentForm.combination = {
+                    special: true,
+                    fields: {
+                        username: '',
+                        password: ''
+                    },
+                    savedFields: {
+                        username: '',
+                        password: ''
+                    },
+                    autoSubmit: false
+                }
+
+                if (mpJQ('input[type=password]:visible').length > 0) { 
+                    currentForm.combination.fields.password = mpJQ('input[type=password]');
+                    currentForm.combination.autoSubmit = true;
+                }
+                if (mpJQ('input[type=email]:visible').length > 0) { 
+                    currentForm.combination.fields.username = mpJQ('input[type=email]');
+                    currentForm.combination.autoSubmit = true;
+                }
+				
+                if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){
+                    var parentForm = currentForm.combination.fields.password[0].closest('form');
+                    if (parentForm){
+                        var inputEmail = parentForm.querySelector('input[type=email]');
+                        if (inputEmail){
+                            currentForm.combination.fields.username = mpJQ(inputEmail);
+                            currentForm.combination.autoSubmit = true;						
+                            currentForm.combination.fields.username.attr('data-mp-id', "login_email");
+                        }
+                    }	
+                }				
+            }
+        }
+    },	
     soundcloud: function (forms) {
         if (mcCombs.getAllForms() == 0) return;
         for (form in forms) {
@@ -799,6 +840,12 @@ mcCombinations.prototype.possibleCombinations = [
         combinationName: 'Firefox Two Page Login Procedure',
         requiredUrl: 'accounts.firefox.com',
         callback: extendedCombinations.firefox
+    },	
+    {
+        combinationId: 'revolutTwoPageAuth',
+        combinationName: 'Revolut Two Page Login Procedure',
+        requiredUrl: 'business.revolut.com',
+        callback: extendedCombinations.revolut
     },	
     {
         combinationId: 'soundcloudTwoPageAuth',
@@ -1707,22 +1754,36 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
         }.bind(this));
     }
 
+	if (this.forceFilling && clickedElement){
+	    if (this.fillPasswordOnly){
+			var passwordField = mpJQ(clickedElement); 
+			passwordField.val('');
+                try {
+                    passwordField.click();
+                } catch (e) { }
 
-    if (this.forceFilling && this.fillPasswordOnly && clickedElement){
-        var passwordField = mpJQ(clickedElement); 
-        passwordField.val('');
-
-        try {
-            passwordField.click();
-        } catch (e) { }
-
-        try {
-            passwordField.sendkeys(credentials[0].Password);
-            this.triggerChangeEvent(passwordField[0], credentials[0].Password)
-            passwordField.trigger('blur')
-        } catch (e) { }
-        passwordField[0].dispatchEvent(new Event('change'));
-        wasFilled = true;			
+                try {
+                    passwordField.sendkeys(credentials[0].Password);
+                    this.triggerChangeEvent(passwordField[0], credentials[0].Password);
+                    passwordField.trigger('blur');
+                } catch (e) { }
+                passwordField[0].dispatchEvent(new Event('change'));
+                //currentForm.combination.savedFields.password.value = credentials[0].Password;
+                wasFilled = true;
+        }
+        if (this.fillUserOnly){
+            if (credentials[0].Login) {
+                var loginField = mpJQ(clickedElement); 
+                loginField.val('');
+                loginField.click();
+                try {
+                    this.triggerChangeEvent(loginField[0], credentials[0].Login);
+                        currentForm.combination.fields.username.trigger('blur');
+                    } catch (e) {}
+                loginField[0].dispatchEvent(new Event('change'));
+                 //   currentForm.combination.savedFields.username.value = credentials[0].Login;
+            }				
+        }
     } 
 	else {
         for (form in this.forms) {
@@ -1737,7 +1798,7 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
             }
             // Unsure about this restriction. Probably should always make a retrieve credentials call (need to think about it)
             else if (currentForm.combination) {
-                if (credentials[0].Login && currentForm.combination.fields.username && this.fillPasswordOnly === false) {
+                if (credentials[0].Login && currentForm.combination.fields.username) {
                     if (this.settings.debugLevel > 3) cipDebug.log('%c mcCombinations - %c retrieveCredentialsCallback filling form - Username', 'background-color: #c3c6b4', 'color: #FF0000');
                     // Fill-in Username
                     if (currentForm.combination.fields.username && typeof currentForm.combination.fields.username !== 'string') {
@@ -1753,7 +1814,7 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
                     }
                 }
 			
-                if (credentials[0].Password && currentForm.combination.fields.password && currentForm.combination.combinationId != 'passwordreset001' && this.fillUserOnly === false) {
+				if (credentials[0].Password && currentForm.combination.fields.password && (currentForm.combination.combinationId != 'passwordreset001XX')) {
                     if (this.settings.debugLevel > 3) cipDebug.log('%c mcCombinations - %c retrieveCredentialsCallback filling form - Password', 'background-color: #c3c6b4', 'color: #FF0000');
                     // Fill-in Password
                     if (
@@ -1813,7 +1874,7 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
 	
     this.fillUserOnly = false;
     this.fillPasswordOnly = false;
-	this.forceFilling = false;	
+	this.forceFilling = false;
 }
 
 /*

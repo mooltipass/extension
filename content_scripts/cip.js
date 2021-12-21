@@ -94,7 +94,24 @@ var cip = {
             'args': [cip.url, cip.submitUrl, true, true]
         }, cip.retrieveCredentialsCallback);
     },
+    fillUserNameOrPasswordField: function()
+    {			
+        var action = "";
+		
+        var parentForm = clickedElement.closest("form");	
+        if (parentForm){
+            action = parentForm.action;
+        }
 
+	    if (typeof (action) != "string" || action == "" || action.indexOf('{') > -1 || action == 'javascript:void(0)' || action.indexOf('javascript') == 0) {
+            action = document.location.origin + document.location.pathname;
+        }
+
+        chrome.runtime.sendMessage({
+            'action': 'retrieve_credentials',
+            'args': [document.location.origin, action, true, true]
+        }, mcCombs.retrieveCredentialsCallback);	
+    },	
     /**
     * Initializes the password generator [cipPassword].
     * Goes through all the <INPUT> fields of type "password" & initializes them.
@@ -294,7 +311,7 @@ var cip = {
         cip.fillUserOnly = true;
         mcCombs.fillUserOnly = true;
         mcCombs.forceFilling = true;
-        this.initCredentialFields(true);
+        this.fillUserNameOrPasswordField();	
     },	
 
     /**
@@ -314,7 +331,7 @@ var cip = {
         cip.fillPasswordOnly = true;
         mcCombs.fillPasswordOnly = true;
         mcCombs.forceFilling = true;
-        this.initCredentialFields(true);
+		this.fillUserNameOrPasswordField();	
     },
 
     fillInFromActiveElement: function (suppressWarnings)
