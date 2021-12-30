@@ -83,7 +83,7 @@
   "EventJs_Notification_ManagementMode_Title": { "message": "Mooltipass in Management Mode!" },
   "EventJs_Notification_ManagementMode_Message": { "message": "Please leave management mode in the App" },
   "EventJs_Notification_PassTooLong_Title": { "message": "Password Too Long" },
-  "EventJs_Notification_PassTooLong_Message": { "message": "We are sorry, Mooltipass only supports passwords that are less than 31 characters" },
+  "EventJs_Notification_PassTooLong_Message": { "message": "We are sorry, Mooltipass only supports passwords that are less than 64 characters" },
   "EventJs_Notification_DetectedCredentials_Title": { "message": "Credentials Detected!" },
   "EventJs_Notification_DetectedCredentials_Message": { "message": "Please Approve their Storage on the Mooltipass" },
   "EventJs_Notification_SubDomainDetected_Title": { "message": "Subdomain Detected!" },
