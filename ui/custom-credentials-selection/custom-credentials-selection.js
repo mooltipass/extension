@@ -16,7 +16,6 @@ $(function () {
         * Receive a message from WS_SOCKET or MooltiPass APP
         */
         listenerCallback = function (req, sender, callback) {
-            if (isSafari) req = req.message;
 
             if ('action' in req) {
                 switch (req.action) {
@@ -27,11 +26,8 @@ $(function () {
             }
         };
 
-        if (isSafari) safari.self.addEventListener("message", listenerCallback, false);
-        else {
-            chrome.runtime.onMessage.removeListener(listenerCallback);
-            chrome.runtime.onMessage.addListener(listenerCallback);
-        }
+        chrome.runtime.onMessage.removeListener(listenerCallback);
+        chrome.runtime.onMessage.addListener(listenerCallback);
     }
 });
 
@@ -686,13 +682,11 @@ cipDefine.prepareStep3 = function () {
 // Unify messaging method - And eliminate callbacks (a message is replied with another message instead)
 function messaging(message) {
     if (content_debug_msg > 4) cipDebug.log('%c Sending message to background:', 'background-color: #0000FF; color: #FFF; padding: 5px; ', message);
-    if (isSafari) safari.self.tab.dispatchMessage("messageFromContent", message);
-    else chrome.runtime.sendMessage(message);
+    chrome.runtime.sendMessage(message);
 };
 
 var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-var isSafari = typeof (safari) == 'object' ? true : false;
-var content_debug_msg = (!isFirefox && !isSafari && chrome.runtime && !('update_url' in chrome.runtime.getManifest())) ? 55 : false;
+var content_debug_msg = (!isFirefox && chrome.runtime && !('update_url' in chrome.runtime.getManifest())) ? 55 : false;
 
 var cipDebug = {};
 if (content_debug_msg) {

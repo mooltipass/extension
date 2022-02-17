@@ -1,16 +1,10 @@
 // Detect if we're dealing with Firefox or Chrome
 var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-var isSafari = typeof(safari) == 'object'?true:false;
 
-if ( isSafari ) {
-    if ( safari.extension.globalPage ) messaging = safari.extension.globalPage.contentWindow.messaging;
-    else messaging = function() {}
-} else {
     // Unify messaging method - And eliminate callbacks (a message is replied with another message instead)
     function messaging( message, callback ) {
         chrome.runtime.sendMessage( message, callback );
     };    
-}
 
 if ( typeof(mpJQ) !== 'undefined') {
     var $ = mpJQ.noConflict(true);
@@ -286,8 +280,6 @@ options.disableLastCharCheckboxOnPasswordGenerator = function () {
 
 options.initGeneralSettingsLocale = function () {
 
-    if (isSafari) return;
-
     // -- Side menu --
     $("#options-html").text(chrome.i18n.getMessage("Options_General"));
     $("#credential-fields-html").text(chrome.i18n.getMessage("Options_Credential_Fields"));
@@ -316,8 +308,6 @@ options.initGeneralSettingsLocale = function () {
 
 options.initAboutLocale = function () {
 
-    if (isSafari) return;
-
     // -- Side menu --
     $("#options-html").text(chrome.i18n.getMessage("Options_General"));
     $("#credential-fields-html").text(chrome.i18n.getMessage("Options_Credential_Fields"));
@@ -341,8 +331,6 @@ options.initAboutLocale = function () {
 
 options.initCredentialListLocale = function () {
 
-    if (isSafari) return;
-
     // -- Side menu --
     $("#options-html").text(chrome.i18n.getMessage("Options_General"));
     $("#credential-fields-html").text(chrome.i18n.getMessage("Options_Credential_Fields"));
@@ -361,8 +349,6 @@ options.initCredentialListLocale = function () {
 };
 
 options.initBlacklistLocale = function () {
-
-    if (isSafari) return;
 
     // -- Side menu --
     $("#options-html").text(chrome.i18n.getMessage("Options_General"));

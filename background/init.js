@@ -17,13 +17,11 @@ startMooltipass = function () {
     // keepass.getDatabaseHash(null);
     // set initial tab-ID
 
-    if (!isSafari) {
         chrome.tabs.query({ "active": true, "windowId": chrome.windows.WINDOW_ID_CURRENT }, function (tabs) {
             if (tabs.length === 0)
                 return; // For example: only the background devtools or a popup are opened
             page.currentTabId = tabs[0].id;
         });
-    }
 
     // Milliseconds for intervall (e.g. to update browserAction)
     var _interval = 250;
@@ -37,41 +35,6 @@ startMooltipass = function () {
      * @param {object} tab
      */
 
-    if (isSafari) {
-        safari.application.addEventListener("message", mooltipassEvent.onMessage, false);
-
-        safari.application.addEventListener("activate", function (evt) {
-            var activeTab = evt.target.activeTab || evt.target
-
-            // remove possible credentials from old tab information
-            page.clearCredentials(page.currentTabId, true)
-
-            activeTab.id = page.currentTabId = getSafariTabId(activeTab)
-            event.invoke(page.switchTab, null, activeTab, [])
-        }, true);
-
-        safari.application.addEventListener("close", function (evt) {
-            var tabId = getSafariTabId(evt.target)
-
-            delete page.tabs[tabId];
-            if (page.currentTabId == tabId) {
-                page.currentTabId = -1;
-            }
-            mooltipass.device.onTabClosed(tabId);
-        }, true);
-
-        // Triggers when navigating away from current page within tab
-        safari.application.addEventListener("beforeNavigate", function (evt) {
-            if (evt.target instanceof SafariBrowserTab)
-            {
-                // Get tabId of tab that triggered event
-                var tabId = getSafariTabId(evt.target);
-
-                // Send a cancelling request if it is the tab from which we're waiting an answer
-                mooltipass.device.onTabUpdated(tabId, { status: "loading", url: evt.target.url});
-            }
-        }, true);
-    } else {
         chrome.runtime.onMessage.addListener(mooltipassEvent.onMessage);
 
         chrome.tabs.onCreated.addListener(function (tab) {
@@ -148,7 +111,9 @@ startMooltipass = function () {
             }
             mooltipass.device.onTabUpdated(tabId, changeInfo);
         });
-
+		
+		
+	if (!isSafari) {	
         /**
          * Detect POST requests and call the content script to check if it is waiting for it
          */
@@ -202,8 +167,6 @@ startMooltipass = function () {
             );
         }
     }
-
-    if (!isSafari) {
         /**
          * Add context menu entry for filling in username only
          */
@@ -270,7 +233,6 @@ startMooltipass = function () {
                 });
             }
         });
-    }
 
 
     /**

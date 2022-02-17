@@ -44,12 +44,10 @@ $(function () {
 // Unify messaging method - And eliminate callbacks (a message is replied with another message instead)
 function messaging( message ) {
 	if (content_debug_msg > 4) cipDebug.log('%c Sending message to background:','background-color: #0000FF; color: #FFF; padding: 5px; ', message);
-	if ( isSafari ) safari.self.tab.dispatchMessage("messageFromContent", message);
-	else chrome.runtime.sendMessage( message );
+    chrome.runtime.sendMessage( message );
 };
 
 function initLocale() {
-    if (isSafari) return;
 
     $("div.notice").html(chrome.i18n.getMessage("HttpAuthHtml_Authorizing"));
     $("#login").text(chrome.i18n.getMessage("HttpAuthHtml_Input_Login"));
@@ -60,8 +58,7 @@ function initLocale() {
 };
 
 var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-var isSafari = typeof(safari) == 'object'?true:false;
-var content_debug_msg = (!isFirefox && !isSafari && chrome.runtime && !('update_url' in chrome.runtime.getManifest())) ? 55 : false;
+var content_debug_msg = (!isFirefox && chrome.runtime && !('update_url' in chrome.runtime.getManifest())) ? 55 : false;
 
 var cipDebug = {};
 if (content_debug_msg) {

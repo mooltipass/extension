@@ -1741,7 +1741,6 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
     mpJQ('#mooltipass-login-info').show();
     mpJQ('#mooltipass-username').val(credentials[0].Login);
 
-    if (!isSafari) {
         // Store retrieved username as a cache
         chrome.runtime.sendMessage({ 'action': 'cache_login', 'args': [credentials[0].Login] }, function (r) {
             var lastError = chrome.runtime.lastError;
@@ -1752,7 +1751,6 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
                 if (this.settings.debugLevel > 1) cipDebug.log('%c mcCombinations: %c retrieveCredentialsCallback Cache: ', 'background-color: #c3c6b4', 'color: #333333', r);
             }
         }.bind(this));
-    }
 
 	if (this.forceFilling && clickedElement){
 	    if (this.fillPasswordOnly){
