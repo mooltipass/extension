@@ -1,6 +1,8 @@
 // Detect if we're dealing with Firefox, Safari, or Chrome
 var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-var isSafari = typeof(safari) == 'object'?true:false;
+//var isSafari = typeof(safari) == 'object'?true:false;
+
+var isSafari = chrome.webRequest.ResourceType ? false:true;
 
 var page = {
 	pageLoaded: true
@@ -16,7 +18,7 @@ page.allLoaded = false;
 
 page.currentTabId = -1;
 page.settings = (typeof(localStorage.settings) == 'undefined') ? {} : JSON.parse(localStorage.settings);
-if (isFirefox || isSafari) page.settings.useMoolticute = true;
+if (isFirefox) page.settings.useMoolticute = true;
 
 page.blockedTabs = {};
 
@@ -104,17 +106,11 @@ page.cacheRetrieve = function( callback, tab, arguments ) {
 }
 
 page.initOpenedTabs = function() {
-	if (isSafari) {
-		for (var i = 0; i < safari.application.activeBrowserWindow.tabs.length; i++) {
-			page.createTabEntry(i)
-		}
-	} else {
 		chrome.tabs.query({}, function(tabs) {
 			for(var i = 0; i < tabs.length; i++) {
 				page.createTabEntry(tabs[i].id);
 			}
 		});	
-	}
 }
 
 page.isValidProtocol = function(url) {

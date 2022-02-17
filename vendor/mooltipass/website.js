@@ -50,15 +50,11 @@ mooltipass.website.hasCredentialFields = function(callback) {
 }
 
 mooltipass.website.chooseCredentialFields = function() {
-    if ( isSafari ) {
-        messaging({ action: "choose_credential_fields" }, safari.application.activeBrowserWindow.activeTab );
-    } else {
         var global = chrome.extension.getBackgroundPage();
 
         chrome.tabs.sendMessage(global.page.currentTabId, {
             action: "choose_credential_fields"
         });     
-    }
 }
 
 mooltipass.website.reportError = function(callback) {

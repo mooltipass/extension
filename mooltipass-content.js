@@ -11,7 +11,6 @@ window.mpJQ = $;
 
 // Define variables
 var isFirefox;
-var isSafari;
 var _called = {};
 var cipDebug = {};
 var content_debug_msg;
@@ -20,16 +19,14 @@ var mcCombs;
 // Unify messaging method - And eliminate callbacks (a message is replied with another message instead)
 function messaging(message) {
     if (content_debug_msg > 4) cipDebug.log('%c Sending message to background:', 'background-color: #0000FF; color: #FFF; padding: 5px; ', message);
-    if (isSafari) safari.self.tab.dispatchMessage("messageFromContent", message);
-    else chrome.runtime.sendMessage(message);
+    chrome.runtime.sendMessage(message);
 };
 
 // ContentScript Entry-Point
 function init() {
     // Init variables
     isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-    isSafari = typeof (safari) == 'object' ? true : false;
-    content_debug_msg = (!isFirefox && !isSafari && chrome.runtime && !('update_url' in chrome.runtime.getManifest())) ? 55 : false;
+    content_debug_msg = (!isFirefox && chrome.runtime && !('update_url' in chrome.runtime.getManifest())) ? 55 : false;
     
     // Initialize logging
     if (content_debug_msg) {
@@ -73,7 +70,6 @@ function startTemporaryEventListener() {
 
     // Define temporary messageListener
     tempListenerCallback = function (req, sender, callback) {
-        if (isSafari) req = req.message;
         if (content_debug_msg > 5) cipDebug.log('%c onMessage: %c ' + req.action, 'background-color: #68b5dc', 'color: #000000');
         else if (content_debug_msg > 4 && req.action != 'check_for_new_input_fields') cipDebug.log('%c onMessage: %c ' + req.action, 'background-color: #68b5dc', 'color: #000000');
 
@@ -82,8 +78,7 @@ function startTemporaryEventListener() {
             case 'response-check_if_blacklisted':
 
                 // Remove event listener
-                if (isSafari) safari.self.removeEventListener("message", tempListenerCallback, false);
-                else chrome.runtime.onMessage.removeListener(tempListenerCallback);
+                chrome.runtime.onMessage.removeListener(tempListenerCallback);
 
                 // Init the content scripts
                 startContentScripts(req);
@@ -92,11 +87,8 @@ function startTemporaryEventListener() {
     };
 
     // Register the temporary messageListener
-    if (isSafari) safari.self.addEventListener("message", tempListenerCallback, false);
-    else {
         chrome.runtime.onMessage.removeListener(tempListenerCallback);
         chrome.runtime.onMessage.addListener(tempListenerCallback);
-    }
 };
 
 // Checks the response of the "check_if_blacklisted" msg and initializes the content scripts

@@ -228,8 +228,10 @@ mooltipass.device.checkConnection = function()
     {
         if (mooltipass.device.browser == "chrome") 
         {
-            // Search for Mooltipass App
-            chrome.management.getAll(mooltipass.device.onSearchForApp);
+			if (!isSafari) {
+                // Search for Mooltipass App
+                chrome.management.getAll(mooltipass.device.onSearchForApp);
+			}
         } 
         else 
         {

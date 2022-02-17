@@ -1,83 +1,49 @@
 
 // Detect if we're dealing with Firefox, Safari, or Chrome
 var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-var isSafari = typeof (safari) == 'object' ? true : false;
 
 var _settings = typeof (localStorage.settings) == 'undefined' ? {} : JSON.parse(localStorage.settings);
 
-if (isSafari) {
-    if (safari.extension.globalPage) messaging = safari.extension.globalPage.contentWindow.messaging;
-    else messaging = function () { }
-} else {
     // Unify messaging method - And eliminate callbacks (a message is replied with another message instead)
     function messaging(message, callback) {
         chrome.runtime.sendMessage(message, callback);
     };
-}
 
 function initSettings() {
-    if (isSafari) {
-        // Safari new method requires this to open a link
-        mpJQ('#btn-link').click(function () {
-            safari.application.activeBrowserWindow.openTab().url = "http://themooltipass.com/";
-        });
-    }
 
     // Display strings in proper locale
     initLocale();
 
     mpJQ(".pure-menu-list .pure-menu-item").click(function () {
-        if (isSafari) {
-            safari.self.hide();
-        }
+
     });
 
     mpJQ("#btn-settings").click(function (e) {
-        if (isSafari) {
-            e.preventDefault();
-            safari.application.activeBrowserWindow.openTab().url = safari.extension.baseURI + "options/options.html";
-        } else {
             chrome.tabs.create({
                 url: "/options/options.html"
             });
-        }
     });
 
 
 
     mpJQ("#btn-report-error").click(function (e) {
-        if (isSafari) {
-            e.preventDefault();
-            safari.application.activeBrowserWindow.openTab().url = "https://docs.google.com/forms/d/1lFKaTR3LQxySyGsZwtHudVE6aGErGU2DHfn-YpuW8aE/viewform?entry.449375470=" + safari.application.activeBrowserWindow.activeTab.url;
-        } else {
             mooltipass.website.reportError(function (target_url) {
                 chrome.tabs.create({
                     url: target_url
                 })
             });
-        }
     });
 
     mpJQ("#btn-select-credential-fields").click(function (e) {
         e.preventDefault()
         if ($(this).hasClass('disabled')) return
 
-        if (isSafari) {
-            var global = safari.extension.globalPage.contentWindow;
-            global.mooltipass.website.chooseCredentialFields();
-        } else {
             var global = chrome.extension.getBackgroundPage();
             mooltipass.website.chooseCredentialFields();
             close();
-        }
     });
 
     mpJQ("#btn-add-site-to-blacklist").click(function (e) {
-        if (isSafari) {
-            e.preventDefault();
-            var message = { action: "blacklist_url", args: [safari.application.activeBrowserWindow.activeTab.url] };
-            messaging(message, function () { });
-        } else {
             chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
                 chrome.runtime.sendMessage({
                     action: 'blacklist_url',
@@ -85,15 +51,9 @@ function initSettings() {
                 }, function () { });
                 close();
             });
-        }
     });
 
     mpJQ("#btn-remove-site-from-blacklist").click(function (e) {
-        if (isSafari) {
-            e.preventDefault();
-            var message = { action: "unblacklist_url", args: [safari.application.activeBrowserWindow.activeTab.url] };
-            messaging(message, function () { });
-        } else {
             chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
                 chrome.runtime.sendMessage({
                     action: 'unblacklist_url',
@@ -101,7 +61,6 @@ function initSettings() {
                 }, function () { });
                 close();
             });
-        }
     });
 }
 
@@ -123,13 +82,9 @@ function getStatusCallback(object) {
         mpJQ("#btn-open-app").click(function (e) {
             e.preventDefault();
             messaging({ action: "show_app" }, function () { });
-            if (!isSafari) close();
+            close();
         });
-        if(isSafari){
-            mpJQ("#btn-open-app").text("Open Mooltipass App");
-        }else{
             mpJQ("#btn-open-app").text(chrome.i18n.getMessage("PopupStatusHtml_Menu_OpenApp"));     
-        }
         mpJQ('#app-missing').hide();
         mpJQ("#btn-open-app").css("color","");
         mpJQ("#btn-open-app").css("cursor","");
@@ -149,12 +104,7 @@ function getStatusCallback(object) {
     // No app found
     else if (!object.status.connectedToApp) {
         mpJQ('#app-missing').show();
-        if(isSafari){
-            $("#btn-open-app").text("Open Mooltipass App (no app installed)");
-        }
-        else{
         mpJQ("#btn-open-app").text(chrome.i18n.getMessage("PopupStatusHtml_Menu_OpenApp")+chrome.i18n.getMessage("PopupStatusHtml_Menu_NoApp"));
-        }
         mpJQ("#btn-open-app").css("color","gray");
         mpJQ("#btn-open-app").css("cursor","default");
         mpJQ("#btn-open-app").off();
@@ -175,14 +125,6 @@ function getStatusCallback(object) {
 }
 
 function updateStatusInfo() {
-    if (isSafari) {
-        if (safari.extension.globalPage && safari.extension.globalPage.contentWindow.mooltipassEvent) {
-            safari.extension.globalPage.contentWindow.mooltipassEvent.onGetStatus(getStatusCallback, {
-                id: getSafariTabId(safari.application.activeBrowserWindow.activeTab),
-                url: safari.application.activeBrowserWindow.activeTab.url
-            });
-        }
-    } else {
         chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
             messaging({ action: "get_status", overwrite_tab: tabs[0] }, getStatusCallback);
         });
@@ -195,7 +137,6 @@ function updateStatusInfo() {
                 }
             });
         }
-    }
 }
 
 function _updateStatusInfo() {
@@ -204,7 +145,6 @@ function _updateStatusInfo() {
 }
 
 function initLocale() {
-    if (isSafari) return;
 
     // -- Error --
     $("#error-encountered h3:first").text(chrome.i18n.getMessage("PopupStatusHtml_Error_Header"));

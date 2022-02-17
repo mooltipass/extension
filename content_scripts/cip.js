@@ -67,7 +67,7 @@ var cip = {
 
         //cipDebug.log('Combinations found:', cipFields.combinations );
         if (cipFields.combinations.length == 0) {
-            if (!isSafari) chrome.runtime.sendMessage({
+            chrome.runtime.sendMessage({
                 'action': 'show_default_browseraction'
             });
             return;

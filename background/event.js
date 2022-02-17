@@ -4,16 +4,10 @@ function messaging(message, tab, callback) {
     if (background_debug_msg > 5) mpDebug.log('%c Sending message to content:', 'background-color: #0000FF; color: #FFF; padding: 3px; ', message, tab);
     else if (background_debug_msg > 4 && message.action != 'check_for_new_input_fields') mpDebug.log('%c Sending message to content:', 'background-color: #0000FF; color: #FFF; padding: 3px; ', message);
 
-    if (isSafari) {
-        //console.log( tab, tab.page );
-        if (tab && tab.page) tab.page.dispatchMessage("messageFromBackground", message);
-        else mooltipassEvent.onMessage({ message: message }, 1, tab);
-    } else {
-     if(typeof (tab) == "number"){//some messages are "broadcast", some are callbacks and should go only to specific frame
+    if(typeof (tab) == "number"){//some messages are "broadcast", some are callbacks and should go only to specific frame
         chrome.tabs.sendMessage(tab, message, function (response) { });
     }else{
         chrome.tabs.sendMessage(tab.id, message,{frameId:tab.frameId} ,function (response) { });    
-    }
     }
 };
 
@@ -60,11 +54,7 @@ var event = mooltipassEvent;
  * @sender {object} Tab object sending the message
 **/
 mooltipassEvent.onMessage = function (request, sender, callback) {
-    if (isSafari) { // Safari sends an EVENT
-        sender = request.target;
-        request = request.message;
-        tab = sender;
-    } else { // Chrome and FF sends Request and Sender separately
+
         tab = sender.tab;
         if (tab) {
             tab.frameId = sender.frameId;//CPU load fix , save frame ID, that sent request
@@ -74,7 +64,6 @@ mooltipassEvent.onMessage = function (request, sender, callback) {
         if (request.action == 'get_status' && (sender.url.startsWith("chrome-extension://") || sender.url.startsWith("moz-extension://"))) {
             tab = request.overwrite_tab;
         }
-    }
 
     if (background_debug_msg > 4) mpDebug.log('%c mooltipassEvent: onMessage ' + request.action, mpDebug.css('e2eef9'), sender);
 
@@ -129,7 +118,7 @@ mooltipassEvent.onShowAlert = function (callback, tab, message) {
 
 mooltipassEvent.onLoadSettings = function (callback, tab) {
     page.settings = (typeof (localStorage.settings) == 'undefined') ? {} : JSON.parse(localStorage.settings);
-    if (isFirefox || isSafari) page.settings.useMoolticute = true;
+    if (isFirefox) page.settings.useMoolticute = true;
     mooltipass.backend.loadSettings();
 }
 
@@ -141,9 +130,7 @@ mooltipassEvent.onGetSettings = function (callback, tab) {
     settings['status'] = mooltipass.device._status;
     settings['tabId'] = tab.id;
     settings['defined-credential-fields'] = settings['defined-credential-fields'] || {}
-    settings['extension-base'] = isSafari
-        ? safari.extension.baseURI
-        : chrome.extension.getURL('/')
+    settings['extension-base'] = chrome.extension.getURL('/')
 
     callback({ data: settings }, tab);
 }
@@ -559,7 +546,7 @@ mooltipassEvent.createAction = function (callback, tab, data) {
     messaging({
         action: data.action,
         args: data.args
-    }, isSafari ? tab : tab.id ) //createAction should be a broadcast message for all frames in tab, remove frameID and use only tabId
+    }, tab.id ) //createAction should be a broadcast message for all frames in tab, remove frameID and use only tabId
 }
 
 /*

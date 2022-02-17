@@ -52,12 +52,7 @@ mooltipass.backend.lastIconSetName = "";
 
 
 mooltipass.backend.setStatusIcon = function(icon_name) {
-    if (isSafari) {
-        var theFunction = function(newIcon) {
-            var iconUri = safari.extension.baseURI.replace(/\/$/, "") + newIcon.path;
-            safari.extension.toolbarItems[0].image = iconUri;
-        };
-    } else if ( isFirefox ) {
+    if ( isFirefox ) {
         var theFunction = browser.browserAction.setIcon;
     } else {
         var theFunction = chrome.browserAction.setIcon;

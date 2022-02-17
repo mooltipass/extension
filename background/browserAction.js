@@ -75,10 +75,8 @@ browserAction.showDefault = function(callback, tab) {
         stackData.popup = "popup_login.html";
     }
 
-    if (!isSafari) { 
-    	browserAction.stackUnshift(stackData, tab.id); 
-    	browserAction.show(null, tab);
-    }
+    browserAction.stackUnshift(stackData, tab.id); 
+    browserAction.show(null, tab);
 }
 
 browserAction.stackAdd = function(callback, tab, icon, popup, level, push, visibleForMilliSeconds, dontShow) {
