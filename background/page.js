@@ -2,7 +2,12 @@
 var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 //var isSafari = typeof(safari) == 'object'?true:false;
 
-var isSafari = chrome.webRequest.ResourceType ? false:true;
+//var isSafari = chrome.webRequest.ResourceType ? false:true;
+
+var isSafari = false;
+if (chrome.runtime.getURL('').indexOf('safari') == 0){
+    isSafari = true;
+}
 
 var page = {
 	pageLoaded: true
@@ -92,7 +97,8 @@ page.cacheLogin = function( callback, tab, arguments ) {
 	var tab_id = tab.id;
 
 	setTimeout(function(){
-		page.tabs[ tab_id ].loginList = { };
+		if (page.tabs[ tab_id ])
+			page.tabs[ tab_id ].loginList = { };
 	},30*1000);//clear cache item after 30 seconds
 
 }

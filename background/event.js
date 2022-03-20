@@ -61,9 +61,16 @@ mooltipassEvent.onMessage = function (request, sender, callback) {
         }
         /* trade lightly below: for getStatus message ONLY we allow overwrite of the current tab object as the sender url is marked as "chrome-extension://" */
         /* worst case: another extension may ask if a given website is blacklisted */
-        if (request.action == 'get_status' && (sender.url.startsWith("chrome-extension://") || sender.url.startsWith("moz-extension://"))) {
-            tab = request.overwrite_tab;
-        }
+        if (request.action == 'get_status'){
+            if (isSafari) {
+                tab = request.overwrite_tab;
+			}
+			else {
+                    if (sender.url.startsWith("chrome-extension://") || sender.url.startsWith("moz-extension://")) {
+                        tab = request.overwrite_tab;
+                    }
+            }
+		}
 
     if (background_debug_msg > 4) mpDebug.log('%c mooltipassEvent: onMessage ' + request.action, mpDebug.css('e2eef9'), sender);
 
@@ -130,7 +137,8 @@ mooltipassEvent.onGetSettings = function (callback, tab) {
     settings['status'] = mooltipass.device._status;
     settings['tabId'] = tab.id;
     settings['defined-credential-fields'] = settings['defined-credential-fields'] || {}
-    settings['extension-base'] = chrome.extension.getURL('/')
+    settings['extension-base'] = chrome.extension.getURL('/');
+    settings['isSafari'] = isSafari;
 
     callback({ data: settings }, tab);
 }
