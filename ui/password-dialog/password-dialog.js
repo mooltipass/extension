@@ -123,7 +123,9 @@ $(function () {
 
 		// Generate password if empty
 		if ( mpBox.find('.mooltipass-password-generator').val() === '' ) {
-			
+			//for Safari we generate password here due to Safari bug (the page from our extension not receives messages from background)
+			//after this we ask password from background whatever. If bug will be corrected in future, the password from background will overwrite the
+			//password generated here
             if (data.isSafari){
                 GeneratePasswordSafari();				
             }
@@ -213,6 +215,7 @@ function messaging( message ) {
 // For Safari case we not ask the background to generate the password, but do this here
 function GeneratePasswordSafari(){
     var randomPassword = generatePasswordFromSettings({'seeds': generateRandomNumbers(data.passwordGenLength)});
+	//console.log("**************randomPassword", randomPassword);
     $('.mooltipass-password-generator').val(randomPassword);
 }
 
