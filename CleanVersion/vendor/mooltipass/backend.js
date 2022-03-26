@@ -3,7 +3,7 @@ var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
 // contains already called method names
 var _called = {};
-var background_debug_msg = (window.chrome && chrome.runtime && !('update_url' in chrome.runtime.getManifest()))? 55 : false;
+var background_debug_msg = (!isFirefox && window.chrome && chrome.runtime && !('update_url' in chrome.runtime.getManifest()))? 55 : false;
 
 var mpDebug = {
     css: function( backgroundColor ) {
@@ -41,11 +41,14 @@ mooltipass.backend = mooltipass.backend || {};
 mooltipass.backend._blacklist = typeof(localStorage.mpBlacklist)=='undefined' ? {} : JSON.parse(localStorage.mpBlacklist);
 
 /**
- * Disable notificatons about unlocked device
- * TODO: add this parameter to the settings dialog and let the user decide
+ * Boolean to only display once the notification about missing app
  */
-mooltipass.backend.disableNonUnlockedNotifications = false;
+mooltipass.backend.noAppNotifShown = false;
 
+/** 
+ * Last icon name set 
+ */
+mooltipass.backend.lastIconSetName = "";
 
 
 mooltipass.backend.setStatusIcon = function(icon_name) {
@@ -60,10 +63,14 @@ mooltipass.backend.setStatusIcon = function(icon_name) {
         var theFunction = chrome.browserAction.setIcon;
     }
 
-    theFunction({
-        tabId: page.currentTabId,
-        path: "/images/icon_" + icon_name + "_19.png"
-    });
+    if (mooltipass.backend.lastIconSetName != icon_name)
+    {
+        mooltipass.backend.lastIconSetName = icon_name;
+        theFunction({
+            //tabId: page.currentTabId,
+            path: "/images/icon_" + icon_name + "_19.png"
+        });
+    }
 }
 
 mooltipass.backend.updateStatusIcon = function() {
@@ -133,10 +140,7 @@ mooltipass.backend.blacklistUrl = function(url) {
         domain = parsed_url.domain;
         subdomain = parsed_url.subdomain;
 
-        url = domain;
-        if(subdomain != null) {
-            url = subdomain + '.' + domain;
-        }
+        url = subdomain ? subdomain + '.' + domain : domain;
     }
 
     //console.log( mooltipass.backend._blacklist );
@@ -175,10 +179,7 @@ mooltipass.backend.unblacklistUrl = function(url) {
         domain = parsed_url.domain;
         subdomain = parsed_url.subdomain;
 
-        url = domain;
-        if(subdomain != null) {
-            url = subdomain;
-        }
+        url = subdomain ? subdomain + '.' + domain : domain;
     }
 
     delete mooltipass.backend._blacklist[url];
@@ -238,7 +239,8 @@ mooltipass.backend.extractDomainAndSubdomain = function ( url ) {
         toReturn.subdomain = null;
     }
 
-    if ( mooltipass.backend.isBlacklisted( toReturn.domain ) || mooltipass.backend.isBlacklisted( toReturn.subdomain ) ) {
+    var toBeProcessedUrl = toReturn.subdomain ? toReturn.subdomain + '.' + toReturn.domain : toReturn.domain;
+    if (mooltipass.backend.isBlacklisted(toReturn.domain) || mooltipass.backend.isBlacklisted(toBeProcessedUrl ) ) {
         toReturn.blacklisted = true;
     }
 

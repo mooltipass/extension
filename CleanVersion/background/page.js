@@ -9,6 +9,8 @@ var page = {
 // special information for every tab
 page.tabs = {};
 
+//arry for  tabID of tabs that interested to receive POST data
+page.interestedInPostData = [];
 // Check for complete load and rendering before trying to act
 page.allLoaded = false;
 
@@ -49,7 +51,7 @@ page.initSettings = function() {
         changed = true;
     }
     if(!("usePasswordGeneratorLength" in page.settings) || parseInt(page.settings.usePasswordGeneratorLength) < 6) {
-        page.settings.usePasswordGeneratorLength = 12;
+        page.settings.usePasswordGeneratorLength = 16;
         changed = true;
     }
     if(!("usePasswordGeneratorLowercase" in page.settings)) {
@@ -85,6 +87,13 @@ page.initSettings = function() {
 page.cacheLogin = function( callback, tab, arguments ) {
 	if (background_debug_msg > 4) mpDebug.log('%c page: %c cacheLogin ','background-color: #ffeef9','color: #246', arguments);
 	page.tabs[ tab.id ].loginList = {'Login': arguments };
+	var tab_id = tab.id;
+
+	setTimeout(function(){
+		if (page.tabs[ tab_id ])
+			page.tabs[ tab_id ].loginList = { };
+	},30*1000);//clear cache item after 30 seconds
+
 }
 
 /*
@@ -125,9 +134,26 @@ page.switchTab = function(callback, tab) {
 page.setAllLoaded = function( callback, tab ) {
 	if (background_debug_msg > 4) mpDebug.log('%c page: setAllLoaded ', mpDebug.css('ffeef9'));
 	page.allLoaded = true;
-	callback({}, tab );
+	
+    //remove closed tab from array of tabs interester in POST data	
+    if (tab.id){
+        for (var i = 0; i < page.interestedInPostData.length; i++){                         
+            if (page.interestedInPostData[i] === tab.id) { 
+                page.interestedInPostData.splice(i, 1); 
+                break;
+            }
+        }
+    }
+    callback({}, tab );
 }
 
+page.addtoWaitForPostArray = function( callback, tab ){
+    if (tab.id){
+        if (!page.interestedInPostData.includes(tab.id)){
+            page.interestedInPostData.push(tab.id);
+        }	
+    }
+}
 page.setCurrentTab = function(callback, tab) {
     if(page.currentTabId != tab.id) {
         page.currentTabId = tab.id;

@@ -120,13 +120,59 @@ mooltipass.device._latestRandomStringRequest = null;
 mooltipass.device.lastRetrieveReqTabId = null;
 mooltipass.device.tabUpdatedEventPrevented = false;
 
+/**
+ * The array of last requests for credentials
+ * Array have not more than 3 last requests for credentials
+ * Each item stores the tab.id, submitURL and time in seconds when request was made (unix time)
+ */
+mooltipass.device.lastCredentialsRequests = [];
+
+/**
+ * add the request for credentials to lastCredentialsRequests array
+ */
+mooltipass.device.addToLastCredentialsRequests = function(tabid, submitURL)
+{
+    var newLastRequestObj = {};
+        newLastRequestObj.tabid = tabid;
+        newLastRequestObj.submitURL = submitURL;
+        newLastRequestObj.submitTime = new Date().getTime();
+    mooltipass.device.lastCredentialsRequests.unshift(newLastRequestObj);
+    if (mooltipass.device.lastCredentialsRequests.length > 3){
+        mooltipass.device.lastCredentialsRequests.pop(); 
+    }
+}
+
+/**
+ * check if the request for credentials in the lastCredentialsRequests array
+ */
+mooltipass.device.checkInLastCredentialsRequests = function(tabid, submitURL)
+{
+    var currTime = new Date().getTime();
+	
+    var wasRequests = 0;  //for the first element wasRequests == 0, for second - wasRequests == 1, for third - wasRequests > 1
+    for (i = 0; i < mooltipass.device.lastCredentialsRequests.length; i++){
+        if ((mooltipass.device.lastCredentialsRequests[i].tabid == tabid) && (mooltipass.device.lastCredentialsRequests[i].submitURL == submitURL)){
+            if (wasRequests > 1){
+				//we process the third element in the array
+	            //so, we check the time between current request and third (most oldest) request - not more than 30 sec - 30000 milisec
+                if (Math.abs(mooltipass.device.lastCredentialsRequests[i].submitTime - currTime) < 30000){
+                    return true;
+                } 
+            } else {
+                wasRequests++;
+            }
+        } else {
+            return false;
+        }
+    }
+    return false;
+}
 
 /**
  * Reset Mooltipass device status 
  */
 mooltipass.device.resetDeviceStatus = function()
 {
-    mooltipass.backend.disableNonUnlockedNotifications = false;
     mooltipass.device._status = 
     {
         connected: mooltipass.device.emulation_mode? true:false,
@@ -300,12 +346,14 @@ mooltipass.device.sendCredentialRequestMessageFromQueue = function()
             setTimeout(function()
             {
                 var credentials = [];
+                var credentials_found = false;
                 
                 for (var i = 0; i < mooltipass.device.emulation_credentials.length; i++)
                 {
-                    if (mooltipass.device.emulation_credentials[i]["domain"] == mooltipass.device.retrieveCredentialsQueue[0].domain)
+                    if ((mooltipass.device.emulation_credentials[i]["domain"] == mooltipass.device.retrieveCredentialsQueue[0].subdomain + '.' + mooltipass.device.retrieveCredentialsQueue[0].domain) || (mooltipass.device.emulation_credentials[i]["domain"] == mooltipass.device.retrieveCredentialsQueue[0].domain))
                     {
                         if (background_debug_msg > 3) mpDebug.log("%c Emulation mode: found credential in buffer:", mpDebug.css('00ff00'), mooltipass.device.emulation_credentials[i]);
+                        credentials_found = true;
                         credentials.push(
                           {
                               Login: mooltipass.device.emulation_credentials[i]["login"],
@@ -317,7 +365,7 @@ mooltipass.device.sendCredentialRequestMessageFromQueue = function()
                         );
                     }
                 }
-                if (background_debug_msg > 3) mpDebug.log("%c Emulation mode: nothing in buffer!", mpDebug.css('00ff00'));
+                if ((background_debug_msg > 3) && (!credentials_found)) mpDebug.log("%c Emulation mode: nothing in buffer!", mpDebug.css('00ff00'));
                 
                 setTimeout(function()
                 {
@@ -656,7 +704,13 @@ mooltipass.device.retrieveCredentials = function(callback, tab, url, submiturl, 
             return;
         }
     }
-    
+    if (mooltipass.device.checkInLastCredentialsRequests(tab.id, submiturl)){
+        mooltipass.device.addToLastCredentialsRequests(tab.id, submiturl);
+        return;
+    }
+	
+    mooltipass.device.addToLastCredentialsRequests(tab.id, submiturl);	
+     
     // If our retrieveCredentialsQueue is empty and the device is unlocked, send the request to the app. Otherwise, queue it
     mooltipass.device.retrieveCredentialsQueue.push({'tabid': tab.id, 'callback': callback, 'domain': parsed_url.domain, 'subdomain': parsed_url.subdomain, 'tabupdated': false, 'reqid': mooltipass.device.retrieveCredentialsCounter, 'tab': tab});
 
@@ -680,6 +734,19 @@ mooltipass.device.retrieveCredentials = function(callback, tab, url, submiturl, 
     }
 };
 
+/**
+ * Informs tabs that card was removed and they need clear cache
+ */
+mooltipass.device.needClearTabsCache = function(){
+    chrome.tabs.query({}, function(tabs) {
+        for (var i=0; i<tabs.length; i++) {
+            chrome.tabs.sendMessage(tabs[i].id, {
+                action: "clear_mscombs_cache"
+            });
+        }
+    });	
+};
+
 /****************************************************************************************************************/
 
 mooltipass.device.messageListener = function(message, sender, sendResponse) {
@@ -691,12 +758,6 @@ mooltipass.device.messageListener = function(message, sender, sendResponse) {
     if ( typeof( message.credentials ) === "undefined" ) message.credentials = null;
     if ( typeof( message.noCredentials ) === "undefined" ) message.noCredentials = null;
     if ( typeof( message.updateComplete ) === "undefined" ) message.updateComplete = null;
-    
-    // Reenable notifications when device status changes.
-    if (mooltipass.device._status && message.deviceStatus &&
-        !!mooltipass.device._status.connected != !!message.deviceStatus.connected) {
-      mooltipass.backend.disableNonUnlockedNotifications = false;
-    }
     
     //console.log('messageListener:', message );
     // Returned on a PING, contains the status of the device
@@ -737,6 +798,11 @@ mooltipass.device.messageListener = function(message, sender, sendResponse) {
                 mooltipass.device.wasPreviouslyUnlocked = true;
             }            
         }
+
+        if ((message.deviceStatus.state) && (message.deviceStatus.state == 'NoCard')){
+            mooltipass.device.needClearTabsCache();
+        }	
+	
         //console.log(mooltipass.device._status)
     }
     // Returned on request for a random number

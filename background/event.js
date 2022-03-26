@@ -62,8 +62,8 @@ mooltipassEvent.onMessage = function (request, sender, callback) {
         /* trade lightly below: for getStatus message ONLY we allow overwrite of the current tab object as the sender url is marked as "chrome-extension://" */
         /* worst case: another extension may ask if a given website is blacklisted */
         if (request.action == 'get_status'){
-			//for Safari we expect sender.url has "safari-web-extension://......" but sender.url has "null" - Safari bug?
-			//so, do not make check sender.url.startsWith("safari-web-extension://") in Safari case
+            //for Safari we expect sender.url has "safari-web-extension://......" but sender.url has "null" - Safari bug?
+            //so, do not make check sender.url.startsWith("safari-web-extension://") in Safari case
             if (isSafari) {
                 tab = request.overwrite_tab;
 			}

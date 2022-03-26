@@ -6,10 +6,17 @@
   <link rel="stylesheet" href="http-auth.css">
 
   <script src="../../vendor/jquery-3.2.1.js"></script>
+  <script src="../../shared_scripts/psl.min.js"></script>
   <script src="../../vendor/mooltipass/website.js"></script>
   <script src="../../vendor/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
   <script src="../../vendor/sendkeys.js"></script>
   <script src="../../vendor/mooltipass/mcCombinations.js"></script>
+  <script src="../../content_scripts/cip.js"></script>
+  <script src="../../content_scripts/cipDefine.js"></script>
+  <script src="../../content_scripts/cipEvents.js"></script>
+  <script src="../../content_scripts/cipFields.js"></script>
+  <script src="../../content_scripts/cipPassword.js"></script>
+  <script src="../../content_scripts/mpDialog.js"></script>
   <script src="../../mooltipass-content.js"></script>
   <script src="http-auth.js"></script>
 </head>
@@ -22,12 +29,12 @@
   		
   		<form class="form">
   			<div class="form-row">
-  				<label>Login</label>
+  				<label id="login">Login</label>
   				<input class="input" type="text" name="login" autofocus>
   			</div>
   				
   			<div class="form-row">
-  				<label>Password</label>
+  				<label id="password">Password</label>
   				<input class="input" type="password" name="password">
   			</div>
   				

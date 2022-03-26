@@ -8,7 +8,10 @@
 
 window.data = JSON.parse(decodeURIComponent(window.location.search.slice(1)))
 
-$(function() {
+$(function () {
+    // Display strings in proper locale
+    initLocale();
+
 	// Set url as action attribute of the form, so mcCombs will
 	// save credentials for the right url.
 	$('.form').attr('action', 
@@ -34,7 +37,7 @@ $(function() {
 		});
 		
 		window.location.href = data.url
-	})
+   })
 });
 
 
@@ -43,6 +46,17 @@ function messaging( message ) {
 	if (content_debug_msg > 4) cipDebug.log('%c Sending message to background:','background-color: #0000FF; color: #FFF; padding: 5px; ', message);
 	if ( isSafari ) safari.self.tab.dispatchMessage("messageFromContent", message);
 	else chrome.runtime.sendMessage( message );
+};
+
+function initLocale() {
+    if (isSafari) return;
+
+    $("div.notice").html(chrome.i18n.getMessage("HttpAuthHtml_Authorizing"));
+    $("#login").text(chrome.i18n.getMessage("HttpAuthHtml_Input_Login"));
+    $("#password").text(chrome.i18n.getMessage("HttpAuthHtml_Input_Password"));
+    $("button").text(chrome.i18n.getMessage("HttpAuthHtml_Button_Submit"));
+    $("div.caution h6:first").text(chrome.i18n.getMessage("HttpAuthHtml_CautionTitle"));
+    $("div.caution p:first").html(chrome.i18n.getMessage("HttpAuthHtml_CautionText"));
 };
 
 var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;

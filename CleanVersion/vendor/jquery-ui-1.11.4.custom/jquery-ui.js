@@ -1,4 +1,4 @@
-/*! jQuery UI - v1.11.4 - 2017-02-16
+/*! jQuery UI - v1.11.4 - 2021-11-24
 * http://jqueryui.com
 * Includes: core.js, widget.js, mouse.js, position.js, draggable.js, resizable.js, autocomplete.js, button.js, dialog.js, menu.js
 * Copyright jQuery Foundation and other contributors; Licensed MIT */
@@ -6298,6 +6298,7 @@ var dialog = $.widget( "ui.dialog", {
 		}
 	}
 });
+
 
 
 
