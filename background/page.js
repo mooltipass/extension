@@ -2,7 +2,14 @@
 var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 //var isSafari = typeof(safari) == 'object'?true:false;
 
-var isSafari = chrome.webRequest.ResourceType ? false:true;
+//var isSafari = chrome.webRequest.ResourceType ? false:true;
+
+//Detect is we work under Safari browser
+//chrome.runtime.getURL('') returns "safari-web-extension://.......", so if result has "safari" this means that we inside the Safari browser
+var isSafari = false;
+if (chrome.runtime.getURL('').indexOf('safari') == 0){
+    isSafari = true;
+}
 
 var page = {
 	pageLoaded: true

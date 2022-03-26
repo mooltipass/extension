@@ -10,7 +10,7 @@
  * @param hideCustomCredentials {Boolean}
  */
  
-window.data = JSON.parse(decodeURIComponent(window.location.search.slice(1)))
+window.data = JSON.parse(decodeURIComponent(window.location.search.slice(1)));
 
 $(function () {
     // Display strings in proper locale
@@ -123,6 +123,13 @@ $(function () {
 
 		// Generate password if empty
 		if ( mpBox.find('.mooltipass-password-generator').val() === '' ) {
+			//for Safari we generate password here due to Safari bug (the page from our extension not receives messages from background)
+			//after this we ask password from background whatever. If bug will be corrected in future, the password from background will overwrite the
+			//password generated here
+            if (data.isSafari){
+                GeneratePasswordSafari();				
+            }
+			
 			messaging({
 				action: 'create_action',
 				args: [{
@@ -204,6 +211,44 @@ function messaging( message ) {
 	if (content_debug_msg > 4) cipDebug.log('%c Sending message to background:','background-color: #0000FF; color: #FFF; padding: 5px; ', message);
     chrome.runtime.sendMessage( message );
 };
+
+// For Safari case we not ask the background to generate the password, but do this here
+function GeneratePasswordSafari(){
+    var randomPassword = generatePasswordFromSettings({'seeds': generateRandomNumbers(data.passwordGenLength)});
+	//console.log("**************randomPassword", randomPassword);
+    $('.mooltipass-password-generator').val(randomPassword);
+}
+
+function generatePasswordFromSettings(passwordSettings){
+        var charactersLowercase = 'abcdefghijklmnopqrstuvwxyz';
+        var charactersUppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        var charactersNumbers = '1234567890';
+        var charactersSpecial = '!$%*()_+{}-[]:"|;\'?,./';
+        var hash = "";
+        var possible = "";
+        var length = data.passwordGenLength;
+
+        if (data["usePasswordGeneratorLowercase"]) possible += charactersLowercase;
+        if (data["usePasswordGeneratorUppercase"]) possible += charactersUppercase;
+        if (data["usePasswordGeneratorNumbers"]) possible += charactersNumbers;
+        if (data["usePasswordGeneratorSpecial"]) possible += charactersSpecial;
+
+        for (var i = 0; i < length; i++) {
+            hash += possible.charAt(Math.floor(passwordSettings.seeds[i] * possible.length));
+        }
+        return hash;
+}
+
+function generateRandomNumbers(length){
+    
+    var seeds = [];
+    for(var i = 0; i < length; i++) 
+    {
+        seeds.push(Math.random());
+    }
+
+    return seeds;
+}
 
 var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 var content_debug_msg = (!isFirefox && chrome.runtime && !('update_url' in chrome.runtime.getManifest())) ? 55 : false;

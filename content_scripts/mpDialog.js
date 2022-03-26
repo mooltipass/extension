@@ -70,6 +70,12 @@ var mpDialog = {
                 isPasswordOnly: isPasswordOnly,
                 windowWidth: window.innerWidth,
                 windowHeight: window.innerHeight,
+				passwordGenLength : cip.settings['usePasswordGeneratorLength'],		
+                isSafari : mcCombs.settings.isSafari, 
+                usePasswordGeneratorLowercase : mcCombs.settings["usePasswordGeneratorLowercase"],
+                usePasswordGeneratorUppercase : mcCombs.settings["usePasswordGeneratorUppercase"],
+                usePasswordGeneratorNumbers : mcCombs.settings["usePasswordGeneratorNumbers"],
+                usePasswordGeneratorSpecial : mcCombs.settings["usePasswordGeneratorSpecial"],				
                 hideCustomCredentials: mcCombs.possibleCombinations.some(function (combination) {
                     return combination.requiredUrl == window.location.hostname
                 })
