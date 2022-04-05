@@ -722,7 +722,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "MooltipassXCODEProject Extension";
+				INFOPLIST_KEY_CFBundleDisplayName = "Mooltipass Extension";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -735,7 +735,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourCompany.MooltipassXCODEProject.Extension;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stephan-electronics.Mooltipass-Extension.Extension";
 				PRODUCT_NAME = "MooltipassXCODEProject Extension";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -752,7 +752,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "MooltipassXCODEProject Extension";
+				INFOPLIST_KEY_CFBundleDisplayName = "Mooltipass Extension";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -765,7 +765,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourCompany.MooltipassXCODEProject.Extension;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stephan-electronics.Mooltipass-Extension.Extension";
 				PRODUCT_NAME = "MooltipassXCODEProject Extension";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -786,7 +786,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS (App)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = MooltipassXCODEProject;
+				INFOPLIST_KEY_CFBundleDisplayName = "Mooltipass Extension";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -804,7 +804,7 @@
 					"-framework",
 					WebKit,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourCompany.MooltipassXCODEProject;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stephan-electronics.Mooltipass-Extension";
 				PRODUCT_NAME = MooltipassXCODEProject;
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -823,7 +823,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS (App)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = MooltipassXCODEProject;
+				INFOPLIST_KEY_CFBundleDisplayName = "Mooltipass Extension";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -841,7 +841,7 @@
 					"-framework",
 					WebKit,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourCompany.MooltipassXCODEProject;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stephan-electronics.Mooltipass-Extension";
 				PRODUCT_NAME = MooltipassXCODEProject;
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -873,7 +873,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourCompany.MooltipassXCODEProject.Extension;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stephan-electronics.Mooltipass-Extension.Extension";
 				PRODUCT_NAME = "MooltipassXCODEProject Extension";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -904,7 +904,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourCompany.MooltipassXCODEProject.Extension;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stephan-electronics.Mooltipass-Extension.Extension";
 				PRODUCT_NAME = "MooltipassXCODEProject Extension";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -926,6 +926,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (App)/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = MooltipassXCODEProject;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -940,7 +941,7 @@
 					"-framework",
 					WebKit,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourCompany.MooltipassXCODEProject;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stephan-electronics.Mooltipass-Extension";
 				PRODUCT_NAME = MooltipassXCODEProject;
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -961,6 +962,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (App)/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = MooltipassXCODEProject;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -975,7 +977,7 @@
 					"-framework",
 					WebKit,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourCompany.MooltipassXCODEProject;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stephan-electronics.Mooltipass-Extension";
 				PRODUCT_NAME = MooltipassXCODEProject;
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
