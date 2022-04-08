@@ -69,6 +69,14 @@ $(function () {
 	// Password Generator Event Listeners
 	$('.mooltipass-new-password').on('click', function( e ) {
 		e.preventDefault();
+		
+        //for Safari we generate password here due to Safari bug (the page from our extension not receives messages from background)
+        //after this we ask password from background whatever. If bug will be corrected in future, the password from background will overwrite the
+        //password generated here
+        if (data.isSafari){
+            GeneratePasswordSafari();				
+        }		
+			
 		messaging({
 			action: 'create_action',
 			args: [{
