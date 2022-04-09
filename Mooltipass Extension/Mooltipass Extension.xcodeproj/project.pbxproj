@@ -1,0 +1,1039 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		84B6F21827BB8B870045467E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B6F21727BB8B870045467E /* AppDelegate.swift */; };
+		84B6F21A27BB8B870045467E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B6F21927BB8B870045467E /* SceneDelegate.swift */; };
+		84B6F21D27BB8B870045467E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F21B27BB8B870045467E /* LaunchScreen.storyboard */; };
+		84B6F22027BB8B870045467E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F21E27BB8B870045467E /* Main.storyboard */; };
+		84B6F22927BB8B870045467E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B6F22827BB8B870045467E /* AppDelegate.swift */; };
+		84B6F22C27BB8B870045467E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F22A27BB8B870045467E /* Main.storyboard */; };
+		84B6F23427BB8B870045467E /* Mooltipass Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 84B6F23327BB8B870045467E /* Mooltipass Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		84B6F23E27BB8B870045467E /* Mooltipass Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 84B6F23D27BB8B870045467E /* Mooltipass Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		84B6F24427BB8B870045467E /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F20727BB8B850045467E /* Main.html */; };
+		84B6F24527BB8B870045467E /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F20727BB8B850045467E /* Main.html */; };
+		84B6F24627BB8B870045467E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F20927BB8B850045467E /* Icon.png */; };
+		84B6F24727BB8B870045467E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F20927BB8B850045467E /* Icon.png */; };
+		84B6F24827BB8B870045467E /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F20A27BB8B850045467E /* Style.css */; };
+		84B6F24927BB8B870045467E /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F20A27BB8B850045467E /* Style.css */; };
+		84B6F24A27BB8B870045467E /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F20B27BB8B850045467E /* Script.js */; };
+		84B6F24B27BB8B870045467E /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F20B27BB8B850045467E /* Script.js */; };
+		84B6F24C27BB8B870045467E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B6F20C27BB8B850045467E /* ViewController.swift */; };
+		84B6F24D27BB8B870045467E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B6F20C27BB8B850045467E /* ViewController.swift */; };
+		84B6F24E27BB8B870045467E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F20D27BB8B870045467E /* Assets.xcassets */; };
+		84B6F24F27BB8B870045467E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F20D27BB8B870045467E /* Assets.xcassets */; };
+		84B6F25027BB8B870045467E /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B6F20F27BB8B870045467E /* SafariWebExtensionHandler.swift */; };
+		84B6F25127BB8B870045467E /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B6F20F27BB8B870045467E /* SafariWebExtensionHandler.swift */; };
+		84B6F27727BB8B880045467E /* background in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F26327BB8B880045467E /* background */; };
+		84B6F27827BB8B880045467E /* ui in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F26427BB8B880045467E /* ui */; };
+		84B6F27927BB8B880045467E /* options in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F26527BB8B880045467E /* options */; };
+		84B6F27A27BB8B880045467E /* first_run_documents in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F26627BB8B880045467E /* first_run_documents */; };
+		84B6F27B27BB8B880045467E /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F26727BB8B880045467E /* LICENSE */; };
+		84B6F27C27BB8B880045467E /* kb in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F26827BB8B880045467E /* kb */; };
+		84B6F27D27BB8B880045467E /* css in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F26927BB8B880045467E /* css */; };
+		84B6F27E27BB8B880045467E /* images in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F26A27BB8B880045467E /* images */; };
+		84B6F27F27BB8B880045467E /* scss in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F26B27BB8B880045467E /* scss */; };
+		84B6F28027BB8B880045467E /* Mooltipass.safariextension in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F26C27BB8B880045467E /* Mooltipass.safariextension */; };
+		84B6F28127BB8B880045467E /* shared_scripts in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F26D27BB8B880045467E /* shared_scripts */; };
+		84B6F28227BB8B880045467E /* popups in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F26E27BB8B880045467E /* popups */; };
+		84B6F28327BB8B880045467E /* icons in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F26F27BB8B880045467E /* icons */; };
+		84B6F28427BB8B880045467E /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F27027BB8B880045467E /* manifest.json */; };
+		84B6F28527BB8B880045467E /* mooltipass-content.js in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F27127BB8B880045467E /* mooltipass-content.js */; };
+		84B6F28627BB8B880045467E /* _locales in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F27227BB8B880045467E /* _locales */; };
+		84B6F28727BB8B880045467E /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F27327BB8B880045467E /* fonts */; };
+		84B6F28827BB8B880045467E /* mooltipass-content.css in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F27427BB8B880045467E /* mooltipass-content.css */; };
+		84B6F28927BB8B880045467E /* vendor in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F27527BB8B880045467E /* vendor */; };
+		84B6F28A27BB8B880045467E /* content_scripts in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F27627BB8B880045467E /* content_scripts */; };
+		84B6F28B27BB8B880045467E /* background in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F26327BB8B880045467E /* background */; };
+		84B6F28C27BB8B880045467E /* ui in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F26427BB8B880045467E /* ui */; };
+		84B6F28D27BB8B880045467E /* options in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F26527BB8B880045467E /* options */; };
+		84B6F28E27BB8B880045467E /* first_run_documents in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F26627BB8B880045467E /* first_run_documents */; };
+		84B6F28F27BB8B880045467E /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F26727BB8B880045467E /* LICENSE */; };
+		84B6F29027BB8B880045467E /* kb in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F26827BB8B880045467E /* kb */; };
+		84B6F29127BB8B880045467E /* css in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F26927BB8B880045467E /* css */; };
+		84B6F29227BB8B880045467E /* images in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F26A27BB8B880045467E /* images */; };
+		84B6F29327BB8B880045467E /* scss in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F26B27BB8B880045467E /* scss */; };
+		84B6F29427BB8B880045467E /* Mooltipass.safariextension in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F26C27BB8B880045467E /* Mooltipass.safariextension */; };
+		84B6F29527BB8B880045467E /* shared_scripts in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F26D27BB8B880045467E /* shared_scripts */; };
+		84B6F29627BB8B880045467E /* popups in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F26E27BB8B880045467E /* popups */; };
+		84B6F29727BB8B880045467E /* icons in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F26F27BB8B880045467E /* icons */; };
+		84B6F29827BB8B880045467E /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F27027BB8B880045467E /* manifest.json */; };
+		84B6F29927BB8B880045467E /* mooltipass-content.js in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F27127BB8B880045467E /* mooltipass-content.js */; };
+		84B6F29A27BB8B880045467E /* _locales in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F27227BB8B880045467E /* _locales */; };
+		84B6F29B27BB8B880045467E /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F27327BB8B880045467E /* fonts */; };
+		84B6F29C27BB8B880045467E /* mooltipass-content.css in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F27427BB8B880045467E /* mooltipass-content.css */; };
+		84B6F29D27BB8B880045467E /* vendor in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F27527BB8B880045467E /* vendor */; };
+		84B6F29E27BB8B880045467E /* content_scripts in Resources */ = {isa = PBXBuildFile; fileRef = 84B6F27627BB8B880045467E /* content_scripts */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		84B6F23527BB8B870045467E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84B6F20127BB8B850045467E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 84B6F23227BB8B870045467E;
+			remoteInfo = "MooltipassXCODEProject Extension (iOS)";
+		};
+		84B6F23F27BB8B870045467E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84B6F20127BB8B850045467E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 84B6F23C27BB8B870045467E;
+			remoteInfo = "MooltipassXCODEProject Extension (macOS)";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		84B6F25727BB8B870045467E /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				84B6F23427BB8B870045467E /* Mooltipass Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84B6F25E27BB8B870045467E /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				84B6F23E27BB8B870045467E /* Mooltipass Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		84B6F20827BB8B850045467E /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = ../Base.lproj/Main.html; sourceTree = "<group>"; };
+		84B6F20927BB8B850045467E /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		84B6F20A27BB8B850045467E /* Style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = Style.css; sourceTree = "<group>"; };
+		84B6F20B27BB8B850045467E /* Script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Script.js; sourceTree = "<group>"; };
+		84B6F20C27BB8B850045467E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		84B6F20D27BB8B870045467E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		84B6F20F27BB8B870045467E /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
+		84B6F21427BB8B870045467E /* Mooltipass Extension Launcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mooltipass Extension Launcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		84B6F21727BB8B870045467E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		84B6F21927BB8B870045467E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		84B6F21C27BB8B870045467E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		84B6F21F27BB8B870045467E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		84B6F22127BB8B870045467E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84B6F22627BB8B870045467E /* Mooltipass Extension Launcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mooltipass Extension Launcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		84B6F22827BB8B870045467E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		84B6F22B27BB8B870045467E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		84B6F22D27BB8B870045467E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84B6F22E27BB8B870045467E /* Mooltipass Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Mooltipass Extension.entitlements"; sourceTree = "<group>"; };
+		84B6F23327BB8B870045467E /* Mooltipass Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Mooltipass Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		84B6F23827BB8B870045467E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84B6F23D27BB8B870045467E /* Mooltipass Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Mooltipass Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		84B6F24227BB8B870045467E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84B6F24327BB8B870045467E /* Mooltipass Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Mooltipass Extension.entitlements"; sourceTree = "<group>"; };
+		84B6F26327BB8B880045467E /* background */ = {isa = PBXFileReference; lastKnownFileType = folder; name = background; path = ../../background; sourceTree = "<group>"; };
+		84B6F26427BB8B880045467E /* ui */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ui; path = ../../ui; sourceTree = "<group>"; };
+		84B6F26527BB8B880045467E /* options */ = {isa = PBXFileReference; lastKnownFileType = folder; name = options; path = ../../options; sourceTree = "<group>"; };
+		84B6F26627BB8B880045467E /* first_run_documents */ = {isa = PBXFileReference; lastKnownFileType = folder; name = first_run_documents; path = ../../first_run_documents; sourceTree = "<group>"; };
+		84B6F26727BB8B880045467E /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = ../../LICENSE; sourceTree = "<group>"; };
+		84B6F26827BB8B880045467E /* kb */ = {isa = PBXFileReference; lastKnownFileType = folder; name = kb; path = ../../kb; sourceTree = "<group>"; };
+		84B6F26927BB8B880045467E /* css */ = {isa = PBXFileReference; lastKnownFileType = folder; name = css; path = ../../css; sourceTree = "<group>"; };
+		84B6F26A27BB8B880045467E /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../../images; sourceTree = "<group>"; };
+		84B6F26B27BB8B880045467E /* scss */ = {isa = PBXFileReference; lastKnownFileType = folder; name = scss; path = ../../scss; sourceTree = "<group>"; };
+		84B6F26C27BB8B880045467E /* Mooltipass.safariextension */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Mooltipass.safariextension; path = ../../Mooltipass.safariextension; sourceTree = "<group>"; };
+		84B6F26D27BB8B880045467E /* shared_scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = shared_scripts; path = ../../shared_scripts; sourceTree = "<group>"; };
+		84B6F26E27BB8B880045467E /* popups */ = {isa = PBXFileReference; lastKnownFileType = folder; name = popups; path = ../../popups; sourceTree = "<group>"; };
+		84B6F26F27BB8B880045467E /* icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = icons; path = ../../icons; sourceTree = "<group>"; };
+		84B6F27027BB8B880045467E /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = ../../manifest.json; sourceTree = "<group>"; };
+		84B6F27127BB8B880045467E /* mooltipass-content.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "mooltipass-content.js"; path = "../../mooltipass-content.js"; sourceTree = "<group>"; };
+		84B6F27227BB8B880045467E /* _locales */ = {isa = PBXFileReference; lastKnownFileType = folder; name = _locales; path = ../../_locales; sourceTree = "<group>"; };
+		84B6F27327BB8B880045467E /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = ../../fonts; sourceTree = "<group>"; };
+		84B6F27427BB8B880045467E /* mooltipass-content.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = "mooltipass-content.css"; path = "../../mooltipass-content.css"; sourceTree = "<group>"; };
+		84B6F27527BB8B880045467E /* vendor */ = {isa = PBXFileReference; lastKnownFileType = folder; name = vendor; path = ../../vendor; sourceTree = "<group>"; };
+		84B6F27627BB8B880045467E /* content_scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = content_scripts; path = ../../content_scripts; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		84B6F21127BB8B870045467E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84B6F22327BB8B870045467E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84B6F23027BB8B870045467E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84B6F23A27BB8B870045467E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		84B6F20027BB8B850045467E = {
+			isa = PBXGroup;
+			children = (
+				84B6F20527BB8B850045467E /* Shared (App) */,
+				84B6F20E27BB8B870045467E /* Shared (Extension) */,
+				84B6F21627BB8B870045467E /* iOS (App) */,
+				84B6F22727BB8B870045467E /* macOS (App) */,
+				84B6F23727BB8B870045467E /* iOS (Extension) */,
+				84B6F24127BB8B870045467E /* macOS (Extension) */,
+				84B6F21527BB8B870045467E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		84B6F20527BB8B850045467E /* Shared (App) */ = {
+			isa = PBXGroup;
+			children = (
+				84B6F20C27BB8B850045467E /* ViewController.swift */,
+				84B6F20D27BB8B870045467E /* Assets.xcassets */,
+				84B6F20627BB8B850045467E /* Resources */,
+			);
+			path = "Shared (App)";
+			sourceTree = "<group>";
+		};
+		84B6F20627BB8B850045467E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				84B6F20727BB8B850045467E /* Main.html */,
+				84B6F20927BB8B850045467E /* Icon.png */,
+				84B6F20A27BB8B850045467E /* Style.css */,
+				84B6F20B27BB8B850045467E /* Script.js */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		84B6F20E27BB8B870045467E /* Shared (Extension) */ = {
+			isa = PBXGroup;
+			children = (
+				84B6F26227BB8B880045467E /* Resources */,
+				84B6F20F27BB8B870045467E /* SafariWebExtensionHandler.swift */,
+			);
+			path = "Shared (Extension)";
+			sourceTree = "<group>";
+		};
+		84B6F21527BB8B870045467E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				84B6F21427BB8B870045467E /* Mooltipass Extension Launcher.app */,
+				84B6F22627BB8B870045467E /* Mooltipass Extension Launcher.app */,
+				84B6F23327BB8B870045467E /* Mooltipass Extension.appex */,
+				84B6F23D27BB8B870045467E /* Mooltipass Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		84B6F21627BB8B870045467E /* iOS (App) */ = {
+			isa = PBXGroup;
+			children = (
+				84B6F21727BB8B870045467E /* AppDelegate.swift */,
+				84B6F21927BB8B870045467E /* SceneDelegate.swift */,
+				84B6F21B27BB8B870045467E /* LaunchScreen.storyboard */,
+				84B6F21E27BB8B870045467E /* Main.storyboard */,
+				84B6F22127BB8B870045467E /* Info.plist */,
+			);
+			path = "iOS (App)";
+			sourceTree = "<group>";
+		};
+		84B6F22727BB8B870045467E /* macOS (App) */ = {
+			isa = PBXGroup;
+			children = (
+				84B6F22827BB8B870045467E /* AppDelegate.swift */,
+				84B6F22A27BB8B870045467E /* Main.storyboard */,
+				84B6F22D27BB8B870045467E /* Info.plist */,
+				84B6F22E27BB8B870045467E /* Mooltipass Extension.entitlements */,
+			);
+			path = "macOS (App)";
+			sourceTree = "<group>";
+		};
+		84B6F23727BB8B870045467E /* iOS (Extension) */ = {
+			isa = PBXGroup;
+			children = (
+				84B6F23827BB8B870045467E /* Info.plist */,
+			);
+			path = "iOS (Extension)";
+			sourceTree = "<group>";
+		};
+		84B6F24127BB8B870045467E /* macOS (Extension) */ = {
+			isa = PBXGroup;
+			children = (
+				84B6F24227BB8B870045467E /* Info.plist */,
+				84B6F24327BB8B870045467E /* Mooltipass Extension.entitlements */,
+			);
+			path = "macOS (Extension)";
+			sourceTree = "<group>";
+		};
+		84B6F26227BB8B880045467E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				84B6F26327BB8B880045467E /* background */,
+				84B6F26427BB8B880045467E /* ui */,
+				84B6F26527BB8B880045467E /* options */,
+				84B6F26627BB8B880045467E /* first_run_documents */,
+				84B6F26727BB8B880045467E /* LICENSE */,
+				84B6F26827BB8B880045467E /* kb */,
+				84B6F26927BB8B880045467E /* css */,
+				84B6F26A27BB8B880045467E /* images */,
+				84B6F26B27BB8B880045467E /* scss */,
+				84B6F26C27BB8B880045467E /* Mooltipass.safariextension */,
+				84B6F26D27BB8B880045467E /* shared_scripts */,
+				84B6F26E27BB8B880045467E /* popups */,
+				84B6F26F27BB8B880045467E /* icons */,
+				84B6F27027BB8B880045467E /* manifest.json */,
+				84B6F27127BB8B880045467E /* mooltipass-content.js */,
+				84B6F27227BB8B880045467E /* _locales */,
+				84B6F27327BB8B880045467E /* fonts */,
+				84B6F27427BB8B880045467E /* mooltipass-content.css */,
+				84B6F27527BB8B880045467E /* vendor */,
+				84B6F27627BB8B880045467E /* content_scripts */,
+			);
+			name = Resources;
+			path = "Shared (Extension)";
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		84B6F21327BB8B870045467E /* Mooltipass Extension Launcher (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84B6F25827BB8B870045467E /* Build configuration list for PBXNativeTarget "Mooltipass Extension Launcher (iOS)" */;
+			buildPhases = (
+				84B6F21027BB8B870045467E /* Sources */,
+				84B6F21127BB8B870045467E /* Frameworks */,
+				84B6F21227BB8B870045467E /* Resources */,
+				84B6F25727BB8B870045467E /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				84B6F23627BB8B870045467E /* PBXTargetDependency */,
+			);
+			name = "Mooltipass Extension Launcher (iOS)";
+			productName = "MooltipassXCODEProject (iOS)";
+			productReference = 84B6F21427BB8B870045467E /* Mooltipass Extension Launcher.app */;
+			productType = "com.apple.product-type.application";
+		};
+		84B6F22527BB8B870045467E /* Mooltipass Extension Launcher (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84B6F25F27BB8B870045467E /* Build configuration list for PBXNativeTarget "Mooltipass Extension Launcher (macOS)" */;
+			buildPhases = (
+				84B6F22227BB8B870045467E /* Sources */,
+				84B6F22327BB8B870045467E /* Frameworks */,
+				84B6F22427BB8B870045467E /* Resources */,
+				84B6F25E27BB8B870045467E /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				84B6F24027BB8B870045467E /* PBXTargetDependency */,
+			);
+			name = "Mooltipass Extension Launcher (macOS)";
+			productName = "MooltipassXCODEProject (macOS)";
+			productReference = 84B6F22627BB8B870045467E /* Mooltipass Extension Launcher.app */;
+			productType = "com.apple.product-type.application";
+		};
+		84B6F23227BB8B870045467E /* Mooltipass Extension (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84B6F25427BB8B870045467E /* Build configuration list for PBXNativeTarget "Mooltipass Extension (iOS)" */;
+			buildPhases = (
+				84B6F22F27BB8B870045467E /* Sources */,
+				84B6F23027BB8B870045467E /* Frameworks */,
+				84B6F23127BB8B870045467E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Mooltipass Extension (iOS)";
+			productName = "MooltipassXCODEProject Extension (iOS)";
+			productReference = 84B6F23327BB8B870045467E /* Mooltipass Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		84B6F23C27BB8B870045467E /* Mooltipass Extension (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84B6F25B27BB8B870045467E /* Build configuration list for PBXNativeTarget "Mooltipass Extension (macOS)" */;
+			buildPhases = (
+				84B6F23927BB8B870045467E /* Sources */,
+				84B6F23A27BB8B870045467E /* Frameworks */,
+				84B6F23B27BB8B870045467E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Mooltipass Extension (macOS)";
+			productName = "MooltipassXCODEProject Extension (macOS)";
+			productReference = 84B6F23D27BB8B870045467E /* Mooltipass Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		84B6F20127BB8B850045467E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1320;
+				LastUpgradeCheck = 1320;
+				TargetAttributes = {
+					84B6F21327BB8B870045467E = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+					84B6F22527BB8B870045467E = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+					84B6F23227BB8B870045467E = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+					84B6F23C27BB8B870045467E = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+				};
+			};
+			buildConfigurationList = 84B6F20427BB8B850045467E /* Build configuration list for PBXProject "Mooltipass Extension" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 84B6F20027BB8B850045467E;
+			productRefGroup = 84B6F21527BB8B870045467E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				84B6F21327BB8B870045467E /* Mooltipass Extension Launcher (iOS) */,
+				84B6F22527BB8B870045467E /* Mooltipass Extension Launcher (macOS) */,
+				84B6F23227BB8B870045467E /* Mooltipass Extension (iOS) */,
+				84B6F23C27BB8B870045467E /* Mooltipass Extension (macOS) */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		84B6F21227BB8B870045467E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84B6F24627BB8B870045467E /* Icon.png in Resources */,
+				84B6F21D27BB8B870045467E /* LaunchScreen.storyboard in Resources */,
+				84B6F24427BB8B870045467E /* Main.html in Resources */,
+				84B6F24A27BB8B870045467E /* Script.js in Resources */,
+				84B6F24E27BB8B870045467E /* Assets.xcassets in Resources */,
+				84B6F22027BB8B870045467E /* Main.storyboard in Resources */,
+				84B6F24827BB8B870045467E /* Style.css in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84B6F22427BB8B870045467E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84B6F24727BB8B870045467E /* Icon.png in Resources */,
+				84B6F24927BB8B870045467E /* Style.css in Resources */,
+				84B6F22C27BB8B870045467E /* Main.storyboard in Resources */,
+				84B6F24B27BB8B870045467E /* Script.js in Resources */,
+				84B6F24F27BB8B870045467E /* Assets.xcassets in Resources */,
+				84B6F24527BB8B870045467E /* Main.html in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84B6F23127BB8B870045467E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84B6F28E27BB8B880045467E /* first_run_documents in Resources */,
+				84B6F29327BB8B880045467E /* scss in Resources */,
+				84B6F29027BB8B880045467E /* kb in Resources */,
+				84B6F28D27BB8B880045467E /* options in Resources */,
+				84B6F29127BB8B880045467E /* css in Resources */,
+				84B6F29627BB8B880045467E /* popups in Resources */,
+				84B6F29C27BB8B880045467E /* mooltipass-content.css in Resources */,
+				84B6F29227BB8B880045467E /* images in Resources */,
+				84B6F29427BB8B880045467E /* Mooltipass.safariextension in Resources */,
+				84B6F29827BB8B880045467E /* manifest.json in Resources */,
+				84B6F28C27BB8B880045467E /* ui in Resources */,
+				84B6F29A27BB8B880045467E /* _locales in Resources */,
+				84B6F29B27BB8B880045467E /* fonts in Resources */,
+				84B6F29E27BB8B880045467E /* content_scripts in Resources */,
+				84B6F28B27BB8B880045467E /* background in Resources */,
+				84B6F29527BB8B880045467E /* shared_scripts in Resources */,
+				84B6F29927BB8B880045467E /* mooltipass-content.js in Resources */,
+				84B6F28F27BB8B880045467E /* LICENSE in Resources */,
+				84B6F29D27BB8B880045467E /* vendor in Resources */,
+				84B6F29727BB8B880045467E /* icons in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84B6F23B27BB8B870045467E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84B6F27A27BB8B880045467E /* first_run_documents in Resources */,
+				84B6F27F27BB8B880045467E /* scss in Resources */,
+				84B6F27C27BB8B880045467E /* kb in Resources */,
+				84B6F27927BB8B880045467E /* options in Resources */,
+				84B6F27D27BB8B880045467E /* css in Resources */,
+				84B6F28227BB8B880045467E /* popups in Resources */,
+				84B6F28827BB8B880045467E /* mooltipass-content.css in Resources */,
+				84B6F27E27BB8B880045467E /* images in Resources */,
+				84B6F28027BB8B880045467E /* Mooltipass.safariextension in Resources */,
+				84B6F28427BB8B880045467E /* manifest.json in Resources */,
+				84B6F27827BB8B880045467E /* ui in Resources */,
+				84B6F28627BB8B880045467E /* _locales in Resources */,
+				84B6F28727BB8B880045467E /* fonts in Resources */,
+				84B6F28A27BB8B880045467E /* content_scripts in Resources */,
+				84B6F27727BB8B880045467E /* background in Resources */,
+				84B6F28127BB8B880045467E /* shared_scripts in Resources */,
+				84B6F28527BB8B880045467E /* mooltipass-content.js in Resources */,
+				84B6F27B27BB8B880045467E /* LICENSE in Resources */,
+				84B6F28927BB8B880045467E /* vendor in Resources */,
+				84B6F28327BB8B880045467E /* icons in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		84B6F21027BB8B870045467E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84B6F24C27BB8B870045467E /* ViewController.swift in Sources */,
+				84B6F21827BB8B870045467E /* AppDelegate.swift in Sources */,
+				84B6F21A27BB8B870045467E /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84B6F22227BB8B870045467E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84B6F24D27BB8B870045467E /* ViewController.swift in Sources */,
+				84B6F22927BB8B870045467E /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84B6F22F27BB8B870045467E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84B6F25027BB8B870045467E /* SafariWebExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84B6F23927BB8B870045467E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84B6F25127BB8B870045467E /* SafariWebExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		84B6F23627BB8B870045467E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 84B6F23227BB8B870045467E /* Mooltipass Extension (iOS) */;
+			targetProxy = 84B6F23527BB8B870045467E /* PBXContainerItemProxy */;
+		};
+		84B6F24027BB8B870045467E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 84B6F23C27BB8B870045467E /* Mooltipass Extension (macOS) */;
+			targetProxy = 84B6F23F27BB8B870045467E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		84B6F20727BB8B850045467E /* Main.html */ = {
+			isa = PBXVariantGroup;
+			children = (
+				84B6F20827BB8B850045467E /* Base */,
+			);
+			name = Main.html;
+			sourceTree = "<group>";
+		};
+		84B6F21B27BB8B870045467E /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				84B6F21C27BB8B870045467E /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		84B6F21E27BB8B870045467E /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				84B6F21F27BB8B870045467E /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		84B6F22A27BB8B870045467E /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				84B6F22B27BB8B870045467E /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		84B6F25227BB8B870045467E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		84B6F25327BB8B870045467E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		84B6F25527BB8B870045467E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Mooltipass Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stephan-electronics.Mooltipass-Extension.Extension";
+				PRODUCT_NAME = "Mooltipass Extension";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		84B6F25627BB8B870045467E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Mooltipass Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stephan-electronics.Mooltipass-Extension.Extension";
+				PRODUCT_NAME = "Mooltipass Extension";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		84B6F25927BB8B870045467E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Mooltipass Extension";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stephan-electronics.Mooltipass-Extension";
+				PRODUCT_NAME = "Mooltipass Extension Launcher";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		84B6F25A27BB8B870045467E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Mooltipass Extension";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stephan-electronics.Mooltipass-Extension";
+				PRODUCT_NAME = "Mooltipass Extension Launcher";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		84B6F25C27BB8B870045467E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "macOS (Extension)/Mooltipass Extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Mooltipass Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stephan-electronics.Mooltipass-Extension.Extension";
+				PRODUCT_NAME = "Mooltipass Extension";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		84B6F25D27BB8B870045467E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "macOS (Extension)/Mooltipass Extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Mooltipass Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stephan-electronics.Mooltipass-Extension.Extension";
+				PRODUCT_NAME = "Mooltipass Extension";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		84B6F26027BB8B870045467E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "macOS (App)/Mooltipass Extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Mooltipass Extension";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stephan-electronics.Mooltipass-Extension";
+				PRODUCT_NAME = "Mooltipass Extension Launcher";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		84B6F26127BB8B870045467E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "macOS (App)/Mooltipass Extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Mooltipass Extension";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stephan-electronics.Mooltipass-Extension";
+				PRODUCT_NAME = "Mooltipass Extension Launcher";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		84B6F20427BB8B850045467E /* Build configuration list for PBXProject "Mooltipass Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84B6F25227BB8B870045467E /* Debug */,
+				84B6F25327BB8B870045467E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		84B6F25427BB8B870045467E /* Build configuration list for PBXNativeTarget "Mooltipass Extension (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84B6F25527BB8B870045467E /* Debug */,
+				84B6F25627BB8B870045467E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		84B6F25827BB8B870045467E /* Build configuration list for PBXNativeTarget "Mooltipass Extension Launcher (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84B6F25927BB8B870045467E /* Debug */,
+				84B6F25A27BB8B870045467E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		84B6F25B27BB8B870045467E /* Build configuration list for PBXNativeTarget "Mooltipass Extension (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84B6F25C27BB8B870045467E /* Debug */,
+				84B6F25D27BB8B870045467E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		84B6F25F27BB8B870045467E /* Build configuration list for PBXNativeTarget "Mooltipass Extension Launcher (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84B6F26027BB8B870045467E /* Debug */,
+				84B6F26127BB8B870045467E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 84B6F20127BB8B850045467E /* Project object */;
+}
