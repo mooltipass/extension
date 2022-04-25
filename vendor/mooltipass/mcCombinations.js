@@ -403,6 +403,47 @@ var extendedCombinations = {
             }
         }
     },	
+    meraki: function (forms) {
+        if (mcCombs.getAllForms() == 0) return;
+        for (form in forms) {
+            var currentForm = forms[form];
+            if (currentForm.element) { // Skip noform form
+                currentForm.combination = {
+                    special: true,
+                    fields: {
+                        username: '',
+                        password: ''
+                    },
+                    savedFields: {
+                        username: '',
+                        password: ''
+                    },
+                    autoSubmit: false
+                }
+
+                if (mpJQ('input[data-testid=login_password]:visible').length > 0) { 
+                    currentForm.combination.fields.password = mpJQ('input[data-testid=login_password]');
+                    currentForm.combination.autoSubmit = true;
+                }
+                if (mpJQ('input[data-testid=login_email]:visible').length > 0) { 
+                    currentForm.combination.fields.username = mpJQ('input[data-testid=login_email]');
+                    currentForm.combination.autoSubmit = true;
+                }
+				
+                if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){
+                    var parentForm = currentForm.combination.fields.password[0].closest('form');
+                    if (parentForm){
+                        var inputEmail = parentForm.querySelector('input[data-testid=login_email]');
+                        if (inputEmail){
+                            currentForm.combination.fields.username = mpJQ(inputEmail);
+                            currentForm.combination.autoSubmit = true;						
+                            currentForm.combination.fields.username.attr('data-mp-id', "login_email");
+                        }
+                    }	
+                }				
+            }
+        }
+    },	
     revolut: function (forms) {
         if (mcCombs.getAllForms() == 0) return;
         for (form in forms) {
@@ -840,6 +881,12 @@ mcCombinations.prototype.possibleCombinations = [
         combinationName: 'Firefox Two Page Login Procedure',
         requiredUrl: 'accounts.firefox.com',
         callback: extendedCombinations.firefox
+    },	
+    {
+        combinationId: 'merakiTwoPageAuth',
+        combinationName: 'Meraki Two Page Login Procedure',
+        requiredUrl: 'meraki.com',
+        callback: extendedCombinations.meraki
     },	
     {
         combinationId: 'revolutTwoPageAuth',
