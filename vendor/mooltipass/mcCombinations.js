@@ -362,6 +362,88 @@ var extendedCombinations = {
             }
         }
     }, 	
+    confluent: function (forms) {
+        if (mcCombs.getAllForms() == 0) return;
+        for (form in forms) {
+            var currentForm = forms[form];
+            if (currentForm.element) { // Skip noform form
+                currentForm.combination = {
+                    special: true,
+                    fields: {
+                        username: '',
+                        password: ''
+                    },
+                    savedFields: {
+                        username: '',
+                        password: ''
+                    },
+                    autoSubmit: false
+                }
+
+                if (mpJQ('input[type=password]:visible').length > 0) { 
+                    currentForm.combination.fields.password = mpJQ('input[type=password]');
+                    currentForm.combination.autoSubmit = true;
+                }
+                if (mpJQ('input[type=email]:visible').length > 0) { 
+                    currentForm.combination.fields.username = mpJQ('input[type=email]');
+                    currentForm.combination.autoSubmit = true;
+                }
+				
+                if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){
+                    var parentForm = currentForm.combination.fields.password[0].closest('form');
+                    if (parentForm){
+                        var inputEmail = parentForm.querySelector('input[type=email]');
+                        if (inputEmail){
+                            currentForm.combination.fields.username = mpJQ(inputEmail);
+                            currentForm.combination.autoSubmit = true;						
+                            currentForm.combination.fields.username.attr('data-mp-id', "login_email");
+                        }
+                    }	
+                }				
+            }
+        }
+    }, 	
+    newegg: function (forms) {
+        if (mcCombs.getAllForms() == 0) return;
+        for (form in forms) {
+            var currentForm = forms[form];
+            if (currentForm.element) { // Skip noform form
+                currentForm.combination = {
+                    special: true,
+                    fields: {
+                        username: '',
+                        password: ''
+                    },
+                    savedFields: {
+                        username: '',
+                        password: ''
+                    },
+                    autoSubmit: false
+                }
+
+                if (mpJQ('input[type=password]:visible').length > 0) { 
+                    currentForm.combination.fields.password = mpJQ('input[type=password]');
+                    currentForm.combination.autoSubmit = true;
+                }
+                if (mpJQ('input[type=email]:visible').length > 0) { 
+                    currentForm.combination.fields.username = mpJQ('input[type=email]');
+                    currentForm.combination.autoSubmit = true;
+                }
+				
+                if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){
+                    var parentForm = currentForm.combination.fields.password[0].closest('form');
+                    if (parentForm){
+                        var inputEmail = parentForm.querySelector('input[type=email]');
+                        if (inputEmail){
+                            currentForm.combination.fields.username = mpJQ(inputEmail);
+                            currentForm.combination.autoSubmit = true;						
+                            currentForm.combination.fields.username.attr('data-mp-id', "login_email");
+                        }
+                    }	
+                }				
+            }
+        }
+    },
     firefox: function (forms) {
         if (mcCombs.getAllForms() == 0) return;
         for (form in forms) {
@@ -875,6 +957,18 @@ mcCombinations.prototype.possibleCombinations = [
         combinationName: 'Samsara Two Page Login Procedure',
         requiredUrl: 'cloud.samsara.com',
         callback: extendedCombinations.samsara
+    },
+    {
+        combinationId: 'confluentTwoPageAuth',
+        combinationName: 'Confluent Two Page Login Procedure',
+        requiredUrl: 'login.confluent.io',
+        callback: extendedCombinations.confluent
+    },	
+    {
+        combinationId: 'neweggTwoPageAuth',
+        combinationName: 'Newegg Two Page Login Procedure',
+        requiredUrl: 'secure.newegg.com',
+        callback: extendedCombinations.newegg
     },	
     {
         combinationId: 'firefoxTwoPageAuth',
@@ -1848,7 +1942,9 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
                     // Fill-in Username
                     if (currentForm.combination.fields.username && typeof currentForm.combination.fields.username !== 'string') {
                         currentForm.combination.fields.username.val('');
-                        currentForm.combination.fields.username.click();
+                        try {
+                            currentForm.combination.fields.username.click();
+						}catch (e) { }
                         try {
                             this.triggerChangeEvent(currentForm.combination.fields.username[0], credentials[0].Login)
                             currentForm.combination.fields.username.trigger('blur')
@@ -1936,6 +2032,7 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
         /logon/i,
         /log on/i,
         /log in/i,
+        /loginbutton/i,
         /sign/i,
         /sign in/i,
         /connexion/i,
