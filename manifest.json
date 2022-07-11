@@ -47,6 +47,7 @@
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
+	  "exclude_matches": ["*://www.youtube.com/*"],
       "js": [
         "vendor/jquery-3.2.1.js",
         "shared_scripts/psl.min.js",
