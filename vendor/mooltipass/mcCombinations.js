@@ -282,6 +282,7 @@ var extendedCombinations = {
     },
     google: function (forms) {
         if (mcCombs.getAllForms() == 0) return;
+		
         for (form in forms) {
             var currentForm = forms[form];
             if (currentForm.element) { // Skip noform form
@@ -298,7 +299,7 @@ var extendedCombinations = {
                     autoSubmit: false
                 }
 
-                if (mpJQ('input[type=password]:visible').length > 0) { // Step 1: Email
+                if (mpJQ('input[type=password]:visible').length > 0) { // Step 2: password
                     currentForm.combination.fields.password = mpJQ('input[type=password]');
                     currentForm.combination.autoSubmit = true;
                 }
@@ -308,6 +309,7 @@ var extendedCombinations = {
                 }
 				
                 if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){
+					
                     var parentForm = currentForm.combination.fields.password[0].closest('form');
                     if (parentForm){
                         var inputEmail = parentForm.querySelector('input#identifierId');
@@ -634,8 +636,8 @@ var extendedCombinations = {
                     currentForm.combination.fields.password = mpJQ('input[name=password]');
                     currentForm.combination.autoSubmit = true;
                 }
-                if (mpJQ('input[name=username]:visible').length > 0) {
-                    currentForm.combination.fields.username = mpJQ('input[name=username]');
+                if (mpJQ('input[name=email]:visible').length > 0) {
+                    currentForm.combination.fields.username = mpJQ('input[name=email]');
                     currentForm.combination.autoSubmit = true;
                 }
             }
