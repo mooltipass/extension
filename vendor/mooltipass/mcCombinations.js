@@ -2149,8 +2149,8 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
         '[role="button"]:visible',
         '[role="button"]:visible span',
         'input.button:visible',
-        'a:visible',
         'input[onclick]:visible',
+        'a:visible',
         'div[onclick]:visible',
         'div.button:visible'
     ];
