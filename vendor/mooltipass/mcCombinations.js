@@ -1478,7 +1478,7 @@ mcCombinations.prototype.detectCombination = function () {
                     messaging({ 'action': 'retrieve_credentials', 'args': [url, submitUrl, true, true] });
                 }
 
-				this.waitingForPost = true;
+                this.waitingForPost = true;
                 messaging({ 'action': 'wait_for_postdata' });				
 
                 return;
