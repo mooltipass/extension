@@ -2211,7 +2211,7 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
 
         var buttons = container.find(selector).filter(function (index, button) {
             var buttonOuterHTML = mpJQ(button).clone().children().remove().end()[0].outerHTML;
-            if (!window.location.hostname.match(/nextcloud.com/)) {
+            if ((!window.location.hostname.match(/nextcloud.com/)) && (!window.location.hostname.match(/mpiphp.org/))) {
                 for (var i = 0; i < IGNORE_PATTERNS.length; i++) {
                     if (buttonOuterHTML.match(IGNORE_PATTERNS[i])) {			
                         return false
