@@ -137,7 +137,7 @@ mooltipass.device.addToLastCredentialsRequests = function(tabid, submitURL)
         newLastRequestObj.submitURL = submitURL;
         newLastRequestObj.submitTime = new Date().getTime();
     mooltipass.device.lastCredentialsRequests.unshift(newLastRequestObj);
-    if (mooltipass.device.lastCredentialsRequests.length > 3){
+    if (mooltipass.device.lastCredentialsRequests.length > 2){
         mooltipass.device.lastCredentialsRequests.pop(); 
     }
 }
@@ -152,9 +152,9 @@ mooltipass.device.checkInLastCredentialsRequests = function(tabid, submitURL)
     var wasRequests = 0;  //for the first element wasRequests == 0, for second - wasRequests == 1, for third - wasRequests > 1
     for (i = 0; i < mooltipass.device.lastCredentialsRequests.length; i++){
         if ((mooltipass.device.lastCredentialsRequests[i].tabid == tabid) && (mooltipass.device.lastCredentialsRequests[i].submitURL == submitURL)){
-            if (wasRequests > 1){
+            if (wasRequests > 0){
 				//we process the third element in the array
-	            //so, we check the time between current request and third (most oldest) request - not more than 30 sec - 30000 milisec
+	            //so, we check the time between current request and second (most oldest) request - not more than 30 sec - 30000 milisec
                 if (Math.abs(mooltipass.device.lastCredentialsRequests[i].submitTime - currTime) < 30000){
                     return true;
                 } 
