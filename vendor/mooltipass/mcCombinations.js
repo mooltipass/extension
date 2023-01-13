@@ -2189,6 +2189,7 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
         /href=".*?loginpage.*?"/i,
         /href="http.*?"/i,
         /\(Logged out\) Header/i,
+		/passwords\/new/i
     ],
 
     // Selectors are ordered by priority, first ones are more important.
