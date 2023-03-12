@@ -449,7 +449,48 @@ var extendedCombinations = {
                 }				
             }
         }
-    }, 	
+    },
+    ros: function (forms) {
+        if (mcCombs.getAllForms() == 0) return;
+        for (form in forms) {
+            var currentForm = forms[form];
+            if (currentForm.element) { // Skip noform form
+                currentForm.combination = {
+                    special: true,
+                    fields: {
+                        username: '',
+                        password: ''
+                    },
+                    savedFields: {
+                        username: '',
+                        password: ''
+                    },
+                    autoSubmit: false
+                }
+
+                if (mpJQ('input[id=password-input').length > 0) { 
+                    currentForm.combination.fields.password = mpJQ('input[id=password-input');
+                    currentForm.combination.autoSubmit = true;
+                }
+                if (mpJQ('input[id=pps-input]').length > 0) { 
+                    currentForm.combination.fields.username = mpJQ('input[id=pps-input]');
+                    currentForm.combination.autoSubmit = true;
+                }
+
+                if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){
+                    var parentForm = currentForm.combination.fields.password[0].closest('form');
+                    if (parentForm){
+                        var inputEmail = parentForm.querySelector('input[id=pps-input]');
+                        if (inputEmail){
+                            currentForm.combination.fields.username = mpJQ(inputEmail);
+                            currentForm.combination.autoSubmit = true;						
+                            currentForm.combination.fields.username.attr('data-mp-id', "login_email");
+                        }
+                    }	
+                }				
+            }
+        }
+    },	 	
     newegg: function (forms) {
         if (mcCombs.getAllForms() == 0) return;
         for (form in forms) {
@@ -522,6 +563,47 @@ var extendedCombinations = {
                     var parentForm = currentForm.combination.fields.password[0].closest('form');
                     if (parentForm){
                         var inputEmail = parentForm.querySelector('input[name=j_username]');
+                        if (inputEmail){
+                            currentForm.combination.fields.username = mpJQ(inputEmail);
+                            currentForm.combination.autoSubmit = true;						
+                            currentForm.combination.fields.username.attr('data-mp-id', "login_email");
+                        }
+                    }	
+                }				
+            }
+        }
+    },
+    openai: function (forms) {
+        if (mcCombs.getAllForms() == 0) return;
+        for (form in forms) {
+            var currentForm = forms[form];
+            if (currentForm.element) { // Skip noform form
+                currentForm.combination = {
+                    special: true,
+                    fields: {
+                        username: '',
+                        password: ''
+                    },
+                    savedFields: {
+                        username: '',
+                        password: ''
+                    },
+                    autoSubmit: false
+                }
+
+                if (mpJQ('input[type=password]:visible').length > 0) { 
+                    currentForm.combination.fields.password = mpJQ('input[type=password]');
+                    currentForm.combination.autoSubmit = true;
+                }
+                if (mpJQ('input[id=username]:visible').length > 0) { 
+                    currentForm.combination.fields.username = mpJQ('input[id=username]');
+                    currentForm.combination.autoSubmit = true;
+                }
+
+                if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){
+                    var parentForm = currentForm.combination.fields.password[0].closest('form');
+                    if (parentForm){
+                        var inputEmail = parentForm.querySelector('input[name=username]');
                         if (inputEmail){
                             currentForm.combination.fields.username = mpJQ(inputEmail);
                             currentForm.combination.autoSubmit = true;						
@@ -1057,7 +1139,13 @@ mcCombinations.prototype.possibleCombinations = [
         combinationName: 'Confluent Two Page Login Procedure',
         requiredUrl: 'login.confluent.io',
         callback: extendedCombinations.confluent
-    },	
+    },
+    {
+        combinationId: 'rosPageAuth',
+        combinationName: 'Ros Page Login Procedure',
+        requiredUrl: 'ros.ie',
+        callback: extendedCombinations.ros
+    },		
     {
         combinationId: 'neweggTwoPageAuth',
         combinationName: 'Newegg Two Page Login Procedure',
@@ -1069,6 +1157,12 @@ mcCombinations.prototype.possibleCombinations = [
         combinationName: 'wolfram Two Page Login Procedure',
         requiredUrl: 'account.wolfram.com',
         callback: extendedCombinations.wolfram
+    },
+    {
+        combinationId: 'openaiTwoPageAuth',
+        combinationName: 'openai Two Page Login Procedure',
+        requiredUrl: 'auth0.openai.com',
+        callback: extendedCombinations.openai
     },	
     {
         combinationId: 'firefoxTwoPageAuth',
@@ -2163,6 +2257,7 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
         /signup/,
         /reset/i,
         /registration/i,
+        /register/i,		
         /oublié/i,
         /vergeten/i,
         /problemen/i,
