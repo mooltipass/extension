@@ -78,7 +78,8 @@ var mpDialog = {
                 usePasswordGeneratorSpecial : mcCombs.settings["usePasswordGeneratorSpecial"],				
                 hideCustomCredentials: mcCombs.possibleCombinations.some(function (combination) {
                     return combination.requiredUrl == window.location.hostname
-                })
+                }),
+                isConnected : mcCombs.settings.status.connected
             }));
 
         $(iframe).addClass('mp-ui-password-dialog').hide()
