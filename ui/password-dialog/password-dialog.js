@@ -66,6 +66,7 @@ $(function () {
 		});
 	});
 	
+    if (data.isConnected){
 	// Password Generator Event Listeners
 	$('.mooltipass-new-password').on('click', function( e ) {
 		e.preventDefault();
@@ -110,7 +111,13 @@ $(function () {
 		copyInput.select();
 		document.execCommand('copy');
 	});
-	
+	}
+	else {
+	    $('.mooltipass-new-password').prop("disabled",true);	
+		$('#copy-to-fields').prop("disabled",true);	
+		$('#copy-to-clipboard').prop("disabled",true);	
+	}
+
 	$('.mp-genpw-overlay').on('click', function( e ) {
 		if ( $(e.target).hasClass('mp-genpw-overlay') ) {
 			messaging({
@@ -129,6 +136,7 @@ $(function () {
 		mpBox.css({ top: data.offsetTop, left: data.offsetLeft });
 		mpBox.find('.mp-triangle-in, .mp-triangle-out').css('top', '')
 
+        if (data.isConnected){
 		// Generate password if empty
 		if ( mpBox.find('.mooltipass-password-generator').val() === '' ) {
 			//for Safari we generate password here due to Safari bug (the page from our extension not receives messages from background)
@@ -146,6 +154,7 @@ $(function () {
 				}]
 			});
 		}
+        }
 
 		// Move dialog if exceeding right area
 		if (data.offsetLeft + mpBox.outerWidth() > data.windowWidth) {
