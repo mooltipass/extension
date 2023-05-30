@@ -1608,6 +1608,9 @@ mcCombinations.prototype.detectCombination = function () {
                 }
 
                 var url = document.location.origin;
+                if (url.includes('login.microsoftonline.com')){
+                    url = url.replace('login.microsoftonline.com', 'login.live.com');
+                }
                 var submitUrl = url;
                 if (this.credentialsCache && this.credentialsCache.length > 0 && this.credentialsCache[0].Login) {
                     if (this.settings.debugLevel > 1) cipDebug.log('%c mcCombinations - %c Using credentials from cache', 'background-color: #c3c6b4', 'color: #777777');
