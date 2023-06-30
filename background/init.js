@@ -234,6 +234,18 @@ startMooltipass = function () {
             }
         });
 
+        /**
+         * Add context menu entry for filling TOTP code
+         */
+        chrome.contextMenus.create({
+            "title": chrome.i18n.getMessage("InitJs_ContextMenu_fetchTOTPcode"),
+            "contexts": ["editable"],
+            "onclick": function (info, tab) {
+                chrome.tabs.sendMessage(tab.id, {
+                    action: "fetch_totp_code"
+                });
+            }
+        });
 
     /**
      * Interval which updates the browserAction (e.g. blinking icon)

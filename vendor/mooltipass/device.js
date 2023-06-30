@@ -105,6 +105,12 @@ mooltipass.device._asynchronous =
  */
  mooltipass.device.retrieveCredentialsQueue = [];
  mooltipass.device.retrieveCredentialsCounter = 0;
+ 
+/**
+ * 
+ */ 
+ mooltipass.device.totpcodeCallback = null;
+ mooltipass.device.totpcodeTab = null;
 
 /**
  * Requesting a new random string from device only once a minute
@@ -573,6 +579,24 @@ mooltipass.device.updateCredentials = function(callback, tab, entryId, username,
 };
 
 /* 
+ * Function called to receive the TOTP code from device
+ */
+ mooltipass.device.fetchTOTPCode = function(callback, tab, url, submiturl, forceCallback, triggerUnlock){  
+    // Check that the Mooltipass is unlocked, returns false if it is anything but unlocked
+    if(!event.isMooltipassUnlocked()) 
+    {
+        return;
+    } 
+
+    if (mooltipass.device.connectedToExternalApp) 
+    {
+        mooltipass.device.totpcodeCallback = callback; 
+        mooltipass.device.totpcodeTab = tab;
+        moolticute.askTOTPCode(url);
+    }	
+}
+
+/* 
  * Function called when a tab navigates away
  */
  mooltipass.device.onNavigatedAway = function(tabId, navigationInfo)
@@ -841,6 +865,20 @@ mooltipass.device.messageListener = function(message, sender, sendResponse) {
         mooltipass.device.retrieveCredentialsQueue.shift();
         mooltipass.device.sendCredentialRequestMessageFromQueue();
     }
+    else if (message.totpcode !== null) 
+    {
+        try
+        {
+            mooltipass.device.totpcodeCallback(
+                {
+                    totpcode: message.totpcode
+                }, mooltipass.device.totpcodeTab);
+        }
+        catch(err)
+        {
+           // console.log( err );
+        }		
+    }	
     // Returned on requesting credentials for a specific URL, but no credentials were found
     else if (message.noCredentials !== null) 
     {

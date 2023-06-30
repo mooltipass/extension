@@ -95,6 +95,18 @@ moolticute.askPassword = function( request ) {
 }
 
 /**
+ * Ask for a password
+ */
+moolticute.askTOTPCode = function(url) {
+
+    let message = {
+        msg: 'ask_totpcode',
+        url: url,
+    };	
+    moolticute.websocket.send(JSON.stringify(message));	
+}
+
+/**
  + * Get random numbers
  + */
  moolticute.getRandomNumbers = function() {
@@ -276,6 +288,9 @@ moolticute.websocket = {
                     };
                 }
                 break;
+            case 'ask_totpcode':
+                wrapped.totpcode = recvMsg.data.totpcode;			
+                break;	
             case 'version_changed':
                 moolticute.status.version = recvMsg.data;
                 wrapped.deviceStatus = moolticute.status;
@@ -329,6 +344,9 @@ moolticute.websocket = {
                 output.data.login = msg.credentials.login;
                 output.data.password = msg.credentials.password;    
             }
+        } else if (msg.totpcode) {
+			output.msg = 'ask_totpcode';
+            output.data.totpcode = msg.totpcode;
         } else if ( msg.command && msg.command == 'getRandomNumber') {
             output.msg = 'get_random_numbers';
             output.data = msg.random;

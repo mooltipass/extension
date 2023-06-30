@@ -41,6 +41,7 @@
   "InitJs_ContextMenu_FillPass": { "message": "Fill Pass Only" },
   "InitJs_ContextMenu_ShowPassGenIcons": { "message": "Show Password Generator Icons" },
   "InitJs_ContextMenu_SaveCredentials": { "message": "Save credentials" },
+  "InitJs_ContextMenu_fetchTOTPcode": { "message": "Fetch TOTP code" }, 
   
   "PopupStatusHtml_Error_Header": { "message": "An error has occurred." },
   "PopupStatusHtml_Error_Message": { "message": "1:bla" },

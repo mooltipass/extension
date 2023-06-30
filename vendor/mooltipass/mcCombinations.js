@@ -2077,14 +2077,15 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
         return;
     }
 
-    this.credentialsCache = credentials;
+    if (!credentials.totpcode){
+        this.credentialsCache = credentials;
 
-    if (this.settings.debugLevel > 4) cipDebug.log('%c mcCombinations: %c retrieveCredentialsCallback', 'background-color: #c3c6b4', 'color: #333333', credentials);
+        if (this.settings.debugLevel > 4) cipDebug.log('%c mcCombinations: %c retrieveCredentialsCallback', 'background-color: #c3c6b4', 'color: #333333', credentials);
 
-    // Credentials callback gets called when there's a hashChange in the fields. If we modified the username, keep the modified one
-    if (mpJQ('#mooltipass-username').val()) credentials[0].Login = mpJQ('#mooltipass-username').val();
-    mpJQ('#mooltipass-login-info').show();
-    mpJQ('#mooltipass-username').val(credentials[0].Login);
+        // Credentials callback gets called when there's a hashChange in the fields. If we modified the username, keep the modified one
+        if (mpJQ('#mooltipass-username').val()) credentials[0].Login = mpJQ('#mooltipass-username').val();
+        mpJQ('#mooltipass-login-info').show();
+        mpJQ('#mooltipass-username').val(credentials[0].Login);
 
         // Store retrieved username as a cache
         chrome.runtime.sendMessage({ 'action': 'cache_login', 'args': [credentials[0].Login] }, function (r) {
@@ -2096,6 +2097,7 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
                 if (this.settings.debugLevel > 1) cipDebug.log('%c mcCombinations: %c retrieveCredentialsCallback Cache: ', 'background-color: #c3c6b4', 'color: #333333', r);
             }
         }.bind(this));
+    }
 
 	if (this.forceFilling && clickedElement){
 	    if (this.fillPasswordOnly){
@@ -2126,6 +2128,18 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
                 loginField[0].dispatchEvent(new Event('change'));
                  //   currentForm.combination.savedFields.username.value = credentials[0].Login;
             }				
+        }
+
+        if (credentials.totpcode){
+            var fieldForTOTP = mpJQ(clickedElement); 
+            fieldForTOTP.val('');
+            fieldForTOTP.click();
+            try {
+                fieldForTOTP.sendkeys(credentials.totpcode);
+                this.triggerChangeEvent(fieldForTOTP[0], credentials.totpcode);
+                fieldForTOTP.trigger('blur');	
+                } catch (e) {}
+            fieldForTOTP[0].dispatchEvent(new Event('change'));			
         }
     } 
 	else {
