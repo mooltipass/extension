@@ -4,6 +4,8 @@
  */
 var clickedElement = null;
 
+var iFillFromCacheCount = 0;
+
 var extendedCombinations = {
         atlassian: function (forms) {
         console.log('atlassian combination');
@@ -1640,9 +1642,14 @@ mcCombinations.prototype.detectCombination = function () {
                 var submitUrl = currentForm.element ? this.getFormActionUrl(currentForm.element) : url;
 
                 if (this.credentialsCache && this.credentialsCache.length > 0) {
-                    // Sometimes the form changes when typing in. Issuing a new detectCombination.. we use a temporary cache to avoid double request in the device
-                    if (this.settings.debugLevel > 1) cipDebug.log('%c mcCombinations - %c Using credentials from cache', 'background-color: #c3c6b4', 'color: #777777', currentForm.element);
-                    this.retrieveCredentialsCallback(this.credentialsCache);
+                    if (iFillFromCacheCount < 2){
+                        iFillFromCacheCount = iFillFromCacheCount + 1;	
+                            // Sometimes the form changes when typing in. Issuing a new detectCombination.. we use a temporary cache to avoid double request in the device
+                            if (this.settings.debugLevel > 1) cipDebug.log('%c mcCombinations - %c Using credentials from cache', 'background-color: #c3c6b4', 'color: #777777', currentForm.element);
+                            this.retrieveCredentialsCallback(this.credentialsCache);
+                    } else {
+                        console.log('STOPPED AFTER 2 TRIES');
+                    }
                 } else {
                     if (this.settings.debugLevel > 1) cipDebug.trace('%c mcCombinations - %c Retrieving credentials', 'background-color: #c3c6b4', 'color: #777777', currentForm.element);
                     messaging({ 'action': 'retrieve_credentials', 'args': [url, submitUrl, true, true] });
@@ -2301,7 +2308,8 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
         /href=".*?loginpage.*?"/i,
         /href="http.*?"/i,
         /\(Logged out\) Header/i,
-		/passwords\/new/i
+		/passwords\/new/i,
+        /visibility ?: ?hidden/i
     ],
 
     // Selectors are ordered by priority, first ones are more important.
