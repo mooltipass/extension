@@ -581,7 +581,7 @@ mooltipass.device.updateCredentials = function(callback, tab, entryId, username,
 /* 
  * Function called to receive the TOTP code from device
  */
- mooltipass.device.fetchTOTPCode = function(callback, tab, url, submiturl, forceCallback, triggerUnlock){  
+ mooltipass.device.fetchTOTPCode = function(callback, tab, url, submiturl, forceCallback, triggerUnlock, sLogin){  
     // Check that the Mooltipass is unlocked, returns false if it is anything but unlocked
     if(!event.isMooltipassUnlocked()) 
     {
@@ -590,9 +590,10 @@ mooltipass.device.updateCredentials = function(callback, tab, entryId, username,
 
     if (mooltipass.device.connectedToExternalApp) 
     {
+        let parsed_url = mooltipass.backend.extractDomainAndSubdomain(url);
         mooltipass.device.totpcodeCallback = callback; 
         mooltipass.device.totpcodeTab = tab;
-        moolticute.askTOTPCode(url);
+        moolticute.askTOTPCode(parsed_url.domain, sLogin);
     }	
 }
 

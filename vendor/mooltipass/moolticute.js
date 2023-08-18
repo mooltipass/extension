@@ -95,14 +95,17 @@ moolticute.askPassword = function( request ) {
 }
 
 /**
- * Ask for a password
+ * Ask for a TOTP Code
  */
-moolticute.askTOTPCode = function(url) {
+moolticute.askTOTPCode = function(sDomain, sLogin) {
 
     let message = {
-        msg: 'ask_totpcode',
-        url: url,
-    };	
+        msg: 'get_totp_code',
+        data: {
+            service : sDomain,
+            login : sLogin			
+        }	
+    };			
     moolticute.websocket.send(JSON.stringify(message));	
 }
 
@@ -288,7 +291,7 @@ moolticute.websocket = {
                     };
                 }
                 break;
-            case 'ask_totpcode':
+            case 'get_totp_code':
                 wrapped.totpcode = recvMsg.data.totpcode;			
                 break;	
             case 'version_changed':
@@ -345,7 +348,7 @@ moolticute.websocket = {
                 output.data.password = msg.credentials.password;    
             }
         } else if (msg.totpcode) {
-			output.msg = 'ask_totpcode';
+            output.msg = 'get_totp_code';
             output.data.totpcode = msg.totpcode;
         } else if ( msg.command && msg.command == 'getRandomNumber') {
             output.msg = 'get_random_numbers';
