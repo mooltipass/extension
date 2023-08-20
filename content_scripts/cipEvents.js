@@ -122,6 +122,9 @@ var cipEvents = {
                 else if (req.action == "remember_credentials") {
                     cip.contextMenuRememberCredentials();
                 }
+                else if (req.action == "fetch_totp_code") {
+                    cip.contextMenuFetchTOTPCode();
+                }
                 else if (req.action == "choose_credential_fields") {
                     cipDefine.source = 'popup-status'
                     cipDefine.show();
