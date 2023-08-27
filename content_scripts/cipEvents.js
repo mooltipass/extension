@@ -73,6 +73,9 @@ var cipEvents = {
                 case 'response-retrieve_credentials':
                     mcCombs.retrieveCredentialsCallback(req.data);
                     break;
+                case 'response-fetch_totp_code':
+                    mcCombs.retrieveCredentialsCallback(req.data);
+                    break;
                 case 'response-generate_password':
                     var randomPassword = cipPassword.generatePasswordFromSettings(req.data);
                     messaging({
