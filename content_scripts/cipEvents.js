@@ -73,6 +73,9 @@ var cipEvents = {
                 case 'response-retrieve_credentials':
                     mcCombs.retrieveCredentialsCallback(req.data);
                     break;
+                case 'response-fetch_totp_code':
+                    mcCombs.retrieveCredentialsCallback(req.data);
+                    break;
                 case 'response-generate_password':
                     var randomPassword = cipPassword.generatePasswordFromSettings(req.data);
                     messaging({
@@ -121,6 +124,9 @@ var cipEvents = {
                 }
                 else if (req.action == "remember_credentials") {
                     cip.contextMenuRememberCredentials();
+                }
+                else if (req.action == "fetch_totp_code") {
+                    cip.contextMenuFetchTOTPCode();
                 }
                 else if (req.action == "choose_credential_fields") {
                     cipDefine.source = 'popup-status'

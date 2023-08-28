@@ -95,6 +95,21 @@ moolticute.askPassword = function( request ) {
 }
 
 /**
+ * Ask for a TOTP Code
+ */
+moolticute.askTOTPCode = function(sDomain, sLogin) {
+
+    let message = {
+        msg: 'get_totp_code',
+        data: {
+            service : sDomain,
+            login : sLogin			
+        }	
+    };			
+    moolticute.websocket.send(JSON.stringify(message));	
+}
+
+/**
  + * Get random numbers
  + */
  moolticute.getRandomNumbers = function() {
@@ -276,6 +291,9 @@ moolticute.websocket = {
                     };
                 }
                 break;
+            case 'get_totp_code':
+                wrapped.totpcode = recvMsg.data.totp_code;			
+                break;	
             case 'version_changed':
                 moolticute.status.version = recvMsg.data;
                 wrapped.deviceStatus = moolticute.status;
@@ -329,6 +347,9 @@ moolticute.websocket = {
                 output.data.login = msg.credentials.login;
                 output.data.password = msg.credentials.password;    
             }
+        } else if (msg.totpcode) {
+            output.msg = 'get_totp_code';
+            output.data.totpcode = msg.totpcode;
         } else if ( msg.command && msg.command == 'getRandomNumber') {
             output.msg = 'get_random_numbers';
             output.data = msg.random;

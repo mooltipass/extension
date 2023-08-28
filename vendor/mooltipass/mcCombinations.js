@@ -4,6 +4,8 @@
  */
 var clickedElement = null;
 
+var iFillFromCacheCount = 0;
+
 var extendedCombinations = {
         atlassian: function (forms) {
         console.log('atlassian combination');
@@ -1608,6 +1610,9 @@ mcCombinations.prototype.detectCombination = function () {
                 }
 
                 var url = document.location.origin;
+                if (url.includes('login.microsoftonline.com')){
+                    url = url.replace('login.microsoftonline.com', 'login.live.com');
+                }
                 var submitUrl = url;
                 if (this.credentialsCache && this.credentialsCache.length > 0 && this.credentialsCache[0].Login) {
                     if (this.settings.debugLevel > 1) cipDebug.log('%c mcCombinations - %c Using credentials from cache', 'background-color: #c3c6b4', 'color: #777777');
@@ -1637,9 +1642,14 @@ mcCombinations.prototype.detectCombination = function () {
                 var submitUrl = currentForm.element ? this.getFormActionUrl(currentForm.element) : url;
 
                 if (this.credentialsCache && this.credentialsCache.length > 0) {
-                    // Sometimes the form changes when typing in. Issuing a new detectCombination.. we use a temporary cache to avoid double request in the device
-                    if (this.settings.debugLevel > 1) cipDebug.log('%c mcCombinations - %c Using credentials from cache', 'background-color: #c3c6b4', 'color: #777777', currentForm.element);
-                    this.retrieveCredentialsCallback(this.credentialsCache);
+                    if (iFillFromCacheCount < 2){
+                        iFillFromCacheCount = iFillFromCacheCount + 1;	
+                            // Sometimes the form changes when typing in. Issuing a new detectCombination.. we use a temporary cache to avoid double request in the device
+                            if (this.settings.debugLevel > 1) cipDebug.log('%c mcCombinations - %c Using credentials from cache', 'background-color: #c3c6b4', 'color: #777777', currentForm.element);
+                            this.retrieveCredentialsCallback(this.credentialsCache);
+                    } else {
+                        console.log('STOPPED AFTER 2 TRIES');
+                    }
                 } else {
                     if (this.settings.debugLevel > 1) cipDebug.trace('%c mcCombinations - %c Retrieving credentials', 'background-color: #c3c6b4', 'color: #777777', currentForm.element);
                     messaging({ 'action': 'retrieve_credentials', 'args': [url, submitUrl, true, true] });
@@ -2074,14 +2084,15 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
         return;
     }
 
-    this.credentialsCache = credentials;
+    if (!credentials.totpcode){
+        this.credentialsCache = credentials;
 
-    if (this.settings.debugLevel > 4) cipDebug.log('%c mcCombinations: %c retrieveCredentialsCallback', 'background-color: #c3c6b4', 'color: #333333', credentials);
+        if (this.settings.debugLevel > 4) cipDebug.log('%c mcCombinations: %c retrieveCredentialsCallback', 'background-color: #c3c6b4', 'color: #333333', credentials);
 
-    // Credentials callback gets called when there's a hashChange in the fields. If we modified the username, keep the modified one
-    if (mpJQ('#mooltipass-username').val()) credentials[0].Login = mpJQ('#mooltipass-username').val();
-    mpJQ('#mooltipass-login-info').show();
-    mpJQ('#mooltipass-username').val(credentials[0].Login);
+        // Credentials callback gets called when there's a hashChange in the fields. If we modified the username, keep the modified one
+        if (mpJQ('#mooltipass-username').val()) credentials[0].Login = mpJQ('#mooltipass-username').val();
+        mpJQ('#mooltipass-login-info').show();
+        mpJQ('#mooltipass-username').val(credentials[0].Login);
 
         // Store retrieved username as a cache
         chrome.runtime.sendMessage({ 'action': 'cache_login', 'args': [credentials[0].Login] }, function (r) {
@@ -2093,6 +2104,7 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
                 if (this.settings.debugLevel > 1) cipDebug.log('%c mcCombinations: %c retrieveCredentialsCallback Cache: ', 'background-color: #c3c6b4', 'color: #333333', r);
             }
         }.bind(this));
+    }
 
 	if (this.forceFilling && clickedElement){
 	    if (this.fillPasswordOnly){
@@ -2123,6 +2135,18 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
                 loginField[0].dispatchEvent(new Event('change'));
                  //   currentForm.combination.savedFields.username.value = credentials[0].Login;
             }				
+        }
+
+        if (credentials.totpcode){
+            var fieldForTOTP = mpJQ(clickedElement); 
+            fieldForTOTP.val('');
+            fieldForTOTP.click();
+            try {
+                fieldForTOTP.sendkeys(credentials.totpcode);
+                this.triggerChangeEvent(fieldForTOTP[0], credentials.totpcode);
+                fieldForTOTP.trigger('blur');	
+                } catch (e) {}
+            fieldForTOTP[0].dispatchEvent(new Event('change'));			
         }
     } 
 	else {
@@ -2284,7 +2308,8 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
         /href=".*?loginpage.*?"/i,
         /href="http.*?"/i,
         /\(Logged out\) Header/i,
-		/passwords\/new/i
+		/passwords\/new/i,
+        /visibility ?: ?hidden/i
     ],
 
     // Selectors are ordered by priority, first ones are more important.

@@ -609,6 +609,7 @@ mooltipassEvent.messageHandlers = {
     'retrieve_credentials': mooltipass.device.retrieveCredentials,
     'show_default_browseraction': browserAction.showDefault,
     'update_credentials': mooltipass.device.updateCredentials,
+    'fetch_totp_code': mooltipass.device.fetchTOTPCode,
     'save_settings': mooltipassEvent.onSaveSettings,
     'update_notify': mooltipassEvent.onUpdateNotify,
     'stack_add': browserAction.stackAdd,

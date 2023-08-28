@@ -113,6 +113,24 @@ var cip = {
         }, mcCombs.retrieveCredentialsCallback);	
     },	
     /**
+    * Triggers when the user selects the "fetch TOTP code" context-menu.
+    */
+    contextMenuFetchTOTPCode: function ()
+    {			
+        mcCombs.forceFilling = true;
+        let sLogin = '';
+        if (mcCombs.credentialsCache && mcCombs.credentialsCache.length > 0){
+            sLogin = mcCombs.credentialsCache[0].Login;
+        }
+	
+        var action = "";
+
+        chrome.runtime.sendMessage({
+            'action': 'fetch_totp_code',
+            'args': [document.location.origin, action, true, true, sLogin]
+        }, mcCombs.retrieveCredentialsCallback);		
+    },	
+    /**
     * Initializes the password generator [cipPassword].
     * Goes through all the <INPUT> fields of type "password" & initializes them.
     *
