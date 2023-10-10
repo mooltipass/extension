@@ -292,7 +292,7 @@ moolticute.websocket = {
                 }
                 break;
             case 'get_totp_code':
-                wrapped.totpcode = recvMsg.data.totpcode;			
+                wrapped.totpcode = recvMsg.data.totp_code;			
                 break;	
             case 'version_changed':
                 moolticute.status.version = recvMsg.data;
