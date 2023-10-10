@@ -1053,6 +1053,7 @@ mcCombinations.prototype = (function () {
 */
 mcCombinations.prototype.init = function (callback) {
     if (this.settings.debugLevel > 4) cipDebug.log('%c mcCombinations: %c Init', 'background-color: #c3c6b4', 'color: #333333');
+    iFillFromCacheCount = 0;
 
     this.callback = callback;
     messaging({ "action": "get_settings" });
@@ -2085,7 +2086,9 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
     }
 
     if (!credentials.totpcode){
-        this.credentialsCache = credentials;
+        if (credentials[0].Password != ''){
+            this.credentialsCache = credentials;
+        }
 
         if (this.settings.debugLevel > 4) cipDebug.log('%c mcCombinations: %c retrieveCredentialsCallback', 'background-color: #c3c6b4', 'color: #333333', credentials);
 
