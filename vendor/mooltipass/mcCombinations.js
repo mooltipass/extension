@@ -2079,13 +2079,19 @@ mcCombinations.prototype.triggerChangeEvent = function (node, value) {
 * Parses the credentials obtained
 */
 mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
-	
-    if (!credentials || credentials.length < 1) {
+
+    if (!credentials) {
         if (this.settings.debugLevel > 1) cipDebug.log('%c mcCombinations: %c retrieveCredentialsCallback returned empty', 'background-color: #c3c6b4', 'color: #FF0000');
         return;
     }
 
     if (!credentials.totpcode){
+
+        if (credentials.length < 1) {
+            if (this.settings.debugLevel > 1) cipDebug.log('%c mcCombinations: %c retrieveCredentialsCallback returned empty', 'background-color: #c3c6b4', 'color: #FF0000');
+            return;
+        }
+
         if (credentials[0].Password != ''){
             this.credentialsCache = credentials;
         }

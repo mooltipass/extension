@@ -785,6 +785,7 @@ mooltipass.device.messageListener = function(message, sender, sendResponse) {
     if ( typeof( message.credentials ) === "undefined" ) message.credentials = null;
     if ( typeof( message.noCredentials ) === "undefined" ) message.noCredentials = null;
     if ( typeof( message.updateComplete ) === "undefined" ) message.updateComplete = null;
+    if ( typeof( message.totpcode ) === "undefined" ) message.totpcode = null;
     
     //console.log('messageListener:', message );
     // Returned on a PING, contains the status of the device
@@ -865,20 +866,6 @@ mooltipass.device.messageListener = function(message, sender, sendResponse) {
         // Treat other pending requests
         mooltipass.device.retrieveCredentialsQueue.shift();
         mooltipass.device.sendCredentialRequestMessageFromQueue();
-    }
-    else if (message.totpcode !== null) 
-    {
-        try
-        {
-            mooltipass.device.totpcodeCallback(
-                {
-                    totpcode: message.totpcode
-                }, mooltipass.device.totpcodeTab);
-        }
-        catch(err)
-        {
-           // console.log( err );
-        }		
     }	
     // Returned on requesting credentials for a specific URL, but no credentials were found
     else if (message.noCredentials !== null) 
@@ -905,6 +892,20 @@ mooltipass.device.messageListener = function(message, sender, sendResponse) {
             }
             mooltipass.device._asynchronous.updateCallback = null;
         }
+    }
+    else if (message.totpcode !== null) 
+    {
+        try
+        {
+            mooltipass.device.totpcodeCallback(
+                {
+                    totpcode: message.totpcode
+                }, mooltipass.device.totpcodeTab);
+        }
+        catch(err)
+        {
+           // console.log( err );
+        }		
     }
 };
 
