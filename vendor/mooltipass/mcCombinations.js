@@ -2414,7 +2414,7 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
             if (a.distance == b.distance) return 0
         })
 
-        // Button shouldn't be far more than 150px from input.
+        // Button shouldn't be far more than 240px (old-150px old2-210px) from input. 
         if (buttons.length > 0)
         {
             // Check if button was previously selected
@@ -2422,14 +2422,14 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
             {
                 // Ensure that button has been labeled as selected
                 if (buttons[0].getAttribute("data-mp-id")) {
-                    if (buttons[0].distance < 210) return buttons[0];//google has 203px distance
+                    if (buttons[0].distance < 240) return buttons[0];//google has 203px distance
                 }
             }
             else
             {
                 // Ensure button was not previously labeled as selected
                 if (!buttons[0].getAttribute("data-mp-id")) {
-                    if (buttons[0].distance < 210) { this.setUniqueId(buttons); return buttons[0]; }
+                    if (buttons[0].distance < 240) { this.setUniqueId(buttons); return buttons[0]; }
                 }
             }
         }
