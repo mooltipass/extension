@@ -938,7 +938,50 @@ var extendedCombinations = {
     },
     amazon: function (forms) {
         if (mcCombs.getAllForms() == 0) return;
-        for (form in forms) {
+            if (window.location.hostname.includes('signin.aws.amazon')){
+            for (form in forms) {
+                var currentForm = forms[form];
+                  //  if (currentForm.element) { // Skip noform form
+                    currentForm.combination = {
+                        special: true,
+                        fields: {
+                            username: '',
+                            password: ''
+                        },
+                        savedFields: {
+                            username: '',
+                            password: ''
+                        },
+                        autoSubmit: false
+                    }								
+
+                if (mpJQ('input[id=resolving_input]:visible').length > 0) { // Step 1: Email
+                    currentForm.combination.fields.username = mpJQ('input[id=resolving_input]');
+                    currentForm.combination.autoSubmit = true;
+					    //STUB to allow our logic to work in this case - the input element not has a parent FORM
+					    currentForm.element = mpJQ('div[id=resolver_container]');
+                }
+                if (mpJQ('input[id=password]:visible').length > 0) { // Step 2: Pass
+                    currentForm.combination.fields.password = mpJQ('input[id=password]');
+                    currentForm.combination.autoSubmit = true;
+					    //STUB to allow our logic to work in this case - the input element not has a parent FORM
+					    currentForm.element = mpJQ('div[id=resolver_container]');					
+                }
+                if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){				
+                    var parentForm = currentForm.combination.fields.password[0].closest('#login_container');
+                    if (parentForm){
+                        var inputEmail = parentForm.querySelector('input[id="email"]');
+                        if (inputEmail){
+                            currentForm.combination.fields.username = mpJQ(inputEmail);
+                            currentForm.combination.autoSubmit = true;						
+                            currentForm.combination.fields.username.attr('data-mp-id', "login_email");
+                        }
+                    }	
+                }				
+              //  } 
+            }						
+		} else {	
+            for (form in forms) {
             var currentForm = forms[form];
             if (currentForm.element) { // Skip noform form
                 currentForm.combination = {
@@ -962,6 +1005,19 @@ var extendedCombinations = {
                     currentForm.combination.fields.password = mpJQ('input[type=password]');
                     currentForm.combination.autoSubmit = true;
                 }
+                if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){
+                    var parentForm = currentForm.combination.fields.password[0].closest('form');
+                    if (parentForm){
+                        var inputEmail = parentForm.querySelector('input[type=email]');
+                        if (inputEmail){
+                            currentForm.combination.fields.username = mpJQ(inputEmail);
+                            currentForm.combination.autoSubmit = true;						
+                            currentForm.combination.fields.username.attr('data-mp-id', "login_email");
+							
+                        }
+                    }	
+                }				
+            } 
             }
         }
     },
@@ -2457,8 +2513,9 @@ mcCombinations.prototype.formHasCaptcha = function (form) {
 
         if ($element.width() != 0 &&
             $element.height() != 0 &&
-            $element.css('display') != 'none') {
-            hasCaptcha = true
+            $element.css('display') != 'none' &&
+            $element.css('visibility') != 'hidden'){
+            hasCaptcha = true;
         }
     })
 
