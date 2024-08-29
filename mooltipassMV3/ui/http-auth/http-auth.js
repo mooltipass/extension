@@ -6,7 +6,7 @@
  * @param url {String}
  */
 
-window.data = JSON.parse(decodeURIComponent(window.location.search.slice(1)))
+window.data = JSON.parse(decodeURIComponent(window.location.search.slice(1)));
 
 $(function () {
     // Display strings in proper locale
@@ -38,8 +38,31 @@ $(function () {
 		
 		window.location.href = data.url
    })
+  
+   $('#idAuthUrl').text(data.url);
+   $('#idDivAddToBlacklist').click(AddToBlacklist);
 });
 
+async function AddToBlacklist(){
+    try {			
+        let storeItems = await chrome.storage.local.get(["mpBlacklist"]);
+        let blacklist = null;
+
+        if (storeItems.mpBlacklist){
+            blacklist = JSON.parse(storeItems.mpBlacklist);
+        } else {
+           blacklist = {};
+        }
+
+        blacklist[data.url] = true;		   
+        await chrome.storage.local.set({mpBlacklist : JSON.stringify(blacklist)});		
+
+        close();
+	
+    } catch (e) {
+        $('#idAuthUrl').text('Error reading/saving blacklist');
+    }	
+}
 
 // Unify messaging method - And eliminate callbacks (a message is replied with another message instead)
 function messaging( message ) {

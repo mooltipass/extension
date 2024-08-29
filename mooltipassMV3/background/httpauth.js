@@ -17,6 +17,17 @@ httpAuth.handleRequest = function(details, callback) {
         return { cancel: true }
       }
     }
+
+	if (mooltipass.backend.isBlacklisted(details.url)){
+	
+        if (!isFirefox) {
+            callback({ cancel: false })
+            return;
+		} else {
+            // Firefox expects this object on return.
+            return { cancel: false }
+		}
+    }
     
     // Enter credentials that we saved last time.
     if (httpAuth.credentials) {
