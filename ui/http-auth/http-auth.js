@@ -38,8 +38,17 @@ $(function () {
 		
 		window.location.href = data.url
    })
+  
+   $('#idAuthUrl').text(data.url);
+   $('#idDivAddToBlacklist').click(AddToBlacklist);
 });
 
+function AddToBlacklist(){
+    let blacklist = typeof(localStorage.mpBlacklist) == 'undefined' ? {} : JSON.parse(localStorage.mpBlacklist);
+    blacklist[data.url] = true;
+    localStorage.mpBlacklist = JSON.stringify(blacklist);
+    close();
+}
 
 // Unify messaging method - And eliminate callbacks (a message is replied with another message instead)
 function messaging( message ) {
