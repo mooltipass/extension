@@ -32,7 +32,17 @@ else
   echo "No folder specified for exclusion, skipping deletion."
 fi
 
-# Create a .zip archive using tar
-tar -a -cf "$TARGET_ZIP" -C "$BUILD_DIR" .
+# Check if zip is installed
+if ! command -v zip &> /dev/null; then
+  echo "zip command not found. Please install zip and try again."
+  exit 1
+fi
+
+# Zip the contents of the build folder
+cd "$BUILD_DIR" || exit
+zip -r "../$TARGET_ZIP" .
+
+# Go back to the original directory
+cd ..
 
 echo "Zip file $TARGET_ZIP created successfully."
