@@ -38,6 +38,12 @@ if ! command -v zip &> /dev/null; then
   exit 1
 fi
 
+# Remove existing mooltipass_extension.zip if it exists
+if [ -f "$TARGET_ZIP" ]; then
+  rm -f "$TARGET_ZIP"
+  echo "Removed existing $TARGET_ZIP"
+fi
+
 # Zip the contents of the build folder
 cd "$BUILD_DIR" || exit
 zip -r "../$TARGET_ZIP" .
