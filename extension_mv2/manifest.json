@@ -1,6 +1,6 @@
 {  
   "name": "Mooltipass Extension",
-  "version": "1.10.14",
+  "version": "1.10.15",
   "manifest_version": 2,
   "default_locale": "en",
   "description": "__MSG_Manifest_Description__",
