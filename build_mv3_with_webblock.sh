@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the source and destination directories
-SOURCE_DIR="extension_mv2"
+SOURCE_DIR="extension_mv3"
 BUILD_DIR="build"
 TARGET_ZIP="mooltipass_extension.zip"
 FIRST_RUN_DOCS_DIR="$BUILD_DIR/first_run_documents"
@@ -24,12 +24,18 @@ fi
 # Inject Scripts
 cp "${SOURCE_DIR}/mooltipass-content.js" "${BUILD_DIR}/mooltipass-content.js"
 cp "${SOURCE_DIR}/mooltipass-content.css" "${BUILD_DIR}/mooltipass-content.css"
-cp "${SOURCE_DIR}/manifest.json" "${BUILD_DIR}/"
+cp "${SOURCE_DIR}/manifest_webblocking.json" "${BUILD_DIR}/manifest.json"
+cp "${SOURCE_DIR}/bg-loader.js" "${BUILD_DIR}/bg-loader.js"
 
 # Copy the contents of the extension_mv2 folder into the build folder
 for ext_dir in vendor popups css options background images icons ui content_scripts _locales first_run_documents shared_scripts; do
 	cp -Rf "${SOURCE_DIR}/${ext_dir}" "${BUILD_DIR}/"
 done
+
+# File name modification depending on webblocking
+mv "${BUILD_DIR}/background/init_webblocking.js" "${BUILD_DIR}/background/init.js"
+rm "${BUILD_DIR}/background/init_withoutwebblocking.js"
+
 
 if [ "${ENABLE_EMULTATION_MODE}" != '0' ] && [ -f "${BUILD_DIR}/vendor/mooltipass/device.js" ]; then
 	if ! sed -i 's/mooltipass.device.emulation_mode = false/mooltipass.device.emulation_mode = true/' \

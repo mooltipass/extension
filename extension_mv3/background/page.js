@@ -102,7 +102,7 @@ console.log('initSettings START');
         changed = true;
     }
     if(!("usePasswordGeneratorLength" in page.settings) || parseInt(page.settings.usePasswordGeneratorLength) < 6) {
-        page.settings.usePasswordGeneratorLength = 16;
+        page.settings.usePasswordGeneratorLength = 24;
         changed = true;
     }
     if(!("usePasswordGeneratorLowercase" in page.settings)) {
