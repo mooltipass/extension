@@ -2384,6 +2384,7 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
         /weiter/i,
         /next/i,
         /inloggen/i,
+        /confirm/i,			
         /identifierNext/i /*google*/
     ],
 
