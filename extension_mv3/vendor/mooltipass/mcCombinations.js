@@ -284,10 +284,10 @@ var extendedCombinations = {
     },
     google: function (forms) {
         if (mcCombs.getAllForms() == 0) return;
-		
+
         for (form in forms) {
             var currentForm = forms[form];
-            if (currentForm.element) { // Skip noform form
+            //if (currentForm.element) { // Skip noform form
                 currentForm.combination = {
                     special: true,
                     fields: {
@@ -301,6 +301,7 @@ var extendedCombinations = {
                     autoSubmit: false
                 }
 
+
                 if (mpJQ('input[type=password]:visible').length > 0) { // Step 2: password
                     currentForm.combination.fields.password = mpJQ('input[type=password]');
                     currentForm.combination.autoSubmit = true;
@@ -308,21 +309,35 @@ var extendedCombinations = {
                 if (mpJQ('input[type=email]:visible').length > 0) { // Step 1: Email
                     currentForm.combination.fields.username = mpJQ('input[type=email]');
                     currentForm.combination.autoSubmit = true;
+                    currentForm.element = currentForm.combination.fields.username.parent();
                 }
 				
                 if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){
 					
                     var parentForm = currentForm.combination.fields.password[0].closest('form');
                     if (parentForm){
-                        var inputEmail = parentForm.querySelector('input#identifierId');
+                        let inputEmail = parentForm.querySelector('input#identifierId');
                         if (inputEmail){
                             currentForm.combination.fields.username = mpJQ(inputEmail);
                             currentForm.combination.autoSubmit = true;
                             currentForm.combination.fields.username.attr('data-mp-id', "identifierId");
+                            if (!currentForm.element){
+                                currentForm.element = mpJQ(parentForm);
+                            }							
                         }
+                    } else {
+                        let inputEmail = document.querySelector('input#identifierId');
+                        if (inputEmail){
+                            currentForm.combination.fields.username = mpJQ(inputEmail);
+                            currentForm.combination.autoSubmit = true;
+                            currentForm.combination.fields.username.attr('data-mp-id', "identifierId");
+                            if (!currentForm.element){
+                                currentForm.element = currentForm.combination.fields.username.parent();
+                            }
+                        }							
                     }	
                 }
-            }
+            //}
         }
     },
     microsoftonline: function (forms) {
@@ -1127,7 +1142,7 @@ function mcCombinations() { }
 mcCombinations.prototype = (function () {
     return {
         constructor: mcCombinations,
-        inputQueryPattern: "input[type='username'], input[type='text']:not([class='search']), input[type='email'], input[type='login'], input[type='password']:not(.notinview):not([tabindex='-1']), input[type='tel'], input[type='number'], input:not([type]), input[name='username']",
+        inputQueryPattern: "input[type='username'], input[type='text']:not([class='search']), input[type='email'], input[type='login'], input[type='password']:not(.notinview):not([tabindex='-1']), input[type='tel'], input[type='number'], input:not([type]), input[name='username'], cl-input[type='password']",
         forms: {
             noform: { fields: [] }
         },
@@ -1681,12 +1696,18 @@ mcCombinations.prototype.detectCombination = function () {
                 if (this.settings.debugLevel > 1) cipDebug.log('Dealing with special case for ' + window.location.hostname);
 
                 if (this.possibleCombinations[I].callback(this.forms) == 'skip') break
+                var url = document.location.origin;
 
                 // Handle sumbit event on submit button click or return keydown.
                 for (form in this.forms) {
-                    var currentForm = this.forms[form]
-                    if (currentForm.element) {
-                        cipPassword.createLoginIcon(currentForm.combination.fields.username);
+                    var currentForm = this.forms[form];
+                if ((currentForm.element) || (url.includes('accounts.google.com'))){
+						console.log('currentForm.combination.fields.username', currentForm.combination.fields.username);
+                        if (currentForm.combination.fields.username.length > 0) {
+                           cipPassword.createLoginIcon(currentForm.combination.fields.username);
+                        } else {
+                            console.log('combination withour username detected');
+                        }
 
                         var field = currentForm.combination.fields.password || currentForm.combination.fields.username;
 
@@ -1699,7 +1720,7 @@ mcCombinations.prototype.detectCombination = function () {
 
                         var submitButton = this.detectSubmitButton(field, field.parent(), false);
                         if (submitButton)
-                        {
+                        {						
                             mpJQ(submitButton)
                                 .unbind('click.mooltipass')
                                 .on('click.mooltipass', this.onSubmit.bind(this, { target: currentForm.element[0] }))
@@ -1709,11 +1730,13 @@ mcCombinations.prototype.detectCombination = function () {
                                 .on('keydown.mooltipass', function (currentForm, event) {
                                     if (event.which == 13) { this.onSubmit.call(this, { target: currentForm.element[0] }) }
                                 }.bind(this, currentForm))
+                        } else {
+
                         }
                     }
                 }
 
-                var url = document.location.origin;
+                //var url = document.location.origin;
                 if (url.includes('login.microsoftonline.com')){
                     url = url.replace('login.microsoftonline.com', 'login.live.com');
                 }
@@ -1729,7 +1752,7 @@ mcCombinations.prototype.detectCombination = function () {
                 }
 
                 this.waitingForPost = true;
-                messaging({ 'action': 'wait_for_postdata' });				
+                messaging({ 'action': 'wait_for_postdata' });
 
                 return;
             }
@@ -1976,7 +1999,8 @@ mcCombinations.prototype.getAllForms = function () {
         // Ignore our fields and search fields.
         if (field.attr('id') == 'mooltipass-password-generator' ||
             (field.attr('id') && field.attr('id').toLowerCase().includes("recherche")) ||
-            field.clone().children().remove().end()[0].outerHTML.match(/search/i)) {
+            (field.clone().children().remove().end()[0].outerHTML.match(/search/i)) || 
+            (field.clone().children().remove().end()[0].outerHTML.match(/newsletter/i))) {
             return;
         }
 
@@ -2027,7 +2051,13 @@ mcCombinations.prototype.onSubmit = function (event) {
     this.onSubmitInProgress = true
     setTimeout(function () {
         this.onSubmitInProgress = false
-    }.bind(this), 100)
+    }.bind(this), 100);
+    if (document.location.origin.includes('accounts.google.com')){
+        if ((!currentForm.combination.fields.password) || (currentForm.combination.fields.password == "")){
+            console.log("no password feild for accounts.google.com");
+            return;
+        }
+    }	
 
     if (this.settings.debugLevel > 1) cipDebug.log('%c mcCombinations: %c onSubmit', 'background-color: #c3c6b4', 'color: #333333');
     this.waitingForPost = false;
@@ -2384,7 +2414,7 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
         /weiter/i,
         /next/i,
         /inloggen/i,
-        /confirm/i,			 
+        /confirm/i,
         /identifierNext/i /*google*/
     ],
 
@@ -2455,7 +2485,7 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
             }
 
             for (var i = 0; i < ACCEPT_PATTERNS.length; i++) {
-                if (buttonOuterHTML.match(ACCEPT_PATTERNS[i])) {	
+                if (buttonOuterHTML.match(ACCEPT_PATTERNS[i])) {
                     return true
                 }
             }
