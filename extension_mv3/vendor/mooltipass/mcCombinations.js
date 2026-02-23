@@ -311,7 +311,25 @@ var extendedCombinations = {
                     currentForm.combination.autoSubmit = true;
                     currentForm.element = currentForm.combination.fields.username.parent();
                 }
-				
+
+                //detectin submit login button for current combination //#identifierNext
+                let divLoginNext = document.querySelector('#identifierNext');
+                if (divLoginNext){
+                    let buttonLoginNext = divLoginNext.querySelector('button');
+                    if (buttonLoginNext){
+                        currentForm.combination.submitLoginButton = buttonLoginNext;
+                    }
+                }				
+	
+                //detectin submit password button for current combination //#passwordNext
+                let divPasswordNext = document.querySelector('#passwordNext');
+                if (divPasswordNext){
+                    let buttonPasswordNext = divPasswordNext.querySelector('button');
+                    if (buttonPasswordNext){
+                        currentForm.combination.submitButton = buttonPasswordNext;
+                    }
+                }
+
                 if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){
 					
                     var parentForm = currentForm.combination.fields.password[0].closest('form');
@@ -1717,10 +1735,19 @@ mcCombinations.prototype.detectCombination = function () {
                         this.passwordFieldId =
                             currentForm.combination.fields.password &&
                             currentForm.combination.fields.password.data('mp-id')
+                        
+                        let submitButton = null;
+                        if (currentForm.combination.submitButton){
+                            submitButton = currentForm.combination.submitButton;
+                        } else if (currentForm.combination.submitLoginButton){
+                            submitButton = currentForm.combination.submitLoginButton;
+                        } else {
+                            submitButton = this.detectSubmitButton(field, field.parent(), false);
+                        }
 
-                        var submitButton = this.detectSubmitButton(field, field.parent(), false);
+                        //var submitButton = this.detectSubmitButton(field, field.parent(), false);
                         if (submitButton)
-                        {						
+                        {
                             mpJQ(submitButton)
                                 .unbind('click.mooltipass')
                                 .on('click.mooltipass', this.onSubmit.bind(this, { target: currentForm.element[0] }))
