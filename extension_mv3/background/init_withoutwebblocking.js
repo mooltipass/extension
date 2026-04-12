@@ -163,7 +163,8 @@ startMooltipass = function () {
          */
         if (chrome.webRequest.onAuthRequired) {
             chrome.webRequest.onAuthRequired.addListener(httpAuth.handleRequest,
-                { urls: ["<all_urls>"] }, [isFirefox ? "blocking" : "asyncBlocking"]
+                { urls: ["<all_urls>"] }, ["blocking"]	
+                //{ urls: ["<all_urls>"] }, [isFirefox ? "blocking" : "asyncBlocking"]		
             );
         }
     }
