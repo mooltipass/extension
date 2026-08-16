@@ -1608,7 +1608,7 @@ mcCombinations.prototype.possibleCombinations = [
                             this.fields.username = r[0].Login;
                         }
                     }.bind(this);
-                    messaging({ 'action': 'retrieve_credentials', 'args': [url, submitUrl, true, true] });
+                    messaging({ 'action': 'retrieve_credentials', 'args': [url, submitUrl, true, true, false] });
                 }
             }.bind(this);
             messaging({ 'action': 'cache_retrieve' });
@@ -1664,7 +1664,7 @@ mcCombinations.prototype.possibleCombinations = [
                             this.fields.username = r[0].Login;
                         }
                     }.bind(this);
-                    messaging({ 'action': 'retrieve_credentials', 'args': [url, submitUrl, true, true] });
+                    messaging({ 'action': 'retrieve_credentials', 'args': [url, submitUrl, true, true, false] });
                 }
             }.bind(this);
             messaging({ 'action': 'cache_retrieve' });
@@ -1775,7 +1775,7 @@ mcCombinations.prototype.detectCombination = function () {
                     if (submitUrl.indexOf("login.microsoftonline.com") > -1){
                         submitUrl = submitUrl.replace("login.microsoftonline.com", "live.com");
                     }
-                    messaging({ 'action': 'retrieve_credentials', 'args': [url, submitUrl, true, true] });
+                    messaging({ 'action': 'retrieve_credentials', 'args': [url, submitUrl, true, true, false] });
                 }
 
                 this.waitingForPost = true;
@@ -1806,7 +1806,7 @@ mcCombinations.prototype.detectCombination = function () {
                     }
                 } else {
                     if (this.settings.debugLevel > 1) cipDebug.trace('%c mcCombinations - %c Retrieving credentials', 'background-color: #c3c6b4', 'color: #777777', currentForm.element);
-                    messaging({ 'action': 'retrieve_credentials', 'args': [url, submitUrl, true, true] });
+                    messaging({ 'action': 'retrieve_credentials', 'args': [url, submitUrl, true, true, false] });
                 }
             }
         }
