@@ -91,7 +91,7 @@ var cip = {
 
         chrome.runtime.sendMessage({
             'action': 'retrieve_credentials',
-            'args': [cip.url, cip.submitUrl, true, true]
+            'args': [cip.url, cip.submitUrl, true, true, mcCombs.forceFilling]
         }, cip.retrieveCredentialsCallback);
     },
     fillUserNameOrPasswordField: function()
@@ -109,7 +109,7 @@ var cip = {
 
         chrome.runtime.sendMessage({
             'action': 'retrieve_credentials',
-            'args': [document.location.origin, action, true, true]
+            'args': [document.location.origin, action, true, true, mcCombs.forceFilling]
         }, mcCombs.retrieveCredentialsCallback);	
     },	
     /**
@@ -312,7 +312,7 @@ var cip = {
 
             chrome.runtime.sendMessage({
                 'action': 'retrieve_credentials',
-                'args': [cip.url, cip.submitUrl, true, true]
+                'args': [cip.url, cip.submitUrl, true, true, false]
             }, function (credentials) {
                 cipDebug.log('cip.fillInCredentials()');
                 cip.retrieveCredentialsCallback(credentials, true);
@@ -337,8 +337,8 @@ var cip = {
     */
     retrieveAndFillUserAndPassword: function ()
     {
-        cip.initCredentialFields(true);
         mcCombs.forceFilling = true;
+        cip.initCredentialFields(true);
     },
 
     /**

@@ -64,16 +64,16 @@ var extendedCombinations = {
                     currentForm.combination.fields.username = mpJQ('input[id=login-email]');
                     currentForm.combination.autoSubmit = true;
                 }
-                if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){	
+                if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){
                     if (mpJQ('form#login-form input[name=login]').length > 0) {
                         currentForm.combination.fields.username = mpJQ('form#login-form input[name=login]');
                         currentForm.combination.autoSubmit = true;
                         currentForm.combination.fields.username.attr('data-mp-id', "login-email");
-                    }	
-                }				
+                    }
+                }
             }
         }
-    },	
+    },
         hp: function (forms) {
         //console.log('hp combination');
         if (mcCombs.getAllForms() == 0) return;
@@ -284,10 +284,10 @@ var extendedCombinations = {
     },
     google: function (forms) {
         if (mcCombs.getAllForms() == 0) return;
-		
+
         for (form in forms) {
             var currentForm = forms[form];
-            if (currentForm.element) { // Skip noform form
+            //if (currentForm.element) { // Skip noform form
                 currentForm.combination = {
                     special: true,
                     fields: {
@@ -301,6 +301,7 @@ var extendedCombinations = {
                     autoSubmit: false
                 }
 
+
                 if (mpJQ('input[type=password]:visible').length > 0) { // Step 2: password
                     currentForm.combination.fields.password = mpJQ('input[type=password]');
                     currentForm.combination.autoSubmit = true;
@@ -308,21 +309,53 @@ var extendedCombinations = {
                 if (mpJQ('input[type=email]:visible').length > 0) { // Step 1: Email
                     currentForm.combination.fields.username = mpJQ('input[type=email]');
                     currentForm.combination.autoSubmit = true;
+                    currentForm.element = currentForm.combination.fields.username.parent();
                 }
-				
+
+                //detectin submit login button for current combination //#identifierNext
+                let divLoginNext = document.querySelector('#identifierNext');
+                if (divLoginNext){
+                    let buttonLoginNext = divLoginNext.querySelector('button');
+                    if (buttonLoginNext){
+                        currentForm.combination.submitLoginButton = buttonLoginNext;
+                    }
+                }
+
+                //detectin submit password button for current combination //#passwordNext
+                let divPasswordNext = document.querySelector('#passwordNext');
+                if (divPasswordNext){
+                    let buttonPasswordNext = divPasswordNext.querySelector('button');
+                    if (buttonPasswordNext){
+                        currentForm.combination.submitButton = buttonPasswordNext;
+                    }
+                }
+
                 if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){
-					
+
                     var parentForm = currentForm.combination.fields.password[0].closest('form');
                     if (parentForm){
-                        var inputEmail = parentForm.querySelector('input#identifierId');
+                        let inputEmail = parentForm.querySelector('input#identifierId');
                         if (inputEmail){
                             currentForm.combination.fields.username = mpJQ(inputEmail);
                             currentForm.combination.autoSubmit = true;
                             currentForm.combination.fields.username.attr('data-mp-id', "identifierId");
+                            if (!currentForm.element){
+                                currentForm.element = mpJQ(parentForm);
+                            }
                         }
-                    }	
+                    } else {
+                        let inputEmail = document.querySelector('input#identifierId');
+                        if (inputEmail){
+                            currentForm.combination.fields.username = mpJQ(inputEmail);
+                            currentForm.combination.autoSubmit = true;
+                            currentForm.combination.fields.username.attr('data-mp-id', "identifierId");
+                            if (!currentForm.element){
+                                currentForm.element = currentForm.combination.fields.username.parent();
+                            }
+                        }
+                    }
                 }
-            }
+            //}
         }
     },
     microsoftonline: function (forms) {
@@ -353,7 +386,7 @@ var extendedCombinations = {
                     currentForm.combination.fields.username = mpJQ('input[type=email]');
                     currentForm.combination.autoSubmit = true;
                 }
-				
+
                 if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){
                     var parentForm = currentForm.combination.fields.password[0].closest('form');
                     if (parentForm){
@@ -364,12 +397,12 @@ var extendedCombinations = {
                             currentForm.combination.autoSubmit = true;
                             currentForm.combination.fields.username.attr('data-mp-id', "identifierId");
                         }
-                    }	
+                    }
                 }
 
             }
         }
-    },	
+    },
     samsara: function (forms) {
         if (mcCombs.getAllForms() == 0) return;
         for (form in forms) {
@@ -388,29 +421,29 @@ var extendedCombinations = {
                     autoSubmit: false
                 }
 
-                if (mpJQ('input[type=password]:visible').length > 0) { 
+                if (mpJQ('input[type=password]:visible').length > 0) {
                     currentForm.combination.fields.password = mpJQ('input[type=password]');
                     currentForm.combination.autoSubmit = true;
                 }
-                if (mpJQ('input[type=email]:visible').length > 0) { 
+                if (mpJQ('input[type=email]:visible').length > 0) {
                     currentForm.combination.fields.username = mpJQ('input[type=email]');
                     currentForm.combination.autoSubmit = true;
                 }
-				
+
                 if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){
                     var parentForm = currentForm.combination.fields.password[0].closest('form');
                     if (parentForm){
                         var inputEmail = parentForm.querySelector('input[type=email]');
                         if (inputEmail){
                             currentForm.combination.fields.username = mpJQ(inputEmail);
-                            currentForm.combination.autoSubmit = true;						
+                            currentForm.combination.autoSubmit = true;
                             currentForm.combination.fields.username.attr('data-mp-id', "login_email");
                         }
-                    }	
-                }				
+                    }
+                }
             }
         }
-    }, 	
+    },
     confluent: function (forms) {
         if (mcCombs.getAllForms() == 0) return;
         for (form in forms) {
@@ -429,26 +462,26 @@ var extendedCombinations = {
                     autoSubmit: false
                 }
 
-                if (mpJQ('input[type=password]:visible').length > 0) { 
+                if (mpJQ('input[type=password]:visible').length > 0) {
                     currentForm.combination.fields.password = mpJQ('input[type=password]');
                     currentForm.combination.autoSubmit = true;
                 }
-                if (mpJQ('input[type=email]:visible').length > 0) { 
+                if (mpJQ('input[type=email]:visible').length > 0) {
                     currentForm.combination.fields.username = mpJQ('input[type=email]');
                     currentForm.combination.autoSubmit = true;
                 }
-				
+
                 if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){
                     var parentForm = currentForm.combination.fields.password[0].closest('form');
                     if (parentForm){
                         var inputEmail = parentForm.querySelector('input[type=email]');
                         if (inputEmail){
                             currentForm.combination.fields.username = mpJQ(inputEmail);
-                            currentForm.combination.autoSubmit = true;						
+                            currentForm.combination.autoSubmit = true;
                             currentForm.combination.fields.username.attr('data-mp-id', "login_email");
                         }
-                    }	
-                }				
+                    }
+                }
             }
         }
     },
@@ -470,11 +503,11 @@ var extendedCombinations = {
                     autoSubmit: false
                 }
 
-                if (mpJQ('input[id=password-input').length > 0) { 
+                if (mpJQ('input[id=password-input').length > 0) {
                     currentForm.combination.fields.password = mpJQ('input[id=password-input');
                     currentForm.combination.autoSubmit = true;
                 }
-                if (mpJQ('input[id=pps-input]').length > 0) { 
+                if (mpJQ('input[id=pps-input]').length > 0) {
                     currentForm.combination.fields.username = mpJQ('input[id=pps-input]');
                     currentForm.combination.autoSubmit = true;
                 }
@@ -485,14 +518,14 @@ var extendedCombinations = {
                         var inputEmail = parentForm.querySelector('input[id=pps-input]');
                         if (inputEmail){
                             currentForm.combination.fields.username = mpJQ(inputEmail);
-                            currentForm.combination.autoSubmit = true;						
+                            currentForm.combination.autoSubmit = true;
                             currentForm.combination.fields.username.attr('data-mp-id', "login_email");
                         }
-                    }	
-                }				
+                    }
+                }
             }
         }
-    },	 	
+    },
     newegg: function (forms) {
         if (mcCombs.getAllForms() == 0) return;
         for (form in forms) {
@@ -511,26 +544,26 @@ var extendedCombinations = {
                     autoSubmit: false
                 }
 
-                if (mpJQ('input[type=password]:visible').length > 0) { 
+                if (mpJQ('input[type=password]:visible').length > 0) {
                     currentForm.combination.fields.password = mpJQ('input[type=password]');
                     currentForm.combination.autoSubmit = true;
                 }
-                if (mpJQ('input[type=email]:visible').length > 0) { 
+                if (mpJQ('input[type=email]:visible').length > 0) {
                     currentForm.combination.fields.username = mpJQ('input[type=email]');
                     currentForm.combination.autoSubmit = true;
                 }
-				
+
                 if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){
                     var parentForm = currentForm.combination.fields.password[0].closest('form');
                     if (parentForm){
                         var inputEmail = parentForm.querySelector('input[type=email]');
                         if (inputEmail){
                             currentForm.combination.fields.username = mpJQ(inputEmail);
-                            currentForm.combination.autoSubmit = true;						
+                            currentForm.combination.autoSubmit = true;
                             currentForm.combination.fields.username.attr('data-mp-id', "login_email");
                         }
-                    }	
-                }				
+                    }
+                }
             }
         }
     },
@@ -552,11 +585,11 @@ var extendedCombinations = {
                     autoSubmit: false
                 }
 
-                if (mpJQ('input[type=password]:visible').length > 0) { 
+                if (mpJQ('input[type=password]:visible').length > 0) {
                     currentForm.combination.fields.password = mpJQ('input[type=password]');
                     currentForm.combination.autoSubmit = true;
                 }
-                if (mpJQ('input[type=email]:visible').length > 0) { 
+                if (mpJQ('input[type=email]:visible').length > 0) {
                     currentForm.combination.fields.username = mpJQ('input[type=email]');
                     currentForm.combination.autoSubmit = true;
                 }
@@ -567,11 +600,11 @@ var extendedCombinations = {
                         var inputEmail = parentForm.querySelector('input[name=j_username]');
                         if (inputEmail){
                             currentForm.combination.fields.username = mpJQ(inputEmail);
-                            currentForm.combination.autoSubmit = true;						
+                            currentForm.combination.autoSubmit = true;
                             currentForm.combination.fields.username.attr('data-mp-id', "login_email");
                         }
-                    }	
-                }				
+                    }
+                }
             }
         }
     },
@@ -593,11 +626,11 @@ var extendedCombinations = {
                     autoSubmit: false
                 }
 
-                if (mpJQ('input[type=password]:visible').length > 0) { 
+                if (mpJQ('input[type=password]:visible').length > 0) {
                     currentForm.combination.fields.password = mpJQ('input[type=password]');
                     currentForm.combination.autoSubmit = true;
                 }
-                if (mpJQ('input[id=username]:visible').length > 0) { 
+                if (mpJQ('input[id=username]:visible').length > 0) {
                     currentForm.combination.fields.username = mpJQ('input[id=username]');
                     currentForm.combination.autoSubmit = true;
                 }
@@ -608,11 +641,11 @@ var extendedCombinations = {
                         var inputEmail = parentForm.querySelector('input[name=username]');
                         if (inputEmail){
                             currentForm.combination.fields.username = mpJQ(inputEmail);
-                            currentForm.combination.autoSubmit = true;						
+                            currentForm.combination.autoSubmit = true;
                             currentForm.combination.fields.username.attr('data-mp-id', "login_email");
                         }
-                    }	
-                }				
+                    }
+                }
             }
         }
     },
@@ -634,11 +667,11 @@ var extendedCombinations = {
                     autoSubmit: false
                 }
 
-                if (mpJQ('input[id=password]:visible').length > 0) { 
+                if (mpJQ('input[id=password]:visible').length > 0) {
                     currentForm.combination.fields.password = mpJQ('input[id=password]');
                     currentForm.combination.autoSubmit = true;
                 }
-                if (mpJQ('input[id=username]:visible').length > 0) { 
+                if (mpJQ('input[id=username]:visible').length > 0) {
                     currentForm.combination.fields.username = mpJQ('input[id=username]');
                     currentForm.combination.autoSubmit = true;
                 }
@@ -649,14 +682,14 @@ var extendedCombinations = {
                         var inputEmail = parentForm.querySelector('input[name=username]');
                         if (inputEmail){
                             currentForm.combination.fields.username = mpJQ(inputEmail);
-                            currentForm.combination.autoSubmit = true;						
+                            currentForm.combination.autoSubmit = true;
                             currentForm.combination.fields.username.attr('data-mp-id', "login_email");
                         }
-                    }	
-                }				
+                    }
+                }
             }
         }
-    },	
+    },
     firefox: function (forms) {
         if (mcCombs.getAllForms() == 0) return;
         for (form in forms) {
@@ -675,29 +708,29 @@ var extendedCombinations = {
                     autoSubmit: false
                 }
 
-                if (mpJQ('input[type=password]:visible').length > 0) { 
+                if (mpJQ('input[type=password]:visible').length > 0) {
                     currentForm.combination.fields.password = mpJQ('input[type=password]');
                     currentForm.combination.autoSubmit = true;
                 }
-                if (mpJQ('input[type=email]:visible').length > 0) { 
+                if (mpJQ('input[type=email]:visible').length > 0) {
                     currentForm.combination.fields.username = mpJQ('input[type=email]');
                     currentForm.combination.autoSubmit = true;
                 }
-				
+
                 if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){
                     var parentForm = currentForm.combination.fields.password[0].closest('form');
                     if (parentForm){
                         var inputEmail = parentForm.querySelector('input[type=email]');
                         if (inputEmail){
                             currentForm.combination.fields.username = mpJQ(inputEmail);
-                            currentForm.combination.autoSubmit = true;						
+                            currentForm.combination.autoSubmit = true;
                             currentForm.combination.fields.username.attr('data-mp-id', "login_email");
                         }
-                    }	
-                }				
+                    }
+                }
             }
         }
-    },	
+    },
     meraki: function (forms) {
         if (mcCombs.getAllForms() == 0) return;
         for (form in forms) {
@@ -716,29 +749,29 @@ var extendedCombinations = {
                     autoSubmit: false
                 }
 
-                if (mpJQ('input[data-testid=login_password]:visible').length > 0) { 
+                if (mpJQ('input[data-testid=login_password]:visible').length > 0) {
                     currentForm.combination.fields.password = mpJQ('input[data-testid=login_password]');
                     currentForm.combination.autoSubmit = true;
                 }
-                if (mpJQ('input[data-testid=login_email]:visible').length > 0) { 
+                if (mpJQ('input[data-testid=login_email]:visible').length > 0) {
                     currentForm.combination.fields.username = mpJQ('input[data-testid=login_email]');
                     currentForm.combination.autoSubmit = true;
                 }
-				
+
                 if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){
                     var parentForm = currentForm.combination.fields.password[0].closest('form');
                     if (parentForm){
                         var inputEmail = parentForm.querySelector('input[data-testid=login_email]');
                         if (inputEmail){
                             currentForm.combination.fields.username = mpJQ(inputEmail);
-                            currentForm.combination.autoSubmit = true;						
+                            currentForm.combination.autoSubmit = true;
                             currentForm.combination.fields.username.attr('data-mp-id', "login_email");
                         }
-                    }	
-                }				
+                    }
+                }
             }
         }
-    },	
+    },
     revolut: function (forms) {
         if (mcCombs.getAllForms() == 0) return;
         for (form in forms) {
@@ -757,29 +790,29 @@ var extendedCombinations = {
                     autoSubmit: false
                 }
 
-                if (mpJQ('input[type=password]:visible').length > 0) { 
+                if (mpJQ('input[type=password]:visible').length > 0) {
                     currentForm.combination.fields.password = mpJQ('input[type=password]');
                     currentForm.combination.autoSubmit = true;
                 }
-                if (mpJQ('input[type=email]:visible').length > 0) { 
+                if (mpJQ('input[type=email]:visible').length > 0) {
                     currentForm.combination.fields.username = mpJQ('input[type=email]');
                     currentForm.combination.autoSubmit = true;
                 }
-				
+
                 if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){
                     var parentForm = currentForm.combination.fields.password[0].closest('form');
                     if (parentForm){
                         var inputEmail = parentForm.querySelector('input[type=email]');
                         if (inputEmail){
                             currentForm.combination.fields.username = mpJQ(inputEmail);
-                            currentForm.combination.autoSubmit = true;						
+                            currentForm.combination.autoSubmit = true;
                             currentForm.combination.fields.username.attr('data-mp-id', "login_email");
                         }
-                    }	
-                }				
+                    }
+                }
             }
         }
-    },	
+    },
     soundcloud: function (forms) {
         if (mcCombs.getAllForms() == 0) return;
         for (form in forms) {
@@ -865,12 +898,12 @@ var extendedCombinations = {
                     currentForm.combination.autoSubmit = true;
                 }
 
-                if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){	
+                if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){
                     if (mpJQ('form#login input[type=text]').length > 0) {
                         currentForm.combination.fields.username = mpJQ('form#login input[type=text]');
                         currentForm.combination.autoSubmit = true;
                         currentForm.combination.fields.username.attr('data-mp-id', "login_username");
-                    }	
+                    }
                 }
             }
         }
@@ -953,7 +986,7 @@ var extendedCombinations = {
                             password: ''
                         },
                         autoSubmit: false
-                    }								
+                    }
 
                 if (mpJQ('input[id=resolving_input]:visible').length > 0) { // Step 1: Email
                     currentForm.combination.fields.username = mpJQ('input[id=resolving_input]');
@@ -965,22 +998,22 @@ var extendedCombinations = {
                     currentForm.combination.fields.password = mpJQ('input[id=password]');
                     currentForm.combination.autoSubmit = true;
 					    //STUB to allow our logic to work in this case - the input element not has a parent FORM
-					    currentForm.element = mpJQ('div[id=resolver_container]');					
+					    currentForm.element = mpJQ('div[id=resolver_container]');
                 }
-                if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){				
+                if ((currentForm.combination.fields.password) && (!currentForm.combination.fields.username)){
                     var parentForm = currentForm.combination.fields.password[0].closest('#login_container');
                     if (parentForm){
                         var inputEmail = parentForm.querySelector('input[id="email"]');
                         if (inputEmail){
                             currentForm.combination.fields.username = mpJQ(inputEmail);
-                            currentForm.combination.autoSubmit = true;						
+                            currentForm.combination.autoSubmit = true;
                             currentForm.combination.fields.username.attr('data-mp-id', "login_email");
                         }
-                    }	
-                }				
-              //  } 
-            }						
-		} else {	
+                    }
+                }
+              //  }
+            }
+		} else {
             for (form in forms) {
             var currentForm = forms[form];
             if (currentForm.element) { // Skip noform form
@@ -1011,13 +1044,13 @@ var extendedCombinations = {
                         var inputEmail = parentForm.querySelector('input[type=email]');
                         if (inputEmail){
                             currentForm.combination.fields.username = mpJQ(inputEmail);
-                            currentForm.combination.autoSubmit = true;						
+                            currentForm.combination.autoSubmit = true;
                             currentForm.combination.fields.username.attr('data-mp-id', "login_email");
-							
+
                         }
-                    }	
-                }				
-            } 
+                    }
+                }
+            }
             }
         }
     },
@@ -1107,7 +1140,7 @@ var extendedPost = {
 /*
 / Form Detection by combinations.
 / Searches the DOM for a predefined set of combinations and retrieves credentials or prepares everything to be saved
-/ This will, eventually, replace cip.* 
+/ This will, eventually, replace cip.*
 */
 
 /* Debug Levels:
@@ -1127,7 +1160,7 @@ function mcCombinations() { }
 mcCombinations.prototype = (function () {
     return {
         constructor: mcCombinations,
-        inputQueryPattern: "input[type='username'], input[type='text']:not([class='search']), input[type='email'], input[type='login'], input[type='password']:not(.notinview):not([tabindex='-1']), input[type='tel'], input[type='number'], input:not([type]), input[name='username']",
+        inputQueryPattern: "input[type='username'], input[type='text']:not([class='search']), input[type='email'], input[type='login'], input[type='password']:not(.notinview):not([tabindex='-1']), input[type='tel'], input[type='number'], input:not([type]), input[name='username'], cl-input[type='password']",
         forms: {
             noform: { fields: [] }
         },
@@ -1168,8 +1201,8 @@ mcCombinations.prototype.gotSettings = function (response) {
         if (this.callback) this.callback.apply(this, response);
         this.detectCombination();
         document.addEventListener("contextmenu", function(event){
-            clickedElement = event.target;	
-		}, true);	
+            clickedElement = event.target;
+		}, true);
     } else {
         if (this.settings.debugLevel > 0) cipDebug.warn('Get settings returned empty!', runtime.lastError);
     }
@@ -1227,7 +1260,7 @@ mcCombinations.prototype.possibleCombinations = [
         combinationName: 'microsoftonline Two Page Login Procedure',
         requiredUrl: 'login.microsoftonline.com',
         callback: extendedCombinations.microsoftonline
-    },		
+    },
     {
         combinationId: 'samsaraTwoPageAuth',
         combinationName: 'Samsara Two Page Login Procedure',
@@ -1245,7 +1278,7 @@ mcCombinations.prototype.possibleCombinations = [
         combinationName: 'Ros Page Login Procedure',
         requiredUrl: 'ros.ie',
         callback: extendedCombinations.ros
-    },		
+    },
     {
         combinationId: 'neweggTwoPageAuth',
         combinationName: 'Newegg Two Page Login Procedure',
@@ -1269,25 +1302,25 @@ mcCombinations.prototype.possibleCombinations = [
         combinationName: 'docker Two Page Login Procedure',
         requiredUrl: 'login.docker.com',
         callback: extendedCombinations.docker
-    },		
+    },
     {
         combinationId: 'firefoxTwoPageAuth',
         combinationName: 'Firefox Two Page Login Procedure',
         requiredUrl: 'accounts.firefox.com',
         callback: extendedCombinations.firefox
-    },	
+    },
     {
         combinationId: 'merakiTwoPageAuth',
         combinationName: 'Meraki Two Page Login Procedure',
         requiredUrl: 'meraki.com',
         callback: extendedCombinations.meraki
-    },	
+    },
     {
         combinationId: 'revolutTwoPageAuth',
         combinationName: 'Revolut Two Page Login Procedure',
         requiredUrl: 'business.revolut.com',
         callback: extendedCombinations.revolut
-    },	
+    },
     {
         combinationId: 'soundcloudTwoPageAuth',
         combinationName: 'SoundCloud Two Page Login Procedure',
@@ -1329,7 +1362,7 @@ mcCombinations.prototype.possibleCombinations = [
         combinationName: 'Box Login Procedure',
         requiredUrl: 'account.box.com',
         callback: extendedCombinations.box
-    },	
+    },
     {
         combinationId: 'googleTwoPageAuth',
         combinationName: 'Google Two Page Login Procedure',
@@ -1575,7 +1608,7 @@ mcCombinations.prototype.possibleCombinations = [
                             this.fields.username = r[0].Login;
                         }
                     }.bind(this);
-                    messaging({ 'action': 'retrieve_credentials', 'args': [url, submitUrl, true, true] });
+                    messaging({ 'action': 'retrieve_credentials', 'args': [url, submitUrl, true, true, false] });
                 }
             }.bind(this);
             messaging({ 'action': 'cache_retrieve' });
@@ -1585,7 +1618,7 @@ mcCombinations.prototype.possibleCombinations = [
             this.fields.password = this.fields.password.parents('form').find("input[type='password']:not('.mooltipass-password-do-not-update')");
 
             // for( field in fields ) {
-            //     fields[field].addClass('mooltipass-password-do-not-update');    
+            //     fields[field].addClass('mooltipass-password-do-not-update');
             // }
 
             // Use password generated for both new password fields
@@ -1631,7 +1664,7 @@ mcCombinations.prototype.possibleCombinations = [
                             this.fields.username = r[0].Login;
                         }
                     }.bind(this);
-                    messaging({ 'action': 'retrieve_credentials', 'args': [url, submitUrl, true, true] });
+                    messaging({ 'action': 'retrieve_credentials', 'args': [url, submitUrl, true, true, false] });
                 }
             }.bind(this);
             messaging({ 'action': 'cache_retrieve' });
@@ -1671,7 +1704,7 @@ mcCombinations.prototype.detectCombination = function () {
     }
 
     if (numberOfFields > 0) {
-        // Check for special cases first 
+        // Check for special cases first
         for (var I = 0; I < this.possibleCombinations.length; I++) {
             var parsedUrl = psl.parse(window.location.hostname);
             if (this.possibleCombinations[I].requiredUrl &&
@@ -1681,12 +1714,18 @@ mcCombinations.prototype.detectCombination = function () {
                 if (this.settings.debugLevel > 1) cipDebug.log('Dealing with special case for ' + window.location.hostname);
 
                 if (this.possibleCombinations[I].callback(this.forms) == 'skip') break
+                var url = document.location.origin;
 
                 // Handle sumbit event on submit button click or return keydown.
                 for (form in this.forms) {
-                    var currentForm = this.forms[form]
-                    if (currentForm.element) {
-                        cipPassword.createLoginIcon(currentForm.combination.fields.username);
+                    var currentForm = this.forms[form];
+                if ((currentForm.element) || (url.includes('accounts.google.com'))){
+						console.log('currentForm.combination.fields.username', currentForm.combination.fields.username);
+                        if (currentForm.combination.fields.username.length > 0) {
+                           cipPassword.createLoginIcon(currentForm.combination.fields.username);
+                        } else {
+                            console.log('combination withour username detected');
+                        }
 
                         var field = currentForm.combination.fields.password || currentForm.combination.fields.username;
 
@@ -1697,7 +1736,16 @@ mcCombinations.prototype.detectCombination = function () {
                             currentForm.combination.fields.password &&
                             currentForm.combination.fields.password.data('mp-id')
 
-                        var submitButton = this.detectSubmitButton(field, field.parent(), false);
+                        let submitButton = null;
+                        if (currentForm.combination.submitButton){
+                            submitButton = currentForm.combination.submitButton;
+                        } else if (currentForm.combination.submitLoginButton){
+                            submitButton = currentForm.combination.submitLoginButton;
+                        } else {
+                            submitButton = this.detectSubmitButton(field, field.parent(), false);
+                        }
+
+                        //var submitButton = this.detectSubmitButton(field, field.parent(), false);
                         if (submitButton)
                         {
                             mpJQ(submitButton)
@@ -1709,11 +1757,13 @@ mcCombinations.prototype.detectCombination = function () {
                                 .on('keydown.mooltipass', function (currentForm, event) {
                                     if (event.which == 13) { this.onSubmit.call(this, { target: currentForm.element[0] }) }
                                 }.bind(this, currentForm))
+                        } else {
+
                         }
                     }
                 }
 
-                var url = document.location.origin;
+                //var url = document.location.origin;
                 if (url.includes('login.microsoftonline.com')){
                     url = url.replace('login.microsoftonline.com', 'login.live.com');
                 }
@@ -1725,11 +1775,11 @@ mcCombinations.prototype.detectCombination = function () {
                     if (submitUrl.indexOf("login.microsoftonline.com") > -1){
                         submitUrl = submitUrl.replace("login.microsoftonline.com", "live.com");
                     }
-                    messaging({ 'action': 'retrieve_credentials', 'args': [url, submitUrl, true, true] });
+                    messaging({ 'action': 'retrieve_credentials', 'args': [url, submitUrl, true, true, false] });
                 }
 
                 this.waitingForPost = true;
-                messaging({ 'action': 'wait_for_postdata' });				
+                messaging({ 'action': 'wait_for_postdata' });
 
                 return;
             }
@@ -1747,7 +1797,7 @@ mcCombinations.prototype.detectCombination = function () {
 
                 if (this.credentialsCache && this.credentialsCache.length > 0) {
                     if (iFillFromCacheCount < 2){
-                        iFillFromCacheCount = iFillFromCacheCount + 1;	
+                        iFillFromCacheCount = iFillFromCacheCount + 1;
                             // Sometimes the form changes when typing in. Issuing a new detectCombination.. we use a temporary cache to avoid double request in the device
                             if (this.settings.debugLevel > 1) cipDebug.log('%c mcCombinations - %c Using credentials from cache', 'background-color: #c3c6b4', 'color: #777777', currentForm.element);
                             this.retrieveCredentialsCallback(this.credentialsCache);
@@ -1756,7 +1806,7 @@ mcCombinations.prototype.detectCombination = function () {
                     }
                 } else {
                     if (this.settings.debugLevel > 1) cipDebug.trace('%c mcCombinations - %c Retrieving credentials', 'background-color: #c3c6b4', 'color: #777777', currentForm.element);
-                    messaging({ 'action': 'retrieve_credentials', 'args': [url, submitUrl, true, true] });
+                    messaging({ 'action': 'retrieve_credentials', 'args': [url, submitUrl, true, true, false] });
                 }
             }
         }
@@ -1976,7 +2026,8 @@ mcCombinations.prototype.getAllForms = function () {
         // Ignore our fields and search fields.
         if (field.attr('id') == 'mooltipass-password-generator' ||
             (field.attr('id') && field.attr('id').toLowerCase().includes("recherche")) ||
-            field.clone().children().remove().end()[0].outerHTML.match(/search/i)) {
+            (field.clone().children().remove().end()[0].outerHTML.match(/search/i)) ||
+            (field.clone().children().remove().end()[0].outerHTML.match(/newsletter/i))) {
             return;
         }
 
@@ -2027,7 +2078,13 @@ mcCombinations.prototype.onSubmit = function (event) {
     this.onSubmitInProgress = true
     setTimeout(function () {
         this.onSubmitInProgress = false
-    }.bind(this), 100)
+    }.bind(this), 100);
+    if (document.location.origin.includes('accounts.google.com')){
+        if ((!currentForm.combination.fields.password) || (currentForm.combination.fields.password == "")){
+            console.log("no password feild for accounts.google.com");
+            return;
+        }
+    }
 
     if (this.settings.debugLevel > 1) cipDebug.log('%c mcCombinations: %c onSubmit', 'background-color: #c3c6b4', 'color: #333333');
     this.waitingForPost = false;
@@ -2219,8 +2276,9 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
     }
 
 	if (this.forceFilling && clickedElement){
+        try {
 	    if (this.fillPasswordOnly){
-			var passwordField = mpJQ(clickedElement); 
+			var passwordField = mpJQ(clickedElement);
 			passwordField.val('');
                 try {
                     passwordField.click();
@@ -2234,10 +2292,11 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
                 passwordField[0].dispatchEvent(new Event('change'));
                 //currentForm.combination.savedFields.password.value = credentials[0].Password;
                 wasFilled = true;
+                return;
         }
         if (this.fillUserOnly){
             if (credentials[0].Login) {
-                var loginField = mpJQ(clickedElement); 
+                var loginField = mpJQ(clickedElement);
                 loginField.val('');
                 loginField.click();
                 try {
@@ -2246,24 +2305,32 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
                     } catch (e) {}
                 loginField[0].dispatchEvent(new Event('change'));
                  //   currentForm.combination.savedFields.username.value = credentials[0].Login;
-            }				
+                return;
+            }
         }
 
         if (credentials.totpcode){
-            var fieldForTOTP = mpJQ(clickedElement); 
+            var fieldForTOTP = mpJQ(clickedElement);
             fieldForTOTP.val('');
             fieldForTOTP.click();
             try {
                 fieldForTOTP.sendkeys(credentials.totpcode);
                 this.triggerChangeEvent(fieldForTOTP[0], credentials.totpcode);
-                fieldForTOTP.trigger('blur');	
+                fieldForTOTP.trigger('blur');
                 } catch (e) {}
-            fieldForTOTP[0].dispatchEvent(new Event('change'));			
+            fieldForTOTP[0].dispatchEvent(new Event('change'));
+            return;
         }
-    } 
-	else {
+
+        } finally {
+            this.fillUserOnly = false;
+            this.fillPasswordOnly = false;
+            this.forceFilling = false;
+        }
+    }
+
         for (form in this.forms) {
-			
+
             var wasFilled = false;
             currentForm = this.forms[form];
             if (this.settings.debugLevel > 1) cipDebug.log('%c mcCombinations - %c retrieveCredentialsCallback filling form', 'background-color: #c3c6b4', 'color: #FF0000', currentForm);
@@ -2291,7 +2358,7 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
                         wasFilled = true;
                     }
                 }
-			
+
 				if (credentials[0].Password && currentForm.combination.fields.password && (currentForm.combination.combinationId != 'passwordreset001XX')) {
                     if (this.settings.debugLevel > 3) cipDebug.log('%c mcCombinations - %c retrieveCredentialsCallback filling form - Password', 'background-color: #c3c6b4', 'color: #FF0000');
                     // Fill-in Password
@@ -2348,8 +2415,7 @@ mcCombinations.prototype.retrieveCredentialsCallback = function (credentials) {
             // Don't proceed other forms when we have defined credential fields.
             if (this.forms['noform'].definedCredentialFields) break
         }
-    }
-	
+
     this.fillUserOnly = false;
     this.fillPasswordOnly = false;
 	this.forceFilling = false;
@@ -2384,7 +2450,7 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
         /weiter/i,
         /next/i,
         /inloggen/i,
-        /confirm/i,			
+        /confirm/i,
         /identifierNext/i /*google*/
     ],
 
@@ -2395,7 +2461,7 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
         /reset/i,
         /registration/i,
         /register/i,
-        /edit/i,		
+        /edit/i,
         /oublié/i,
         /vergeten/i,
         /problemen/i,
@@ -2448,14 +2514,14 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
             var buttonOuterHTML = mpJQ(button).clone().children().remove().end()[0].outerHTML;
             if ((!window.location.hostname.match(/nextcloud.com/)) && (!window.location.hostname.match(/mpiphp.org/))) {
                 for (var i = 0; i < IGNORE_PATTERNS.length; i++) {
-                    if (buttonOuterHTML.match(IGNORE_PATTERNS[i])) {			
+                    if (buttonOuterHTML.match(IGNORE_PATTERNS[i])) {
                         return false
                     }
 			    }
             }
 
             for (var i = 0; i < ACCEPT_PATTERNS.length; i++) {
-                if (buttonOuterHTML.match(ACCEPT_PATTERNS[i])) {	
+                if (buttonOuterHTML.match(ACCEPT_PATTERNS[i])) {
                     return true
                 }
             }
@@ -2472,7 +2538,7 @@ mcCombinations.prototype.detectSubmitButton = function detectSubmitButton(field,
             if (a.distance == b.distance) return 0
         })
 
-        // Button shouldn't be far more than 240px (old-150px old2-210px) from input. 
+        // Button shouldn't be far more than 240px (old-150px old2-210px) from input.
         if (buttons.length > 0)
         {
             // Check if button was previously selected
@@ -2566,12 +2632,12 @@ mcCombinations.prototype.doSubmit = function doSubmit(currentForm) {
             return
         }
         if (window.location.hostname.match(/accounts.google.com/)) {  //for google trigger('submit') not works. So, simulate the pressing of the ENTER key
-            var ke1 = new KeyboardEvent('keydown', {bubbles: true, cancelable: true, keyCode: 13});	
+            var ke1 = new KeyboardEvent('keydown', {bubbles: true, cancelable: true, keyCode: 13});
             if (field){
-                field[0].dispatchEvent(ke1);	
-            }			
+                field[0].dispatchEvent(ke1);
+            }
             return
-        }	
+        }
         if (!mpJQ(currentForm.element)[0].outerHTML.match(/ng-submit/i)) mpJQ(currentForm.element).trigger('submit');
     }
 }
@@ -2625,7 +2691,7 @@ mcCombinations.prototype.postDetected = function (details) {
                     if ((inputpass) && (inputpass.value.length > 7)){   //google password 8 characters or more
                         if ((details.requestBody.formData['f.req'].length > 0) && (details.requestBody.formData['f.req'][0].indexOf(inputpass.value) > -1)){
                             this.onSubmit.call(this, { target: inputpass.closest('form') });
-                            return;							
+                            return;
                         }
                     }
                 }
