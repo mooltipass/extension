@@ -34,7 +34,9 @@ if (typeof(safari) == 'object')
     if (background_debug_msg > 4) mpDebug.log('%c Extension running in Safari', mpDebug.css('00ffff'));
     mooltipass.device.browser = "safari";
 }
-if (window.chrome && chrome.runtime && chrome.runtime.id)
+//old before MV3
+//if (window.chrome && chrome.runtime && chrome.runtime.id)
+if (chrome && chrome.runtime && chrome.runtime.id)	
 {
     if (background_debug_msg > 4) mpDebug.log('%c Extension running in Chrome', mpDebug.css('00ffff'));
     mooltipass.device.browser = "chrome";
@@ -682,7 +684,7 @@ mooltipass.device.onTabUpdated = function(tabId, removeInfo)
  * @param forceCallback
  * @param triggerUnlock
  */
-mooltipass.device.retrieveCredentials = function(callback, tab, url, submiturl, forceCallback, triggerUnlock) 
+mooltipass.device.retrieveCredentials = function(callback, tab, url, submiturl, forceCallback, triggerUnlock, manualFilling) 
 {
     if (background_debug_msg > 3) mpDebug.log('%c device: %c retrieveCredentials ','background-color: #e244ff','color: #484848', arguments);
 
@@ -731,13 +733,16 @@ mooltipass.device.retrieveCredentials = function(callback, tab, url, submiturl, 
             return;
         }
     }
-    if (mooltipass.device.checkInLastCredentialsRequests(tab.id, submiturl)){
-        mooltipass.device.addToLastCredentialsRequests(tab.id, submiturl);
-        return;
+
+    if (!manualFilling){
+        if (mooltipass.device.checkInLastCredentialsRequests(tab.id, submiturl)){
+            mooltipass.device.addToLastCredentialsRequests(tab.id, submiturl);
+            return;
+        }
+
+        mooltipass.device.addToLastCredentialsRequests(tab.id, submiturl);	
     }
-	
-    mooltipass.device.addToLastCredentialsRequests(tab.id, submiturl);	
-     
+
     // If our retrieveCredentialsQueue is empty and the device is unlocked, send the request to the app. Otherwise, queue it
     mooltipass.device.retrieveCredentialsQueue.push({'tabid': tab.id, 'callback': callback, 'domain': parsed_url.domain, 'subdomain': parsed_url.subdomain, 'tabupdated': false, 'reqid': mooltipass.device.retrieveCredentialsCounter, 'tab': tab});
 

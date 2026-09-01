@@ -337,7 +337,7 @@ var cip = {
     */
     retrieveAndFillUserAndPassword: function ()
     {
-        mcCombs.forceFilling = true;									  
+        mcCombs.forceFilling = true;
         cip.initCredentialFields(true);
     },
 
